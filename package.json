@@ -1,0 +1,25 @@
+{
+  "name": "second-wind-playground",
+  "private": true,
+  "scripts": {
+    "build:agentation": "esbuild js/agentation-wrapper.jsx --bundle --format=iife --outfile=js/agentation.bundle.js --jsx=automatic",
+    "watch:agentation": "esbuild js/agentation-wrapper.jsx --bundle --format=iife --outfile=js/agentation.bundle.js --jsx=automatic --watch"
+  },
+  "dependencies": {
+    "agentation": "^3.0.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.5"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

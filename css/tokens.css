@@ -1,0 +1,113 @@
+/* ============================================================
+   SECOND WIND PRO V2 — DESIGN TOKENS
+   ------------------------------------------------------------
+   Source of truth for color, type, spacing, and motion.
+   All combinations meet WCAG 2.2 AA. Most exceed AAA.
+   See docs/CRAFT-RULES.md for usage rules.
+   ============================================================ */
+
+:root {
+  /* Surfaces */
+  --bg:           #0d0e1a;
+  --bg-deep:      #080912;
+  --bg-mid:       #15172a;
+  --surface:      #1a1d2e;
+  --surface-2:    #232539;
+  --surface-3:    #25143d;
+  --surface-sub:  #15172a;
+
+  /* Borders */
+  --line:         rgba(196, 181, 253, 0.16);
+  --line-strong:  rgba(196, 181, 253, 0.40);
+
+  /* Purple system */
+  --purple:       #b89dff;          /* 8.5:1 on bg — AAA */
+  --purple-bright:#d4c5ff;          /* 12.1:1 on bg — AAA */
+  --purple-deep:  #6d28d9;          /* gradients only */
+  --purple-glow:  rgba(184, 157, 255, 0.45);
+
+  /* Text */
+  --cream:        #f4efe6;          /* 16.8:1 on bg — AAA */
+  --muted:        #c4bbd1;          /* 10.4:1 on bg — AAA */
+  --muted-2:      #9890a3;          /* 6.3:1 on bg — AA */
+  --on-purple:    #1a0a2e;          /* 8.3:1 on --purple */
+
+  /* Semantic */
+  --success:      #86efac;          /* In / Stable / Signed */
+  --danger:       #fca5a5;          /* Out / Portal Risk */
+  --warning:      #fde047;          /* Need depth */
+  --focus:        #ffd166;          /* 13.3:1 on bg */
+
+  /* Typography */
+  --font-sans: 'Geist', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
+
+  --t-xs:      11px;
+  --t-sm:      13px;
+  --t-base:    15px;
+  --t-md:      17px;
+  --t-lg:      22px;
+  --t-xl:      30px;
+  --t-2xl:     46px;
+  --t-display: clamp(46px, 8vw, 72px);
+
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-bold:    600;
+
+  /* Spacing (4px base) */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  22px;
+  --s-6:  32px;
+  --s-7:  48px;
+  --s-8:  64px;
+  --s-9:  100px;
+
+  /* Motion */
+  --dur-instant: 100ms;
+  --dur-fast:    200ms;
+  --dur-mid:     300ms;
+  --dur-slow:    450ms;
+  --dur-hero:    700ms;
+
+  --ease-out:    cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout */
+  --container:        1400px;
+  --gutter:           40px;
+  --gutter-tablet:    28px;
+  --gutter-mobile:    22px;
+  --bp-tablet:        1200px;
+  --bp-stack:         980px;
+  --bp-mobile:        560px;
+  --radius-sm:        4px;
+  --radius-md:        8px;
+  --radius-lg:        12px;
+  --radius-pill:      100px;
+  --modal-padding:    calc(var(--s-4) + var(--s-2)); /* 24px */
+
+  /* Buttons — section CTAs */
+  --btn-padding-y:    14px;
+  --btn-padding-x:    26px;
+  --btn-gap:          12px;
+  --btn-letter-spacing: 0.02em;
+  --btn-radius:       var(--radius-sm);
+  --btn-secondary-border: var(--line-strong);
+  --btn-secondary-text:   var(--cream);
+  --btn-secondary-hover-border: var(--purple);
+  --btn-secondary-hover-text:   var(--purple);
+  --btn-primary-bg:     var(--purple);
+  --btn-primary-text:   var(--on-purple);
+  --btn-primary-hover-bg: var(--purple-bright);
+  --btn-focus-ring:     var(--focus);
+
+  /* Placeholder photo gradients (swap when real photography lands) */
+  --photo-football-from: #3C096C;
+  --photo-football-to:   #7B2CBF;
+  --photo-basketball-from: #1e3a8a;
+  --photo-basketball-to:   #3b82f6;
+}

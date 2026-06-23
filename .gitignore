@@ -1,0 +1,23 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Dependencies & build
+node_modules/
+dist/
+build/
+.cache/
+
+# Netlify
+.netlify/
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+
+# Editor
+.cursor/
