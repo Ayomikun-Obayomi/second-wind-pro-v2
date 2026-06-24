@@ -46,7 +46,7 @@ const roster = sliceBetween(index, '<!-- ROSTER -->', '<!-- LATEST MOVEMENT -->'
 const transfer = fs.readFileSync(path.join(__dirname, 'snippets/transfer-landing.html'), 'utf8').trim();
 const leadership = fs.readFileSync(path.join(__dirname, 'snippets/leadership-landing.html'), 'utf8').trim();
 const brand = mainFrom('brand.html');
-const join = mainFrom('join.html');
+const join = mainFrom('get-started.html');
 
 const landingMain = `${landingCore}
 

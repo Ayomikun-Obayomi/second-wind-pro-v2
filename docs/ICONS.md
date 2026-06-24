@@ -45,6 +45,10 @@ SW_ICONS.hydrate(mountRoot); // re-run after injecting templates
 | `car` | car-01 | 1007:11764 | Ground transport |
 | `building` | building-01 | 1007:9771 | Hotel, venue |
 | `luggage` | luggage-01 | 1007:11815 | Wardrobe, packing |
+| `user` | user-01 | — | Get started · tailored |
+| `users` | users-01 | — | Get started · agent-matched |
+| `message-chat-circle` | message-chat-circle | — | Get started · no pressure |
+| `line-chart-up` | line-chart-up-01 | — | Get started · long game |
 
 ## CSS rules
 

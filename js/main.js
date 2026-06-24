@@ -64,7 +64,9 @@ const ATHLETES = {
     stats: [
       ['1,210', 'Receiving yards'], ['9', 'Touchdowns'], ['16.8', 'Yards per catch'],
       ['All-Conf', 'Conference honors'], ['#8', 'National WR rank'], ['78', 'Receptions']
-    ]
+    ],
+    from: { name: 'Baton Rouge High', logo: 'BR', color: '#461d7c' },
+    to:   { name: 'LSU', logo: 'LSU', color: '#461d7c' },
   },
   'sienna-hart': {
     name: 'Sienna Hart', position: 'SG · AAU Top 50', photo: 'SH',
@@ -78,7 +80,9 @@ const ATHLETES = {
     stats: [
       ['19.8', 'Points per game'], ['5.4', 'Assists'], ['3.8', 'Steals'],
       ['Top-50', 'National rank'], ['41%', '3-point %'], ['EYBL', 'Circuit']
-    ]
+    ],
+    from: { name: 'Hoover High', logo: 'HV', color: '#2d68c4' },
+    to:   { name: 'UCLA', logo: 'UCLA', color: '#2d68c4' },
   },
   'trey-holloway': {
     name: 'Trey Holloway', position: 'Edge · Class of 2026', photo: 'TH',
@@ -92,7 +96,9 @@ const ATHLETES = {
     stats: [
       ['17.5', 'Sacks'], ['74', 'Tackles'], ['12', 'Tackles for loss'],
       ['Top-10', 'National rank'], ['4', 'Forced fumbles'], ['5-Star', 'Recruit rating']
-    ]
+    ],
+    from: { name: 'Westlake High', logo: 'WL', color: '#ba0c2f' },
+    to:   { name: 'University of Georgia', logo: 'UGA', color: '#ba0c2f' },
   },
   'devon-park': {
     name: 'Devon Park', position: 'RB · Senior', photo: 'DP',
@@ -119,6 +125,9 @@ const ADVISORS = {
   'jordan-ellis': {
     name: 'Jordan Ellis',
     title: 'Head of Sports & COO',
+    initials: 'JE',
+    email: 'jordan.ellis@secondwind.pro',
+    phone: '(305) 555-0101',
     bio: 'Jordan spent twelve years in Power Four front offices before co-founding Second Wind Pro. He is known for staying in the negotiation room until every term protects the athlete—not just the next season.',
     disciplines: ['Football', 'Tennis'],
     regions: ['National operations', 'Southeast hub', 'Texas corridor', 'East Coast'],
@@ -126,7 +135,10 @@ const ADVISORS = {
   },
   'luke-bramwell': {
     name: 'Luke Bramwell',
-    title: 'Senior Agent',
+    title: 'Senior Agent · Football',
+    initials: 'LB',
+    email: 'luke.bramwell@secondwind.pro',
+    phone: '(512) 555-0108',
     bio: 'Luke played defensive back at Florida State and moved into representation after helping teammates navigate the first NIL cycle. Families work with him for straight answers and contracts built around eligibility, not headlines.',
     disciplines: ['Football'],
     regions: ['Southeast', 'Texas'],
@@ -134,7 +146,10 @@ const ADVISORS = {
   },
   'lenny-vasquez': {
     name: 'Lenny Vasquez',
-    title: 'Senior Agent',
+    title: 'Senior Agent · Basketball',
+    initials: 'LV',
+    email: 'lenny.vasquez@secondwind.pro',
+    phone: '(718) 555-0114',
     bio: 'Lenny grew up playing point guard in Brooklyn and started in D1 compliance before joining the agency. He represents guards and wings the way he wished someone had represented him—clear guidance, no pressure tactics.',
     disciplines: ['Basketball'],
     regions: ['East Coast', 'AAU circuits'],
@@ -142,7 +157,10 @@ const ADVISORS = {
   },
   'mara-chen': {
     name: 'Mara Chen',
-    title: 'Agent',
+    title: 'Agent · Tennis',
+    initials: 'MC',
+    email: 'mara.chen@secondwind.pro',
+    phone: '(415) 555-0122',
     bio: 'Mara was a nationally ranked junior before an injury led her to sports law. She still competes in local tournaments and brings an athlete\'s patience to families navigating school, travel, and sponsorship at the same time.',
     disciplines: ['Tennis'],
     regions: ['Junior-to-college pathways', 'National'],
@@ -150,7 +168,10 @@ const ADVISORS = {
   },
   'eli-okonkwo': {
     name: 'Eli Okonkwo',
-    title: 'Agent',
+    title: 'Agent · Football',
+    initials: 'EO',
+    email: 'eli.okonkwo@secondwind.pro',
+    phone: '(614) 555-0136',
     bio: 'Eli is a former Ohio State linebacker who began advising teammates on deals before NIL had a formal name. He focuses on linemen and defenders because those rooms are where leverage is built—and too often ignored.',
     disciplines: ['Football'],
     regions: ['Midwest', 'Power Four'],
@@ -158,13 +179,35 @@ const ADVISORS = {
   },
   'sofia-ruiz': {
     name: 'Sofia Ruiz',
-    title: 'Agent',
+    title: 'Agent · Basketball',
+    initials: 'SR',
+    email: 'sofia.ruiz@secondwind.pro',
+    phone: '(503) 555-0140',
     bio: 'Sofia played at Oregon and spent four years in sportswear brand strategy before becoming an agent. She helps players tell their own story so partnerships feel authentic—not like a template every recruit gets.',
     disciplines: ['Basketball'],
     regions: ['West Coast', 'Prep-to-pro pipeline'],
     athletes: ['sienna-hart'],
   },
 };
+
+function advisorByName(name) {
+  if (!name) return null;
+  const entry = Object.entries(ADVISORS).find(([, adv]) => adv.name === name);
+  return entry ? { id: entry[0], ...entry[1] } : null;
+}
+
+function advisorPhotoModifier(advisor) {
+  if (!advisor) return '';
+  if (advisor.id === 'jordan-ellis') return ' athlete-magazine-agent-photo--exec';
+  if (advisor.disciplines?.includes('Basketball')) return ' athlete-magazine-agent-photo--basketball';
+  if (advisor.disciplines?.includes('Tennis')) return ' athlete-magazine-agent-photo--tennis';
+  return '';
+}
+
+function phoneTelHref(phone) {
+  const digits = phone.replace(/\D/g, '');
+  return digits.length === 10 ? `tel:+1${digits}` : `tel:${digits}`;
+}
 
 
 /* ------------------------------------------------------------
@@ -387,6 +430,23 @@ const ADVISORS = {
     return `${text.slice(0, max).replace(/\s+\S*$/, '').trim()}…`;
   }
 
+  /** Card teaser: first sentence when it fits; otherwise word-safe trim. */
+  function cardBioExcerpt(text) {
+    if (!text) return '';
+    const normalized = text.trim().replace(/\s+/g, ' ');
+    const firstSentence = normalized.match(/^(.+?[.!?])(?:\s+|$)/)?.[1]?.trim();
+
+    const TEASER_MAX = 120;
+    const SENTENCE_CAP = 140;
+
+    if (firstSentence && normalized.length > firstSentence.length && firstSentence.length <= SENTENCE_CAP) {
+      return firstSentence;
+    }
+
+    const source = firstSentence && firstSentence.length <= SENTENCE_CAP ? firstSentence : normalized;
+    return excerptCopy(source, TEASER_MAX);
+  }
+
   document.querySelectorAll('#roster.roster-page .athlete-card[data-athlete]').forEach((card) => {
     const key = card.dataset.athlete;
     const a = ATHLETES[key];
@@ -400,7 +460,7 @@ const ADVISORS = {
       rank.textContent = a.athleticLevel || '';
       rank.hidden = !rank.textContent;
     }
-    if (descText) descText.textContent = `${excerptCopy(a.bio || a.presentability || '')} `;
+    if (descText) descText.textContent = cardBioExcerpt(a.bio || a.presentability || '');
     if (readMore) {
       readMore.href = `athlete.html?athlete=${encodeURIComponent(key)}`;
       readMore.setAttribute('aria-label', `Read more about ${a.name}`);
@@ -2375,6 +2435,409 @@ const ADVISORS = {
     return `<dt>${label}</dt><dd>${value}</dd>`;
   }
 
+  function magazineSchoolLogo(school) {
+    if (!school) return '';
+    if (school.logoSrc) {
+      return `<div class="logo logo--img"><img src="${school.logoSrc}" alt="" width="36" height="36" loading="lazy" decoding="async" /></div>`;
+    }
+    return `<div class="logo" style="background:${school.color}">${school.logo}</div>`;
+  }
+
+  function parseQuoteAttribution(cite) {
+    if (!cite) return { name: '', role: '' };
+    const parts = cite.split(',').map((s) => s.trim());
+    const name = parts[0] || cite;
+    const role = parts.slice(1).join(' · ');
+    return { name, role };
+  }
+
+  function renderMagazineAgent(agentName) {
+    const advisor = advisorByName(agentName);
+    const fallbackName = agentName || 'Second Wind Pro';
+
+    if (!advisor) {
+      return `<span class="athlete-magazine-agent-name">${fallbackName}</span>`;
+    }
+
+    const photoClass = `athlete-magazine-agent-photo${advisorPhotoModifier(advisor)}`;
+    return `<div class="athlete-magazine-agent-card">
+      <div class="${photoClass}" aria-hidden="true">
+        <span class="athlete-magazine-agent-initials">${advisor.initials}</span>
+      </div>
+      <div class="athlete-magazine-agent-body">
+        <span class="athlete-magazine-agent-name">${advisor.name}</span>
+        <span class="athlete-magazine-agent-title">${advisor.title}</span>
+        <ul class="athlete-magazine-agent-contact">
+          <li><a href="${phoneTelHref(advisor.phone)}">${advisor.phone}</a></li>
+          <li><a href="mailto:${advisor.email}">${advisor.email}</a></li>
+        </ul>
+      </div>
+    </div>`;
+  }
+
+  function pathMetaLabel(a) {
+    if (a.status === 'portal') return 'Transfer';
+    if (a.status === 'signed') return 'Signing';
+    return 'Commitment';
+  }
+
+  function renderMagazinePath(from, to) {
+    return `<div class="athlete-magazine-path-flow">
+      <div class="wire-school">${magazineSchoolLogo(from)}<span class="name">${from.name}</span></div>
+      <span class="athlete-magazine-path-arrow" aria-hidden="true">→</span>
+      <div class="wire-school">${magazineSchoolLogo(to)}<span class="name">${to.name}</span></div>
+    </div>`;
+  }
+
+  function renderHighlights(items) {
+    if (!items?.length) return '';
+    const [featured] = items;
+    const imgClass = featured.contain ? ' is-contain' : '';
+    return `<figure class="athlete-magazine-feature">
+      <img src="${featured.src}" alt="${featured.alt || ''}" loading="lazy" decoding="async"${imgClass} />
+      <figcaption>
+        <span class="athlete-magazine-highlight-label">${featured.label || ''}</span>
+        <p>${featured.caption || ''}</p>
+      </figcaption>
+    </figure>`;
+  }
+
+  const CLIP_CTAS = { x: 'Watch on X', instagram: 'Watch on Instagram', tiktok: 'Watch on TikTok' };
+  const X_LOGO = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>';
+  const IG_LOGO = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>';
+
+  function youtubeId(section) {
+    if (section.youtubeId) return section.youtubeId;
+    if (!section.youtube) return '';
+    const match = String(section.youtube).match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    return match?.[1] || (/^[a-zA-Z0-9_-]{11}$/.test(section.youtube) ? section.youtube : '');
+  }
+
+  function renderEmbedMedia(section, mediaClass) {
+    const yt = youtubeId(section);
+    const title = section.thumbnailAlt || section.text || section.preview || 'Video';
+
+    if (yt) {
+      return `<div class="${mediaClass} ${mediaClass}--youtube">
+        <iframe src="https://www.youtube.com/embed/${yt}" title="${title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+      </div>`;
+    }
+
+    if (section.video) {
+      return `<div class="${mediaClass}">
+        <video src="${section.video}"${section.thumbnail ? ` poster="${section.thumbnail}"` : ''} controls playsinline preload="metadata"></video>
+      </div>`;
+    }
+
+    if (section.thumbnail) {
+      return `<div class="${mediaClass} ${mediaClass}--photo">
+        <img src="${section.thumbnail}" alt="${title}" loading="lazy" decoding="async" />
+      </div>`;
+    }
+
+    return '';
+  }
+
+  function renderTweetEmbed(section) {
+    const url = section.tweetUrl || section.url || 'https://x.com';
+    const handle = section.handle || '';
+    const name = section.displayName || handle.replace(/^@/, '') || 'Post';
+    const avatar = section.avatar || name.split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase();
+    const text = section.text || section.preview || '';
+    const isLiveTweet = /(?:twitter\.com|x\.com)\/\w+\/status\/\d+/.test(url);
+
+    if (isLiveTweet) {
+      return `<aside class="athlete-magazine-embed athlete-magazine-embed--tweet">
+        <blockquote class="twitter-tweet" data-theme="dark" data-dnt="true">
+          <p lang="en" dir="ltr">${text}</p>
+          <a href="${url}">${name} (${handle})</a>
+        </blockquote>
+      </aside>`;
+    }
+
+    const media = renderEmbedMedia(section, 'athlete-magazine-tweet-media');
+
+    return `<aside class="athlete-magazine-embed athlete-magazine-embed--tweet">
+      <article class="athlete-magazine-tweet">
+        <header class="athlete-magazine-tweet-header">
+          <a href="${url}" class="athlete-magazine-tweet-profile" target="_blank" rel="noopener noreferrer">
+            <span class="athlete-magazine-tweet-avatar" aria-hidden="true">${avatar}</span>
+            <span class="athlete-magazine-tweet-names">
+              <span class="athlete-magazine-tweet-name">${name}</span>
+              <span class="athlete-magazine-tweet-handle">${handle}</span>
+            </span>
+          </a>
+          <a href="${url}" class="athlete-magazine-tweet-brand" target="_blank" rel="noopener noreferrer" aria-label="View on X">${X_LOGO}</a>
+        </header>
+        <div class="athlete-magazine-tweet-content">
+          <p>${text}</p>
+          ${media}
+        </div>
+        <footer class="athlete-magazine-tweet-footer">
+          ${section.posted ? `<time${section.postedISO ? ` datetime="${section.postedISO}"` : ''}>${section.posted}</time>` : ''}
+          ${section.metric ? `<span class="athlete-magazine-tweet-metric">${section.metric}</span>` : ''}
+          <a href="${url}" class="athlete-magazine-tweet-view" target="_blank" rel="noopener noreferrer">View on X</a>
+        </footer>
+      </article>
+    </aside>`;
+  }
+
+  function hydrateTwitterEmbeds(root) {
+    if (!root?.querySelector('.twitter-tweet')) return;
+
+    const load = () => window.twttr?.widgets?.load(root);
+
+    if (window.twttr?.widgets) {
+      load();
+      return;
+    }
+
+    if (document.getElementById('twitter-wjs')) {
+      window.twttr?.ready?.(load);
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.id = 'twitter-wjs';
+    script.async = true;
+    script.src = 'https://platform.twitter.com/widgets.js';
+    script.onload = () => window.twttr?.ready?.(load);
+    document.body.appendChild(script);
+  }
+
+  function renderInstagramEmbed(section) {
+    const url = section.instagramUrl || section.url || 'https://instagram.com';
+    const handle = section.handle || '';
+    const name = section.displayName || handle.replace(/^@/, '') || 'Post';
+    const avatar = section.avatar || name.split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase();
+    const text = section.text || section.preview || '';
+    const isLiveIg = /instagram\.com\/(p|reel|tv)\//.test(url);
+
+    if (isLiveIg) {
+      return `<aside class="athlete-magazine-embed athlete-magazine-embed--instagram">
+        <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="${url}" data-instgrm-version="14"></blockquote>
+      </aside>`;
+    }
+
+    const media = renderEmbedMedia(section, 'athlete-magazine-ig-media');
+
+    return `<aside class="athlete-magazine-embed athlete-magazine-embed--instagram">
+      <article class="athlete-magazine-ig">
+        <header class="athlete-magazine-ig-header">
+          <a href="${url}" class="athlete-magazine-ig-profile" target="_blank" rel="noopener noreferrer">
+            <span class="athlete-magazine-ig-avatar-wrap" aria-hidden="true">
+              <span class="athlete-magazine-ig-avatar">${avatar}</span>
+            </span>
+            <span class="athlete-magazine-ig-names">
+              <span class="athlete-magazine-ig-name">${name}</span>
+              <span class="athlete-magazine-ig-handle">${handle}</span>
+            </span>
+          </a>
+          <a href="${url}" class="athlete-magazine-ig-brand" target="_blank" rel="noopener noreferrer" aria-label="View on Instagram">${IG_LOGO}</a>
+        </header>
+        ${media}
+        <div class="athlete-magazine-ig-caption">
+          <p><strong>${handle}</strong> ${text}</p>
+        </div>
+        <footer class="athlete-magazine-ig-footer">
+          ${section.posted ? `<time${section.postedISO ? ` datetime="${section.postedISO}"` : ''}>${section.posted}</time>` : ''}
+          ${section.metric ? `<span class="athlete-magazine-ig-metric">${section.metric}</span>` : ''}
+          <a href="${url}" class="athlete-magazine-ig-view" target="_blank" rel="noopener noreferrer">View on Instagram</a>
+        </footer>
+      </article>
+    </aside>`;
+  }
+
+  function hydrateInstagramEmbeds(root) {
+    if (!root?.querySelector('.instagram-media')) return;
+
+    const load = () => window.instgrm?.Embeds?.process();
+
+    if (window.instgrm?.Embeds) {
+      load();
+      return;
+    }
+
+    if (document.getElementById('instagram-wjs')) {
+      const check = setInterval(() => {
+        if (window.instgrm?.Embeds) {
+          clearInterval(check);
+          load();
+        }
+      }, 100);
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.id = 'instagram-wjs';
+    script.async = true;
+    script.src = 'https://www.instagram.com/embed.js';
+    script.onload = load;
+    document.body.appendChild(script);
+  }
+
+  function renderClipMedia(section) {
+    const thumbAlt = section.thumbnailAlt || `${SOCIAL_LABELS[section.platform] || section.platform} post preview`;
+
+    if (section.media === 'photo' && section.thumbnail) {
+      return `<div class="athlete-magazine-clip-media athlete-magazine-clip-media--photo">
+        <img src="${section.thumbnail}" alt="${thumbAlt}" loading="lazy" decoding="async" />
+      </div>`;
+    }
+
+    if (section.video) {
+      const poster = section.thumbnail ? ` poster="${section.thumbnail}"` : '';
+      return `<div class="athlete-magazine-clip-media athlete-magazine-clip-media--video">
+        <video src="${section.video}"${poster} controls playsinline preload="metadata" aria-label="${thumbAlt}"></video>
+      </div>`;
+    }
+
+    if (section.thumbnail) {
+      const cta = section.cta || CLIP_CTAS[section.platform] || 'Watch post';
+      return `<a href="${section.url}" class="athlete-magazine-clip-media" target="_blank" rel="noopener noreferrer" aria-label="${cta}: ${section.handle}">
+        <img src="${section.thumbnail}" alt="${thumbAlt}" loading="lazy" decoding="async" />
+        <span class="athlete-magazine-clip-play" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </span>
+        ${section.duration ? `<span class="athlete-magazine-clip-duration">${section.duration}</span>` : ''}
+      </a>`;
+    }
+
+    const cta = section.cta || CLIP_CTAS[section.platform] || 'Watch post';
+    return `<a href="${section.url}" class="athlete-magazine-clip-media athlete-magazine-clip-media--placeholder" target="_blank" rel="noopener noreferrer" aria-label="${cta}: ${section.handle}">
+      <span class="athlete-magazine-clip-play" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </span>
+    </a>`;
+  }
+
+  function renderMagazineClip(section) {
+    if (section.embed === 'tweet') {
+      return renderTweetEmbed(section);
+    }
+
+    if (section.embed === 'instagram') {
+      return renderInstagramEmbed(section);
+    }
+
+    const platform = SOCIAL_LABELS[section.platform] || section.platform;
+    const cta = section.cta || CLIP_CTAS[section.platform] || 'Watch post';
+
+    return `<aside class="athlete-magazine-clip athlete-magazine-clip--${section.platform}">
+      ${renderClipMedia(section)}
+      <div class="athlete-magazine-clip-body">
+        <div class="athlete-magazine-clip-head">
+          <span class="athlete-magazine-clip-platform">${platform}</span>
+          ${section.metric ? `<span class="athlete-magazine-clip-metric">${section.metric}</span>` : ''}
+        </div>
+        <p class="athlete-magazine-clip-handle">${section.handle}</p>
+        <p class="athlete-magazine-clip-preview">${section.preview}</p>
+        <a href="${section.url}" class="athlete-magazine-clip-link" target="_blank" rel="noopener noreferrer">${cta} →</a>
+      </div>
+    </aside>`;
+  }
+
+  const SOCIAL_LABELS = { x: 'X', instagram: 'Instagram', tiktok: 'TikTok' };
+
+  const SOCIAL_ICONS = {
+    x: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
+    instagram: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>',
+    tiktok: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/></svg>',
+  };
+
+  function renderSocialLinks(links) {
+    if (!links?.length) return '';
+    return links.map((link) => {
+      const label = SOCIAL_LABELS[link.platform] || link.platform;
+      const icon = SOCIAL_ICONS[link.platform] || '';
+      return `<a href="${link.url}" class="athlete-magazine-social-link athlete-magazine-social-link--${link.platform}" target="_blank" rel="noopener noreferrer" aria-label="${label}: ${link.label}">
+        ${icon ? `<span class="athlete-magazine-social-icon">${icon}</span>` : ''}
+        <span class="athlete-magazine-social-handle">${link.label}</span>
+      </a>`;
+    }).join('');
+  }
+
+  function renderMagazineQuote(section) {
+    const { name, role } = parseQuoteAttribution(section.cite);
+    return `<blockquote class="athlete-magazine-story-quote">
+      <div class="athlete-magazine-story-quote-card">
+        <span class="athlete-magazine-story-quote-mark athlete-magazine-story-quote-mark--open" aria-hidden="true">“</span>
+        <p class="athlete-magazine-story-quote-text">${section.text}</p>
+        <footer class="athlete-magazine-story-quote-byline">
+          <div class="athlete-magazine-story-quote-speaker">
+            <cite class="athlete-magazine-story-quote-name">${name}</cite>
+            ${role ? `<span class="athlete-magazine-story-quote-role">${role}</span>` : ''}
+          </div>
+        </footer>
+      </div>
+    </blockquote>`;
+  }
+
+  function renderMagazineStorySection(section) {
+    switch (section.type) {
+      case 'chapter':
+        return `<section class="athlete-magazine-chapter">
+          <h2 class="athlete-magazine-chapter-title">${section.title}</h2>
+          ${(section.paragraphs || []).map((p) => `<p>${p}</p>`).join('')}
+        </section>`;
+      case 'clip':
+        if (section.embed === 'tweet') return renderTweetEmbed(section);
+        if (section.embed === 'instagram') return renderInstagramEmbed(section);
+        return renderMagazineClip(section);
+      case 'scout':
+        return `<section class="athlete-magazine-scout">
+          <h2 class="athlete-magazine-chapter-title">Scout's notebook</h2>
+          <div class="athlete-magazine-scout-grid">
+            <div class="athlete-magazine-scout-col">
+              <h3>Strengths</h3>
+              <ul>${(section.strengths || []).map((s) => `<li>${s}</li>`).join('')}</ul>
+            </div>
+            <div class="athlete-magazine-scout-col">
+              <h3>Areas to monitor</h3>
+              <ul>${(section.weaknesses || []).map((s) => `<li>${s}</li>`).join('')}</ul>
+            </div>
+          </div>
+        </section>`;
+      default:
+        return '';
+    }
+  }
+
+  function renderMagazineStory(sections) {
+    if (!sections?.length) return '';
+
+    const chunks = [];
+    let quoteGroup = [];
+
+    function flushQuotes() {
+      if (!quoteGroup.length) return;
+      chunks.push(`<div class="athlete-magazine-story-quotes">${quoteGroup.join('')}</div>`);
+      quoteGroup = [];
+    }
+
+    sections.forEach((section) => {
+      if (section.type === 'quote') {
+        quoteGroup.push(renderMagazineQuote(section));
+        return;
+      }
+      flushQuotes();
+      chunks.push(renderMagazineStorySection(section));
+    });
+    flushQuotes();
+
+    return chunks.join('');
+  }
+
+  function renderStatValue(value) {
+    const starMatch = String(value).match(/^(\d)-Star$/i);
+    if (!starMatch) return { html: value, stars: false };
+
+    const filled = Math.min(5, Math.max(0, parseInt(starMatch[1], 10)));
+    const star = (on) => `<svg class="athlete-magazine-star${on ? ' is-filled' : ''}" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+    const html = `<span class="athlete-magazine-stars" aria-label="${filled} out of 5 stars">${Array.from({ length: 5 }, (_, i) => star(i < filled)).join('')}</span>`;
+    return { html, stars: true };
+  }
+
   function render(key) {
     const a = ATHLETES[key];
     if (!a) {
@@ -2384,12 +2847,13 @@ const ADVISORS = {
     }
 
     const bio = a.bio || `${a.name} is represented by Second Wind Pro for athlete-first NIL partnerships.`;
-    const { lead, body } = splitBio(bio);
-    const sport = a.basketball ? 'Basketball' : 'Football';
+    const { lead } = splitBio(bio);
+    const magazineSections = window.MAGAZINE_STORIES?.[key] || [];
+    const socialLinks = window.ATHLETE_SOCIAL?.[key] || [];
 
     document.title = `${a.name} — Second Wind Pro`;
     const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) metaDesc.setAttribute('content', `${a.name} — ${a.athleticLevel || a.position}. ${lead}`);
+    if (metaDesc) metaDesc.setAttribute('content', `${a.name} — ${a.position}. ${lead}`);
 
     const photo = document.getElementById('athlete-magazine-photo');
     if (photo) {
@@ -2397,14 +2861,11 @@ const ADVISORS = {
       photo.className = 'athlete-magazine-photo' + (a.basketball ? ' basketball' : '');
     }
 
-    const sportEl = document.getElementById('athlete-magazine-sport');
-    if (sportEl) sportEl.textContent = sport;
-
-    const rankEl = document.getElementById('athlete-magazine-rank');
-    if (rankEl) rankEl.textContent = a.athleticLevel || '';
-
     const nameEl = document.getElementById('athlete-magazine-name');
     if (nameEl) nameEl.textContent = a.name;
+
+    const breadcrumbName = document.getElementById('athlete-magazine-breadcrumb-name');
+    if (breadcrumbName) breadcrumbName.textContent = a.name;
 
     const posEl = document.getElementById('athlete-magazine-position');
     if (posEl) posEl.textContent = a.position || '';
@@ -2412,49 +2873,60 @@ const ADVISORS = {
     const leadEl = document.getElementById('athlete-magazine-lead');
     if (leadEl) leadEl.textContent = lead;
 
-    const pullEl = document.getElementById('athlete-magazine-pull');
-    if (pullEl) {
-      pullEl.textContent = a.presentability ? `“${a.presentability}”` : '';
+    const socialEl = document.getElementById('athlete-magazine-social');
+    if (socialEl) {
+      const html = renderSocialLinks(socialLinks);
+      if (html) {
+        socialEl.innerHTML = html;
+        socialEl.hidden = false;
+      } else {
+        socialEl.innerHTML = '';
+        socialEl.hidden = true;
+      }
     }
 
     const copyEl = document.getElementById('athlete-magazine-copy');
     if (copyEl) {
-      const paragraphs = [];
-      if (body) paragraphs.push(`<p>${body}</p>`);
-      if (a.hometown || a.university) {
-        paragraphs.push(
-          `<p>Based in ${a.hometown || 'the United States'}, ${a.name.split(' ')[0]} is closely tied to ${a.university || a.to?.name || 'a top collegiate program'}—a footprint brands use for regional activations and campus-adjacent storytelling.</p>`
-        );
-      }
-      copyEl.innerHTML = paragraphs.join('');
+      copyEl.innerHTML = renderMagazineStory(magazineSections);
+      hydrateTwitterEmbeds(copyEl);
+      hydrateInstagramEmbeds(copyEl);
     }
 
-    const accEl = document.getElementById('athlete-magazine-accomplishments');
-    if (accEl) {
-      const items = a.accomplishments?.length
-        ? a.accomplishments
-        : ['Verified athletic profile available on request'];
-      accEl.innerHTML = items.map((item) => `<li>${item}</li>`).join('');
+    const highlightsEl = document.getElementById('athlete-magazine-highlights');
+    if (highlightsEl) {
+      const html = renderHighlights(a.highlights);
+      if (html) {
+        highlightsEl.innerHTML = html;
+        highlightsEl.hidden = false;
+      } else {
+        highlightsEl.innerHTML = '';
+        highlightsEl.hidden = true;
+      }
     }
 
     const statsEl = document.getElementById('athlete-magazine-stats');
     if (statsEl && a.stats) {
-      statsEl.innerHTML = a.stats.map(([v, k]) => (
-        `<div class="athlete-magazine-stat"><span class="v">${v}</span><span class="k">${k}</span></div>`
-      )).join('');
+      statsEl.innerHTML = a.stats.map(([v, k]) => {
+        const { html, stars } = renderStatValue(v);
+        const valueClass = stars ? 'v v--stars' : 'v';
+        return `<div class="athlete-magazine-stat"><span class="${valueClass}">${html}</span><span class="k">${k}</span></div>`;
+      }).join('');
     }
 
     const metaEl = document.getElementById('athlete-magazine-meta');
     if (metaEl) {
+      const pathBlock = a.from && a.to
+        ? `<dt>${pathMetaLabel(a)}</dt><dd class="athlete-magazine-meta-path">${renderMagazinePath(a.from, a.to)}</dd>`
+        : renderMeta('University', a.university);
       metaEl.innerHTML = [
+        pathBlock,
         renderMeta('Hometown', a.hometown),
-        renderMeta('University', a.university || a.to?.name),
         renderMeta('Presentability', a.presentability),
       ].filter(Boolean).join('');
     }
 
     const agentEl = document.getElementById('athlete-magazine-agent');
-    if (agentEl) agentEl.textContent = a.agent || 'Second Wind Pro';
+    if (agentEl) agentEl.innerHTML = renderMagazineAgent(a.agent);
 
     root.hidden = false;
     if (empty) empty.hidden = true;
@@ -2467,6 +2939,304 @@ const ADVISORS = {
 /* ------------------------------------------------------------
    10. PARTNERSHIP CONTACT FORM
    ------------------------------------------------------------ */
+
+(function GetStartedForm() {
+  const form = document.getElementById('get-started-form');
+  if (!form) return;
+
+  const interestError = document.getElementById('interest-error');
+  const slotError = document.getElementById('slot-error');
+  const success = document.getElementById('get-started-success');
+  const successDetail = document.getElementById('get-started-success-detail');
+  const continueBtn = document.getElementById('gs-continue');
+  const continueBtn2 = document.getElementById('gs-continue-2');
+  const backBtn2 = document.getElementById('gs-back-2');
+  const backBtn = document.getElementById('gs-back');
+  const confirmBtn = document.getElementById('gs-confirm');
+  const stepPanels = [...form.querySelectorAll('.get-started-step-panel')];
+  const progressSteps = [...form.querySelectorAll('.get-started-progress-step')];
+  const daysEl = document.getElementById('gs-booking-days');
+  const timesEl = document.getElementById('gs-time-slots');
+  const rangeEl = document.getElementById('gs-booking-range');
+  const weekPrev = document.getElementById('gs-week-prev');
+  const weekNext = document.getElementById('gs-week-next');
+  const dateInput = document.getElementById('gs-booking-date');
+  const timeInput = document.getElementById('gs-booking-time');
+
+  const SLOT_TIMES = ['9:00 AM', '9:30 AM', '10:00 AM', '11:00 AM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM'];
+  const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+
+  let weekOffset = 0;
+  let selectedDate = null;
+  let selectedTime = null;
+
+  function panelForStep(step) {
+    return stepPanels.find((panel) => Number(panel.dataset.step) === step);
+  }
+
+  function selectedInterest() {
+    return form.querySelector('input[name="interest"]:checked');
+  }
+
+  function startOfWeek(date) {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = day === 0 ? -6 : 1 - day;
+    d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() + diff);
+    return d;
+  }
+
+  function addDays(date, days) {
+    const d = new Date(date);
+    d.setDate(d.getDate() + days);
+    return d;
+  }
+
+  function isWeekend(date) {
+    const day = date.getDay();
+    return day === 0 || day === 6;
+  }
+
+  function formatDateKey(date) {
+    return date.toISOString().slice(0, 10);
+  }
+
+  function formatDisplayDate(date) {
+    return date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+  }
+
+  function formatRangeLabel(start, end) {
+    const sameMonth = start.getMonth() === end.getMonth();
+    const startFmt = start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const endFmt = end.toLocaleDateString('en-US', sameMonth ? { day: 'numeric' } : { month: 'short', day: 'numeric' });
+    return `${startFmt} – ${endFmt}`;
+  }
+
+  function businessDaysForWeek(offset) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const weekStart = addDays(startOfWeek(today), offset * 7);
+    const days = [];
+
+    for (let i = 0; i < 5; i += 1) {
+      const date = addDays(weekStart, i);
+      days.push({
+        date,
+        disabled: date < today || isWeekend(date),
+      });
+    }
+    return days;
+  }
+
+  function slotsForDate(date) {
+    const seed = date.getDate() + date.getMonth() * 3;
+    return SLOT_TIMES.filter((_, i) => (seed + i) % 5 !== 0);
+  }
+
+  function setStep(step) {
+    stepPanels.forEach((panel) => {
+      panel.hidden = Number(panel.dataset.step) !== step;
+    });
+    progressSteps.forEach((item) => {
+      const n = Number(item.dataset.progressStep);
+      item.classList.toggle('is-active', n === step);
+      item.classList.toggle('is-complete', n < step);
+      item.setAttribute('aria-disabled', n > step ? 'true' : 'false');
+    });
+    form.dataset.step = String(step);
+    if (step === 3) {
+      renderWeek();
+      window.SW_ICONS?.hydrate(form);
+    }
+  }
+
+  function updateConfirmState() {
+    const ready = Boolean(selectedDate && selectedTime);
+    if (confirmBtn) confirmBtn.disabled = !ready;
+    if (dateInput) dateInput.value = selectedDate ? formatDateKey(selectedDate) : '';
+    if (timeInput) timeInput.value = selectedTime || '';
+    if (slotError) slotError.hidden = true;
+  }
+
+  function renderTimes() {
+    if (!timesEl) return;
+    timesEl.innerHTML = '';
+    timesEl.classList.toggle('is-empty', !selectedDate);
+
+    if (!selectedDate) {
+      updateConfirmState();
+      return;
+    }
+
+    const slots = slotsForDate(selectedDate);
+    slots.forEach((time) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'gs-time-slot';
+      btn.textContent = time;
+      btn.setAttribute('role', 'option');
+      if (selectedTime === time) btn.classList.add('is-selected');
+      btn.addEventListener('click', () => {
+        selectedTime = time;
+        timesEl.querySelectorAll('.gs-time-slot').forEach((el) => el.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        updateConfirmState();
+      });
+      timesEl.appendChild(btn);
+    });
+    updateConfirmState();
+  }
+
+  function renderWeek() {
+    if (!daysEl || !rangeEl) return;
+
+    const days = businessDaysForWeek(weekOffset);
+    rangeEl.textContent = formatRangeLabel(days[0].date, days[4].date);
+    daysEl.innerHTML = '';
+
+    if (weekPrev) weekPrev.disabled = weekOffset <= 0;
+
+    days.forEach((item, index) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'gs-day-btn';
+      btn.disabled = item.disabled;
+      btn.setAttribute('role', 'option');
+      btn.innerHTML = `<span class="gs-day-weekday">${WEEKDAYS[index]}</span><span class="gs-day-date">${item.date.getDate()}</span>`;
+
+      const key = formatDateKey(item.date);
+      if (selectedDate && formatDateKey(selectedDate) === key) {
+        btn.classList.add('is-selected');
+      }
+
+      btn.addEventListener('click', () => {
+        selectedDate = item.date;
+        selectedTime = null;
+        daysEl.querySelectorAll('.gs-day-btn').forEach((el) => el.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        renderTimes();
+      });
+
+      daysEl.appendChild(btn);
+    });
+
+    if (!selectedDate) {
+      const firstOpen = days.find((d) => !d.disabled);
+      if (firstOpen) {
+        selectedDate = firstOpen.date;
+        renderWeek();
+        return;
+      }
+    }
+
+    renderTimes();
+  }
+
+  function validatePanel(step) {
+    const panel = panelForStep(step);
+    const fields = panel?.querySelectorAll('input, textarea, select') || [];
+    let valid = true;
+    fields.forEach((field) => {
+      if (!field.checkValidity()) valid = false;
+    });
+    if (!valid) {
+      const firstInvalid = [...fields].find((field) => !field.checkValidity());
+      firstInvalid?.reportValidity();
+      return false;
+    }
+    return true;
+  }
+
+  function validateStepOne() {
+    return validatePanel(1);
+  }
+
+  function validateStepTwo() {
+    if (!validatePanel(2)) return false;
+    if (!selectedInterest()) {
+      if (interestError) interestError.hidden = false;
+      form.querySelector('input[name="interest"]')?.focus();
+      return false;
+    }
+    if (interestError) interestError.hidden = true;
+    return true;
+  }
+
+  form.querySelectorAll('input[name="interest"]').forEach((input) => {
+    input.addEventListener('change', () => {
+      if (selectedInterest() && interestError) interestError.hidden = true;
+    });
+  });
+
+  continueBtn?.addEventListener('click', () => {
+    if (!validateStepOne()) return;
+    setStep(2);
+    form.querySelector('input[name="interest"]')?.focus();
+  });
+
+  backBtn2?.addEventListener('click', () => {
+    setStep(1);
+    continueBtn?.focus();
+  });
+
+  continueBtn2?.addEventListener('click', () => {
+    if (!validateStepTwo()) return;
+    setStep(3);
+    panelForStep(3)?.querySelector('.gs-day-btn:not(:disabled)')?.focus();
+  });
+
+  backBtn?.addEventListener('click', () => {
+    setStep(2);
+    continueBtn2?.focus();
+  });
+
+  weekPrev?.addEventListener('click', () => {
+    if (weekOffset <= 0) return;
+    weekOffset -= 1;
+    selectedDate = null;
+    selectedTime = null;
+    renderWeek();
+  });
+
+  weekNext?.addEventListener('click', () => {
+    if (weekOffset >= 8) return;
+    weekOffset += 1;
+    selectedDate = null;
+    selectedTime = null;
+    renderWeek();
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    if (!validateStepOne()) {
+      setStep(1);
+      return;
+    }
+
+    if (!validateStepTwo()) {
+      setStep(2);
+      return;
+    }
+
+    if (!selectedDate || !selectedTime) {
+      if (slotError) slotError.hidden = false;
+      setStep(3);
+      return;
+    }
+
+    form.classList.add('is-submitted');
+    if (success) success.hidden = false;
+    if (successDetail) {
+      successDetail.textContent = `Your intro call is set for ${formatDisplayDate(selectedDate)} at ${selectedTime} Eastern. We'll send a calendar invite to your email shortly.`;
+    }
+    success?.focus();
+  });
+
+  form.dataset.step = '1';
+})();
+
 
 (function PartnershipForm() {
   const form = document.getElementById('partnership-form');

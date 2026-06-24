@@ -7,6 +7,16 @@ const root = path.join(__dirname, '..');
 const indexPath = path.join(root, 'index.html');
 const leadershipLanding = fs.readFileSync(path.join(__dirname, 'snippets/leadership-landing.html'), 'utf8').trim();
 const transferLanding = fs.readFileSync(path.join(__dirname, 'snippets/transfer-landing.html'), 'utf8').trim();
+const joinLanding = fs.readFileSync(path.join(__dirname, 'snippets/join-landing.html'), 'utf8').trim();
+const getStartedMain = fs.readFileSync(path.join(__dirname, 'snippets/get-started-main.html'), 'utf8').trim();
+const aboutMain = fs.readFileSync(path.join(__dirname, 'snippets/about-main.html'), 'utf8').trim();
+
+const NAV_CTA_ARROW = '<svg class="nav-cta-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 12L12 2M5 2h7v7"/></svg>';
+
+function navCta(current) {
+  const isCurrent = current === 'get-started';
+  return `<a class="nav-cta" href="get-started.html"${isCurrent ? ' aria-current="page"' : ''}><span class="nav-cta-label">Get Started</span>${NAV_CTA_ARROW}</a>`;
+}
 const index = fs.readFileSync(indexPath, 'utf8');
 
 function sliceBetween(start, end) {
@@ -74,7 +84,7 @@ function nav(current) {
       <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="nav-drawer" aria-label="Open menu">
         <span class="nav-toggle-bars" aria-hidden="true"></span>
       </button>
-      ${link('join.html', 'Get Started', 'join').replace('<a ', '<a class="nav-cta" ')}
+      ${navCta(current)}
     </div>
   </nav>
 
@@ -148,7 +158,15 @@ function leadershipLandingFrom(html) {
   return block;
 }
 
-function page({ file, title, description, current, main, withModal = false, withTemplates = false }) {
+function pageTail({ withAthleteMagazineData = false } = {}) {
+  if (!withAthleteMagazineData) return tail;
+  return tail.replace(
+    '<script src="js/main.js" defer></script>',
+    '<script src="js/athlete-magazine-data.js" defer></script>\n<script src="js/main.js" defer></script>'
+  );
+}
+
+function page({ file, title, description, current, main, withModal = false, withTemplates = false, withAthleteMagazineData = false }) {
   const pageHead = head
     .replace(/<title>.*?<\/title>/, `<title>${title}</title>`)
     .replace(
@@ -176,7 +194,7 @@ ${main}
 ${footerHtml()}
 
 ${withModal ? `\n${modal}\n` : ''}
-${tail}`;
+${pageTail({ withAthleteMagazineData })}`;
 
   fs.writeFileSync(path.join(root, file), body);
 }
@@ -196,7 +214,7 @@ const athletesPage = mainFrom('meet-the-athletes.html');
 const transfer = mainFrom('transfer.html');
 const brand = mainFrom('brand.html');
 const leadership = mainFrom('leadership.html');
-const join = sliceBetween('<!-- JOIN -->', '</main>');
+const join = getStartedMain;
 const agency = sliceBetween('<!-- AGENCY STATEMENT -->', '<!-- BENTO SERVICES -->');
 
 const careers = `  <section class="page-intro" aria-labelledby="careers-heading">
@@ -225,6 +243,7 @@ page({
   description: 'Athlete profile — Second Wind Pro represented talent for NIL partnerships.',
   current: 'athletes',
   main: athleteProfileMain,
+  withAthleteMagazineData: true,
 });
 
 page({
@@ -264,9 +283,9 @@ page({
 page({
   file: 'about.html',
   title: 'About Us — Second Wind Pro',
-  description: 'About Second Wind Pro — athlete-first NIL representation built for the modern era.',
+  description: 'About Second Wind Pro — founder Luke Mazur, our mission, and how we serve athletes and universities in the pay-to-play era.',
   current: 'about',
-  main: agency,
+  main: aboutMain,
 });
 
 page({
@@ -286,10 +305,10 @@ page({
 });
 
 page({
-  file: 'join.html',
+  file: 'get-started.html',
   title: 'Get Started — Second Wind Pro',
   description: 'Get started with Second Wind Pro — representation for elite athletes and partners.',
-  current: 'join',
+  current: 'get-started',
   main: join,
 });
 
@@ -313,7 +332,7 @@ ${mainFrom('brand.html')}
 
 ${leadershipLandingFrom(currentIndex)}
 
-${mainFrom('join.html')}`;
+${joinLanding}`;
 
   const cleanHead = head
     .replace(/<title>.*?<\/title>/, '<title>Second Wind Pro — The Modern Athlete\'s NIL Agency</title>');
@@ -346,5 +365,5 @@ ${tail}`;
 // Trim index.html — landing + copies of all subpage sections
 buildIndexFromPages();
 
-console.log('Built: athlete.html, meet-the-athletes.html, transfer.html, brand.html, leadership.html, about.html, careers.html, contact-us.html, join.html');
+console.log('Built: athlete.html, meet-the-athletes.html, transfer.html, brand.html, leadership.html, about.html, careers.html, contact-us.html, get-started.html');
 console.log('Updated: index.html (landing only)');

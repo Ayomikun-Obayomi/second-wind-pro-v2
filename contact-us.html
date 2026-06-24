@@ -59,7 +59,7 @@
       <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="nav-drawer" aria-label="Open menu">
         <span class="nav-toggle-bars" aria-hidden="true"></span>
       </button>
-      <a class="nav-cta" href="join.html">Get Started</a>
+      <a class="nav-cta" href="get-started.html"><span class="nav-cta-label">Get Started</span><svg class="nav-cta-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 12L12 2M5 2h7v7"/></svg></a>
     </div>
   </nav>
 
@@ -114,14 +114,17 @@
 
             <div class="form-field">
               <label class="form-label" for="budget">Estimated Budget Range</label>
-              <select class="form-input form-select" id="budget" name="budget" required>
-                <option value="" disabled selected>Select a range</option>
-                <option value="under-50k">Under $50,000</option>
-                <option value="50k-150k">$50,000 – $150,000</option>
-                <option value="150k-500k">$150,000 – $500,000</option>
-                <option value="500k-1m">$500,000 – $1M</option>
-                <option value="1m-plus">$1M+</option>
-              </select>
+              <div class="form-select-wrap">
+                <select class="form-input form-select" id="budget" name="budget" required>
+                  <option value="" disabled selected>Select a range</option>
+                  <option value="under-50k">Under $50,000</option>
+                  <option value="50k-150k">$50,000 – $150,000</option>
+                  <option value="150k-500k">$150,000 – $500,000</option>
+                  <option value="500k-1m">$500,000 – $1M</option>
+                  <option value="1m-plus">$1M+</option>
+                </select>
+                <span class="form-select-chevron" data-sw-icon="chevron-down" data-sw-icon-size="20" aria-hidden="true"></span>
+              </div>
             </div>
 
             <div class="form-field form-field--full">

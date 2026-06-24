@@ -2,23 +2,25 @@
 
   <article class="athlete-magazine" id="athlete-profile" hidden>
     <header class="athlete-magazine-masthead">
-      <div class="athlete-magazine-masthead-inner">
-        <a href="meet-the-athletes.html" class="athlete-magazine-back">← Meet the Athletes</a>
-        <p class="athlete-magazine-issue">Second Wind Pro · Athlete Profile</p>
-      </div>
+      <nav class="athlete-magazine-breadcrumb" aria-label="Breadcrumb">
+        <ol>
+          <li><span class="athlete-magazine-breadcrumb-label">Roster</span></li>
+          <li><a href="meet-the-athletes.html">Meet the Athletes</a></li>
+          <li aria-current="page"><span id="athlete-magazine-breadcrumb-name">Athlete</span></li>
+        </ol>
+      </nav>
     </header>
 
     <div class="athlete-magazine-hero">
       <div class="athlete-magazine-hero-grid">
         <div class="athlete-magazine-visual">
           <div class="athlete-magazine-photo" id="athlete-magazine-photo" aria-hidden="true"></div>
-          <span class="athlete-magazine-sport" id="athlete-magazine-sport"></span>
         </div>
         <div class="athlete-magazine-intro">
-          <p class="athlete-magazine-rank" id="athlete-magazine-rank"></p>
           <h1 class="athlete-magazine-name" id="athlete-magazine-name"></h1>
           <p class="athlete-magazine-position" id="athlete-magazine-position"></p>
           <p class="athlete-magazine-lead" id="athlete-magazine-lead"></p>
+          <nav class="athlete-magazine-social" id="athlete-magazine-social" aria-label="Social media" hidden></nav>
         </div>
       </div>
     </div>
@@ -26,21 +28,17 @@
     <div class="athlete-magazine-body">
       <div class="athlete-magazine-columns">
         <div class="athlete-magazine-story">
-          <blockquote class="athlete-magazine-pull" id="athlete-magazine-pull"></blockquote>
           <div class="athlete-magazine-copy" id="athlete-magazine-copy"></div>
-          <section class="athlete-magazine-record" aria-labelledby="athlete-magazine-record-heading">
-            <h2 id="athlete-magazine-record-heading">On the record</h2>
-            <ul class="athlete-magazine-accomplishments" id="athlete-magazine-accomplishments"></ul>
-          </section>
+          <div class="athlete-magazine-highlights" id="athlete-magazine-highlights" hidden></div>
         </div>
         <aside class="athlete-magazine-sidebar" aria-label="Athlete details">
           <div class="athlete-magazine-statboard" id="athlete-magazine-stats"></div>
           <dl class="athlete-magazine-meta" id="athlete-magazine-meta"></dl>
           <div class="athlete-magazine-agent">
             <span class="athlete-magazine-agent-label">Represented by</span>
-            <span class="athlete-magazine-agent-name" id="athlete-magazine-agent"></span>
+            <div id="athlete-magazine-agent"></div>
           </div>
-          <a href="join.html" class="btn-outline btn-primary athlete-magazine-cta">
+          <a href="get-started.html" class="btn-outline btn-primary athlete-magazine-cta">
             <span class="btn-label">Partner with this athlete</span>
             <svg class="arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 12L12 2M5 2h7v7"/></svg>
           </a>
