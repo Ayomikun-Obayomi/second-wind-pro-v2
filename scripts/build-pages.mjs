@@ -1,9 +1,38 @@
-import fs from 'fs';
+function mainFrom(file) {
+  const html = fs.readFileSync(path.join(root, file), 'utf8');
+  const open = html.indexOf('<main id="main">');
+  const contentStart = open + '<main id="main">'.length;
+  const close = html.indexOf('</main>', contentStart);
+  return html.slice(contentStart, close).trim();
+}
+
+function transferLandingFrom(html) {
+  const s = html.indexOf('<!-- LATEST MOVEMENT -->');
+  if (s === -1) return '';
+  const brand = html.indexOf('<!-- BRAND PARTNERSHIPS -->', s);
+  if (brand !== -1) return html.slice(s, brand).trim();
+  const close = html.indexOf('</main>', s);
+  if (close === -1) throw new Error('transfer.html: missing </main> after LATEST MOVEMENT');
+  return html.slice(s, close).trim();
+}
+
+function leadershipLandingFrom(html) {
+  const s = html.indexOf('<!-- LEADERSHIP & AGENTS -->');
+  if (s === -1) return leadershipLanding;
+  const e = html.indexOf('<!-- JOIN -->', s);
+  if (e === -1) throw new Error('index.html missing <!-- JOIN --> after leadership');
+  const block = html.slice(s, e).trim();
+  if (block.includes('leadership-page')) return leadershipLanding;
+  return block;
+}import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { execSync } from 'child_process';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, '..');
+execSync('node scripts/generate-athletes-data.mjs', { cwd: root, stdio: 'inherit' });
+execSync('node scripts/generate-athlete-magazine-data.mjs', { cwd: root, stdio: 'inherit' });
 const indexPath = path.join(root, 'index.html');
 const leadershipLanding = fs.readFileSync(path.join(__dirname, 'snippets/leadership-landing.html'), 'utf8').trim();
 const transferLanding = fs.readFileSync(path.join(__dirname, 'snippets/transfer-landing.html'), 'utf8').trim();
@@ -130,40 +159,44 @@ function footerHtml() {
     .replace('href="#careers"', 'href="careers.html"');
 }
 
-function mainFrom(file) {
-  const html = fs.readFileSync(path.join(root, file), 'utf8');
-  const open = html.indexOf('<main id="main">');
-  const contentStart = open + '<main id="main">'.length;
-  const close = html.indexOf('</main>', contentStart);
-  return html.slice(contentStart, close).trim();
-}
-
-function transferLandingFrom(html) {
-  const s = html.indexOf('<!-- LATEST MOVEMENT -->');
-  if (s === -1) return '';
-  const brand = html.indexOf('<!-- BRAND PARTNERSHIPS -->', s);
-  if (brand !== -1) return html.slice(s, brand).trim();
-  const close = html.indexOf('</main>', s);
-  if (close === -1) throw new Error('transfer.html: missing </main> after LATEST MOVEMENT');
-  return html.slice(s, close).trim();
-}
-
-function leadershipLandingFrom(html) {
-  const s = html.indexOf('<!-- LEADERSHIP & AGENTS -->');
-  if (s === -1) return leadershipLanding;
-  const e = html.indexOf('<!-- JOIN -->', s);
-  if (e === -1) throw new Error('index.html missing <!-- JOIN --> after leadership');
-  const block = html.slice(s, e).trim();
-  if (block.includes('leadership-page')) return leadershipLanding;
-  return block;
+function transferForLanding(html) {
+  return html
+    .replace(/\s*<div class="transfer-live-bar"[\s\S]*?<\/div>\s*\n\s*<\/div>\s*\n/, '\n    </div>\n\n')
+    .replace(/\s*<div class="wire-row" data-transfer="devon-park"[\s\S]*?<\/div>\s*\n/, '\n')
+    .replace('wire-row wire-row-live', 'wire-row')
+    .replace(
+      '<h2 id="transfer-heading">Strategic placements <em>&amp; commitments.</em></h2>\n      </div>',
+      '<h2 id="transfer-heading">Strategic placements <em>&amp; commitments.</em></h2>\n        <p class="desc">Confirmed signings and commitments from athletes we represent.</p>\n      </div>'
+    );
 }
 
 function pageTail({ withAthleteMagazineData = false } = {}) {
-  if (!withAthleteMagazineData) return tail;
-  return tail.replace(
-    '<script src="js/main.js" defer></script>',
-    '<script src="js/athlete-magazine-data.js" defer></script>\n<script src="js/main.js" defer></script>'
-  );
+  let scripts = tail;
+  if (!scripts.includes('portraits.js')) {
+    scripts = scripts.replace(
+      '<script src="js/athletes-data.js" defer></script>',
+      '<script src="js/portraits.js" defer></script>\n<script src="js/athletes-data.js" defer></script>'
+    );
+    if (!scripts.includes('portraits.js')) {
+      scripts = scripts.replace(
+        '<script src="js/main.js" defer></script>',
+        '<script src="js/portraits.js" defer></script>\n<script src="js/main.js" defer></script>'
+      );
+    }
+  }
+  if (!scripts.includes('athletes-data.js')) {
+    scripts = scripts.replace(
+      '<script src="js/main.js" defer></script>',
+      '<script src="js/athletes-data.js" defer></script>\n<script src="js/main.js" defer></script>'
+    );
+  }
+  if (withAthleteMagazineData) {
+    scripts = scripts.replace(
+      '<script src="js/main.js" defer></script>',
+      '<script src="js/athlete-magazine-data.js" defer></script>\n<script src="js/main.js" defer></script>'
+    );
+  }
+  return scripts;
 }
 
 function page({ file, title, description, current, main, withModal = false, withTemplates = false, withAthleteMagazineData = false }) {

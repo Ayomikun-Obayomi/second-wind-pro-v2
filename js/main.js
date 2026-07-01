@@ -12,114 +12,53 @@
    ============================================================ */
 
 /* ------------------------------------------------------------
-   1. ATHLETE DATA
+   1. ATHLETE DATA — loaded from js/athletes-data.js
    ------------------------------------------------------------ */
 
-const ATHLETES = {
-  'marcus-lane': {
-    name: 'Marcus Lane', position: 'QB · Class of 2027', photo: 'ML',
-    basketball: false, agent: 'Luke Bramwell',
-    athleticLevel: '5-Star QB · National #1',
-    hometown: 'Phoenix, Arizona',
-    university: 'University of Texas',
-    presentability: 'Executive-ready on camera; trusted in live interview settings',
-    bio: 'Marcus is a dual-threat quarterback known for command at the line and poise in high-pressure drives. He is active in local youth camps and is consistently one of the strongest interview performers in his class.',
-    accomplishments: ['Elite 11 finalist', 'State champion (2025)', 'Regional NIL camp ambassador'],
-    stats: [
-      ['3,847', 'Passing yards'], ['32', 'Touchdowns'], ['68.4%', 'Completion rate'],
-      ['5-Star', 'Recruit rating'], ['#1', 'National rank'], ['9.2', 'QBR']
-    ],
-    status: 'committed',
-    from: { name: 'Phoenix Heritage HS', logo: 'PH', color: '#7c1d1d' },
-    to:   { name: 'University of Texas', logo: 'UT', color: '#bf5700', logoSrc: 'assets/schools/texas.png' },
-    signed: 'February 14, 2026'
-  },
-  'idris-vale': {
-    name: 'Idris Vale', position: 'PG · Class of 2026', photo: 'IV',
-    basketball: true, agent: 'Lenny Vasquez',
-    athleticLevel: 'Top-25 National Guard',
-    hometown: 'Newark, New Jersey',
-    university: 'Duke University',
-    presentability: 'Strong social presence with clean brand alignment history',
-    bio: 'Idris is a scoring point guard with advanced pace control and high-assist playmaking. Off the floor, he is known for polished social content and a dependable, sponsor-friendly media style.',
-    accomplishments: ['Jordan Brand Classic invite', 'EYBL All-Circuit First Team', 'State Player of the Year finalist'],
-    stats: [
-      ['24.3', 'Points per game'], ['7.2', 'Assists'], ['4.1', 'Rebounds'],
-      ['Top-25', 'National rank'], ['43%', '3-point %'], ['18', 'Games played']
-    ],
-    status: 'signed',
-    from: { name: 'Montverde Academy', logo: 'MN', color: '#3d3d3d' },
-    to:   { name: 'Duke University', logo: 'DUKE', color: '#0d2240', logoSrc: 'assets/schools/duke.png' },
-    signed: 'December 9, 2025'
-  },
-  'caleb-mooney': {
-    name: 'Caleb Mooney', position: 'WR · Junior', photo: 'CM',
-    basketball: false, agent: 'Luke Bramwell', status: 'represented',
-    athleticLevel: 'Top-10 National WR',
-    hometown: 'Baton Rouge, Louisiana',
-    university: 'LSU',
-    presentability: 'Charismatic speaker with high fan-event conversion',
-    bio: 'Caleb is an explosive receiver with high route discipline and consistent production against top competition. He brings high energy to community and fan activations, especially youth-focused events.',
-    accomplishments: ['All-Conference selection', '1,200+ receiving yards season', 'Team captain'],
-    stats: [
-      ['1,210', 'Receiving yards'], ['9', 'Touchdowns'], ['16.8', 'Yards per catch'],
-      ['All-Conf', 'Conference honors'], ['#8', 'National WR rank'], ['78', 'Receptions']
-    ],
-    from: { name: 'Baton Rouge High', logo: 'BR', color: '#461d7c' },
-    to:   { name: 'LSU', logo: 'LSU', color: '#461d7c' },
-  },
-  'sienna-hart': {
-    name: 'Sienna Hart', position: 'SG · AAU Top 50', photo: 'SH',
-    basketball: true, agent: 'Lenny Vasquez', status: 'represented',
-    athleticLevel: 'AAU Top-50 Wing',
-    hometown: 'San Diego, California',
-    university: 'UCLA (commit target)',
-    presentability: 'Camera-confident storyteller with premium lifestyle fit',
-    bio: 'Sienna is a two-way wing whose perimeter defense and shooting range translate across systems. She is especially strong in beauty, wellness, and lifestyle storytelling partnerships.',
-    accomplishments: ['EYBL top scorer (regional)', 'Top-50 AAU ranking', 'Nike circuit standout'],
-    stats: [
-      ['19.8', 'Points per game'], ['5.4', 'Assists'], ['3.8', 'Steals'],
-      ['Top-50', 'National rank'], ['41%', '3-point %'], ['EYBL', 'Circuit']
-    ],
-    from: { name: 'Hoover High', logo: 'HV', color: '#2d68c4' },
-    to:   { name: 'UCLA', logo: 'UCLA', color: '#2d68c4' },
-  },
-  'trey-holloway': {
-    name: 'Trey Holloway', position: 'Edge · Class of 2026', photo: 'TH',
-    basketball: false, agent: 'Luke Bramwell', status: 'represented',
-    athleticLevel: 'Top-10 National Edge',
-    hometown: 'Atlanta, Georgia',
-    university: 'University of Georgia',
-    presentability: 'Disciplined spokesperson with strong team-first tone',
-    bio: 'Trey is a disruptive edge rusher with elite closing speed and disciplined technique. His personality and communication style perform well for team culture, performance, and training-focused campaigns.',
-    accomplishments: ['5-Star recruit', '17.5 sacks in season', 'Defensive MVP (state final)'],
-    stats: [
-      ['17.5', 'Sacks'], ['74', 'Tackles'], ['12', 'Tackles for loss'],
-      ['Top-10', 'National rank'], ['4', 'Forced fumbles'], ['5-Star', 'Recruit rating']
-    ],
-    from: { name: 'Westlake High', logo: 'WL', color: '#ba0c2f' },
-    to:   { name: 'University of Georgia', logo: 'UGA', color: '#ba0c2f' },
-  },
-  'devon-park': {
-    name: 'Devon Park', position: 'RB · Senior', photo: 'DP',
-    basketball: false, agent: 'Luke Bramwell',
-    athleticLevel: 'Top-3 National RB',
-    hometown: 'Eugene, Oregon',
-    university: 'Ohio State University',
-    presentability: 'Veteran media presence; polished in long-form interviews',
-    bio: 'Devon is a versatile running back with downhill power and proven receiving production. He offers immediate credibility for performance, apparel, and leadership-driven brand stories.',
-    accomplishments: ['Heisman watch list', '1,500+ rushing yards', '18 total touchdowns'],
-    stats: [
-      ['1,560', 'Rushing yards'], ['18', 'Touchdowns'], ['5.8', 'Yards per carry'],
-      ['Heisman', 'Watch list'], ['#3', 'National RB rank'], ['52', 'Receptions']
-    ],
-    status: 'portal',
-    from: { name: 'University of Oregon', logo: 'OR', color: '#154733', logoSrc: 'assets/schools/oregon.png' },
-    to:   { name: 'Ohio State University', logo: 'OSU', color: '#a71930', logoSrc: 'assets/schools/ohio-state.png' },
-    signed: 'January 30, 2026'
-  }
-};
+function partnerGetStartedUrl(athleteSlug) {
+  const params = new URLSearchParams();
+  if (athleteSlug) params.set('athlete', athleteSlug);
+  params.set('interest', 'brand');
+  return `get-started?${params.toString()}`;
+}
 
+function wirePartnerButtons(root = document) {
+  root.querySelectorAll('.athlete-card[data-athlete] .partner-btn:not(.athlete-read-more)').forEach((btn) => {
+    const slug = btn.closest('.athlete-card[data-athlete]')?.dataset.athlete;
+    if (!slug) return;
+
+    const athlete = typeof ATHLETES !== 'undefined' ? ATHLETES[slug] : null;
+    const url = partnerGetStartedUrl(slug);
+    const label = athlete ? `Partner with ${athlete.name}` : 'Partner with this athlete';
+
+    if (btn.tagName === 'A') {
+      btn.href = url;
+      btn.setAttribute('aria-label', label);
+      return;
+    }
+
+    const link = document.createElement('a');
+    link.className = btn.className;
+    link.href = url;
+    link.setAttribute('aria-label', label);
+    link.textContent = btn.textContent.trim();
+    link.addEventListener('click', (e) => e.stopPropagation());
+    btn.replaceWith(link);
+  });
+
+  const profileCta = root.querySelector('.athlete-magazine-cta');
+  if (profileCta) {
+    const params = new URLSearchParams(location.search);
+    const slug = params.get('athlete') || location.hash.replace(/^#/, '');
+    if (slug) {
+      profileCta.href = partnerGetStartedUrl(slug);
+      const athlete = typeof ATHLETES !== 'undefined' ? ATHLETES[slug] : null;
+      if (athlete) profileCta.setAttribute('aria-label', `Partner with ${athlete.name}`);
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => wirePartnerButtons());
 
 const ADVISORS = {
   'jordan-ellis': {
@@ -295,7 +234,11 @@ function phoneTelHref(phone) {
 
     $name.textContent = a.name;
     $position.textContent = a.position;
-    $photo.textContent = a.photo;
+    if (globalThis.SW_PORTRAITS) {
+      globalThis.SW_PORTRAITS.fillAthletePhoto($photo, key, a);
+    } else {
+      $photo.textContent = a.photo;
+    }
     $photo.className = 'modal-photo' + (a.basketball ? ' basketball' : '');
 
     $stats.innerHTML = '';
@@ -420,9 +363,7 @@ function phoneTelHref(phone) {
     }
   });
 
-  document.querySelectorAll('.partner-btn').forEach((btn) => {
-    btn.addEventListener('click', (e) => e.stopPropagation());
-  });
+  wirePartnerButtons();
 
   function excerptCopy(text, max = 110) {
     if (!text) return '';
@@ -609,7 +550,7 @@ function phoneTelHref(phone) {
         t.classList.toggle('active', active);
         t.setAttribute('aria-pressed', String(active));
       });
-      const sport = tab.textContent.trim().split(' ')[0].toLowerCase();
+      const sport = tab.dataset.filter || tab.textContent.trim().split(' ')[0].toLowerCase();
       applyFilter(sport);
     });
   });
@@ -764,11 +705,23 @@ function phoneTelHref(phone) {
       if (cardPhoto && $detailPhoto) {
         $detailPhoto.className = 'leadership-detail-photo advisor-photo';
         cardPhoto.classList.forEach((cls) => {
-          if (cls !== 'advisor-photo') $detailPhoto.classList.add(cls);
+          if (cls !== 'advisor-photo' && cls !== 'has-portrait') {
+            $detailPhoto.classList.add(cls);
+          }
         });
-      }
-      if ($detailInitials) {
+        const surface = $detailPhoto.querySelector('.advisor-photo-surface');
+        surface?.classList.remove('has-portrait');
+        surface?.querySelector('.portrait-img')?.remove();
+        if ($detailInitials) {
+          $detailInitials.textContent = card.querySelector('.advisor-initials')?.textContent || '';
+          $detailInitials.hidden = false;
+        }
+        if (globalThis.SW_PORTRAITS) {
+          globalThis.SW_PORTRAITS.fillAdvisorPhoto($detailPhoto, id, advisor);
+        }
+      } else if ($detailInitials) {
         $detailInitials.textContent = card.querySelector('.advisor-initials')?.textContent || '';
+        $detailInitials.hidden = false;
       }
 
       renderDetailTags(advisor.disciplines, $detailDisciplines);
@@ -2215,7 +2168,7 @@ function phoneTelHref(phone) {
     onScroll();
   });
 
-  setActive(0, { animate: false });
+  setActive(0, { fromScroll: true, animate: false });
 })();
 
 
@@ -2460,9 +2413,11 @@ function phoneTelHref(phone) {
     }
 
     const photoClass = `athlete-magazine-agent-photo${advisorPhotoModifier(advisor)}`;
+    const photoSrc = advisor.photoSrc || `assets/portraits/agents/${advisor.id}.jpg`;
     return `<div class="athlete-magazine-agent-card">
-      <div class="${photoClass}" aria-hidden="true">
-        <span class="athlete-magazine-agent-initials">${advisor.initials}</span>
+      <div class="${photoClass} has-portrait" aria-hidden="true">
+        <img class="portrait-img" src="${photoSrc}" alt="${advisor.name} headshot" loading="lazy" decoding="async" />
+        <span class="athlete-magazine-agent-initials" hidden>${advisor.initials}</span>
       </div>
       <div class="athlete-magazine-agent-body">
         <span class="athlete-magazine-agent-name">${advisor.name}</span>
@@ -2857,8 +2812,12 @@ function phoneTelHref(phone) {
 
     const photo = document.getElementById('athlete-magazine-photo');
     if (photo) {
-      photo.textContent = a.photo;
       photo.className = 'athlete-magazine-photo' + (a.basketball ? ' basketball' : '');
+      if (globalThis.SW_PORTRAITS) {
+        globalThis.SW_PORTRAITS.fillAthletePhoto(photo, key, a);
+      } else {
+        photo.textContent = a.photo;
+      }
     }
 
     const nameEl = document.getElementById('athlete-magazine-name');
@@ -2928,6 +2887,12 @@ function phoneTelHref(phone) {
     const agentEl = document.getElementById('athlete-magazine-agent');
     if (agentEl) agentEl.innerHTML = renderMagazineAgent(a.agent);
 
+    const partnerCta = document.querySelector('.athlete-magazine-cta');
+    if (partnerCta) {
+      partnerCta.href = partnerGetStartedUrl(key);
+      partnerCta.setAttribute('aria-label', `Partner with ${a.name}`);
+    }
+
     root.hidden = false;
     if (empty) empty.hidden = true;
   }
@@ -2943,6 +2908,110 @@ function phoneTelHref(phone) {
 (function GetStartedForm() {
   const form = document.getElementById('get-started-form');
   if (!form) return;
+
+  const PARTNER_BENEFITS = [
+    {
+      icon: 'user',
+      title: 'Athlete-aligned fit',
+      desc: (name) => `Campaigns shaped around ${name}'s brand, audience, and compliance requirements.`,
+    },
+    {
+      icon: 'users',
+      title: 'Partnerships team',
+      desc: () => 'Your inquiry routes to a strategist who knows our roster and your category.',
+    },
+    {
+      icon: 'announcement',
+      title: 'End-to-end activations',
+      desc: () => 'Social content, appearances, and product integrations — from brief to delivery.',
+    },
+    {
+      icon: 'message-chat-circle',
+      title: 'No pressure',
+      desc: () => 'This intro call is to explore scope, budget, and timing — no commitment required.',
+    },
+  ];
+
+  function renderPartnerBenefits(athleteName) {
+    const list = document.getElementById('get-started-benefits');
+    if (!list) return;
+
+    list.innerHTML = PARTNER_BENEFITS.map((benefit) => {
+      const desc = typeof benefit.desc === 'function' ? benefit.desc(athleteName) : benefit.desc;
+      return `<li class="get-started-benefit">
+        <span class="get-started-benefit-icon" data-sw-icon="${benefit.icon}" data-sw-icon-size="22" aria-hidden="true"></span>
+        <div class="get-started-benefit-body">
+          <strong class="get-started-benefit-title">${benefit.title}</strong>
+          <span class="get-started-benefit-desc">${desc}</span>
+        </div>
+      </li>`;
+    }).join('');
+
+    globalThis.SW_ICONS?.hydrate(list);
+  }
+
+  function applyPartnerDeepLink() {
+    const params = new URLSearchParams(location.search);
+    const athleteSlug = params.get('athlete')?.trim();
+    if (!athleteSlug) return;
+
+    const athlete = typeof ATHLETES !== 'undefined' ? ATHLETES[athleteSlug] : null;
+    const context = document.getElementById('get-started-athlete-context');
+    if (!athlete) {
+      if (context) context.hidden = true;
+      return;
+    }
+
+    const interest = params.get('interest') || 'brand';
+    const interestInput = form.querySelector(`input[name="interest"][value="${interest}"]`);
+    if (interestInput) interestInput.checked = true;
+
+    const sport = athlete.basketball ? 'basketball' : 'football';
+    const sportInput = form.querySelector(`input[name="sport"][value="${sport}"]`);
+    if (sportInput) sportInput.checked = true;
+
+    const goals = document.getElementById('gs-goals');
+    const defaultGoal = `I'm interested in partnering with ${athlete.name} for a brand campaign, appearance, or NIL activation.`;
+    if (goals && !goals.value.trim()) goals.value = defaultGoal;
+
+    let hidden = form.querySelector('input[name="athlete"]');
+    if (!hidden) {
+      hidden = document.createElement('input');
+      hidden.type = 'hidden';
+      hidden.name = 'athlete';
+      form.appendChild(hidden);
+    }
+    hidden.value = athleteSlug;
+
+    if (context) {
+      const nameEl = context.querySelector('[data-athlete-name]');
+      const linkEl = context.querySelector('[data-athlete-profile]');
+      if (nameEl) nameEl.textContent = athlete.name;
+      if (linkEl) {
+        linkEl.href = `athlete.html?athlete=${encodeURIComponent(athleteSlug)}`;
+        linkEl.setAttribute('aria-label', `View ${athlete.name} profile`);
+      }
+      context.hidden = false;
+      document.querySelector('.get-started-copy')?.classList.add('has-athlete-context');
+    }
+
+    renderPartnerBenefits(athlete.name);
+
+    const eyebrow = document.getElementById('get-started-eyebrow');
+    const heading = document.getElementById('get-started-heading');
+    const lead = document.querySelector('.get-started-lead');
+    const section = document.querySelector('.get-started-page');
+    if (eyebrow) eyebrow.textContent = 'Get started — Partnership Inquiry';
+    if (heading) heading.hidden = true;
+    if (lead) {
+      lead.textContent = 'Tell us about your campaign goals — an agent from our team will reach out to map the right next step.';
+    }
+    if (section) section.setAttribute('aria-labelledby', 'get-started-partner-heading');
+
+    document.title = `Partnership Inquiry — ${athlete.name} — Second Wind Pro`;
+  }
+
+  applyPartnerDeepLink();
 
   const interestError = document.getElementById('interest-error');
   const slotError = document.getElementById('slot-error');
@@ -3243,16 +3312,65 @@ function phoneTelHref(phone) {
   if (!form) return;
 
   const sportsError = document.getElementById('sports-error');
+  const budgetInput = document.getElementById('budget');
+  const budgetError = document.getElementById('budget-error');
   const success = document.getElementById('contact-form-success');
+  const MIN_BUDGET = 50000;
 
   function selectedSports() {
     return [...form.querySelectorAll('input[name="sports"]:checked')];
+  }
+
+  function parseBudgetAmount(raw) {
+    const text = String(raw || '').trim().toLowerCase();
+    if (!text) return NaN;
+
+    const rangeParts = text.split(/\s*(?:-|–|—|\bto\b)\s*/i).filter(Boolean);
+    const amounts = (rangeParts.length ? rangeParts : [text]).map(parseBudgetToken).filter((n) => Number.isFinite(n));
+    if (!amounts.length) return NaN;
+    return Math.min(...amounts);
+  }
+
+  function parseBudgetToken(token) {
+    const cleaned = token.replace(/[$,\s]/g, '');
+    if (!cleaned) return NaN;
+
+    const match = cleaned.match(/^([\d.]+)(k|m)?$/i);
+    if (!match) {
+      const digits = cleaned.replace(/[^\d.]/g, '');
+      return digits ? Number(digits) : NaN;
+    }
+
+    let amount = Number(match[1]);
+    if (match[2] === 'k') amount *= 1000;
+    if (match[2] === 'm') amount *= 1000000;
+    return amount;
+  }
+
+  function budgetIsValid() {
+    if (!budgetInput) return true;
+    const amount = parseBudgetAmount(budgetInput.value);
+    return Number.isFinite(amount) && amount >= MIN_BUDGET;
+  }
+
+  function setBudgetError(show) {
+    if (!budgetError || !budgetInput) return;
+    budgetError.hidden = !show;
+    budgetInput.setAttribute('aria-invalid', show ? 'true' : 'false');
   }
 
   form.querySelectorAll('input[name="sports"]').forEach((input) => {
     input.addEventListener('change', () => {
       if (selectedSports().length && sportsError) sportsError.hidden = true;
     });
+  });
+
+  budgetInput?.addEventListener('input', () => {
+    if (budgetIsValid()) setBudgetError(false);
+  });
+
+  budgetInput?.addEventListener('blur', () => {
+    if (budgetInput.value.trim() && !budgetIsValid()) setBudgetError(true);
   });
 
   form.addEventListener('submit', (e) => {
@@ -3263,17 +3381,61 @@ function phoneTelHref(phone) {
       return;
     }
 
+    if (!budgetIsValid()) {
+      setBudgetError(true);
+      budgetInput?.focus();
+      return;
+    }
+
     if (!selectedSports().length) {
       if (sportsError) sportsError.hidden = false;
       form.querySelector('input[name="sports"]')?.focus();
       return;
     }
 
+    setBudgetError(false);
     if (sportsError) sportsError.hidden = true;
     form.classList.add('is-submitted');
     if (success) success.hidden = false;
     success?.focus();
   });
+})();
+
+
+/* ------------------------------------------------------------
+   10b. PORTRAIT PLACEHOLDERS — wire demo headshots on static markup
+   ------------------------------------------------------------ */
+
+(function WirePortraits() {
+  const portraits = globalThis.SW_PORTRAITS;
+  if (!portraits) return;
+
+  document.querySelectorAll('.athlete-card[data-athlete]').forEach((card) => {
+    const slug = card.dataset.athlete;
+    const photo = card.querySelector('.athlete-photo');
+    if (photo && typeof ATHLETES !== 'undefined') {
+      portraits.fillAthletePhoto(photo, slug, ATHLETES[slug]);
+    }
+  });
+
+  document.querySelectorAll('.commit-card[data-athlete]').forEach((card) => {
+    const slug = card.dataset.athlete;
+    const photo = card.querySelector('.commit-card-athlete');
+    if (photo && typeof ATHLETES !== 'undefined') {
+      portraits.fillAthletePhoto(photo, slug, ATHLETES[slug]);
+    }
+  });
+
+  document.querySelectorAll('.advisor-card[data-advisor]').forEach((card) => {
+    const id = card.dataset.advisor;
+    const photo = card.querySelector('.advisor-photo');
+    portraits.fillAdvisorPhoto(photo, id, ADVISORS[id]);
+  });
+
+  const founder = document.querySelector('.about-founder-photo .advisor-photo-surface, .about-founder-photo');
+  if (founder) {
+    portraits.applyPortraitImage(founder, portraits.founderPortraitSrc(), 'Luke Mazur, founder portrait');
+  }
 })();
 
 

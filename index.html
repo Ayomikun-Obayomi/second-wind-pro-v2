@@ -6,6 +6,10 @@
   <meta name="description" content="Second Wind Pro — the modern athlete's NIL agency. Athlete-first NIL representation for elite college and high school football and basketball." />
   <meta name="theme-color" content="#0d0e1a" />
 
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+
   <title>Second Wind Pro — The Modern Athlete's NIL Agency</title>
 
   <!-- Fonts -->
@@ -133,7 +137,7 @@
   <section id="services" aria-labelledby="services-heading">
     <div class="section-head">
       <div>
-        <span class="eyebrow">02 — What we do</span>
+        <span class="eyebrow">What we do</span>
         <h2 id="services-heading">Six pillars of <em>elite representation.</em></h2>
       </div>
     </div>
@@ -158,28 +162,28 @@
             <span class="svc-stack-tab-label">School Earnings Strategy</span>
             <span class="svc-stack-tab-detail">
               <span class="svc-stack-tab-desc">Valuation, collectives, and salary leveraging to maximize on-field earning potential.</span>
-              <span class="svc-stack-progress" aria-hidden="true"><span class="svc-stack-progress-fill"></span></span>
+
             </span>
           </button>
           <button type="button" class="svc-stack-tab" role="tab" data-i="3" aria-selected="false" id="svc-tab-3" aria-controls="svc-panel-3">
             <span class="svc-stack-tab-label">Lifestyle &amp; Logistics</span>
             <span class="svc-stack-tab-detail">
               <span class="svc-stack-tab-desc">Brand building, travel, and concierge support so athletes can focus on performance.</span>
-              <span class="svc-stack-progress" aria-hidden="true"><span class="svc-stack-progress-fill"></span></span>
+
             </span>
           </button>
           <button type="button" class="svc-stack-tab" role="tab" data-i="4" aria-selected="false" id="svc-tab-4" aria-controls="svc-panel-4">
             <span class="svc-stack-tab-label">Technology &amp; Data</span>
             <span class="svc-stack-tab-detail">
               <span class="svc-stack-tab-desc">Real-time NIL valuation, dashboards, and decision-ready analytics for every deal.</span>
-              <span class="svc-stack-progress" aria-hidden="true"><span class="svc-stack-progress-fill"></span></span>
+
             </span>
           </button>
           <button type="button" class="svc-stack-tab" role="tab" data-i="5" aria-selected="false" id="svc-tab-5" aria-controls="svc-panel-5">
             <span class="svc-stack-tab-label">Wealth &amp; Career Building</span>
             <span class="svc-stack-tab-detail">
               <span class="svc-stack-tab-desc">Financial literacy, investment, money management, and post-career planning.</span>
-              <span class="svc-stack-progress" aria-hidden="true"><span class="svc-stack-progress-fill"></span></span>
+
             </span>
           </button>
         </div>
@@ -304,7 +308,7 @@
                 </div>
               </div>
               <div class="mkt-school-list mkt-perf-sessions" role="group" aria-label="Week sessions"></div>
-              <div class="mkt-panel mkt-perf-status"><span>Game day</span><strong>Cleared to play · Saturday kickoff</strong></div>
+              <div class="mkt-panel mkt-perf-status"><span>Game day</span><strong>Cleared · Sat kickoff</strong></div>
             </div>
           </div>
         </div>
@@ -550,9 +554,9 @@
     <div class="roster-stage">
     <div class="roster-toolbar">
       <div class="roster-tabs" role="group" aria-label="Filter roster by sport">
-        <button type="button" class="tab active" aria-pressed="true">All <span class="count">35</span></button>
-        <button type="button" class="tab" aria-pressed="false">Football <span class="count">24</span></button>
-        <button type="button" class="tab" aria-pressed="false">Basketball <span class="count">11</span></button>
+        <button type="button" class="tab active" aria-pressed="true" data-filter="all">All <span class="count">35</span></button>
+        <button type="button" class="tab" aria-pressed="false" data-filter="football">Football <span class="count">24</span></button>
+        <button type="button" class="tab" aria-pressed="false" data-filter="basketball">Basketball <span class="count">11</span></button>
       </div>
     </div>
 
@@ -564,7 +568,7 @@
         <div class="athlete-info">
           <h3>Marcus Lane</h3>
           <div class="position">QB · Class of 2027</div>
-          <button type="button" class="partner-btn">Partner with this athlete</button>
+          <a href="get-started?athlete=marcus-lane&interest=brand" class="partner-btn">Partner with this athlete</a>
         </div>
       </article>
 
@@ -573,7 +577,7 @@
         <div class="athlete-info">
           <h3>Idris Vale</h3>
           <div class="position">PG · Class of 2026</div>
-          <button class="partner-btn">Partner with this athlete</button>
+          <a href="get-started?athlete=idris-vale&interest=brand" class="partner-btn">Partner with this athlete</a>
         </div>
       </article>
 
@@ -582,7 +586,7 @@
         <div class="athlete-info">
           <h3>Caleb Mooney</h3>
           <div class="position">WR · Junior</div>
-          <button class="partner-btn">Partner with this athlete</button>
+          <a href="get-started?athlete=caleb-mooney&interest=brand" class="partner-btn">Partner with this athlete</a>
         </div>
       </article>
 
@@ -591,7 +595,7 @@
         <div class="athlete-info">
           <h3>Sienna Hart</h3>
           <div class="position">SG · AAU Top 50</div>
-          <button class="partner-btn">Partner with this athlete</button>
+          <a href="get-started?athlete=sienna-hart&interest=brand" class="partner-btn">Partner with this athlete</a>
         </div>
       </article>
 
@@ -600,7 +604,7 @@
         <div class="athlete-info">
           <h3>Trey Holloway</h3>
           <div class="position">Edge · Class of 2026</div>
-          <button class="partner-btn">Partner with this athlete</button>
+          <a href="get-started?athlete=trey-holloway&interest=brand" class="partner-btn">Partner with this athlete</a>
         </div>
       </article>
 
@@ -609,7 +613,7 @@
         <div class="athlete-info">
           <h3>Devon Park</h3>
           <div class="position">RB · Senior</div>
-          <button class="partner-btn">Partner with this athlete</button>
+          <a href="get-started?athlete=devon-park&interest=brand" class="partner-btn">Partner with this athlete</a>
         </div>
       </article>
         </div>
@@ -641,7 +645,7 @@
     </div>
 
     <div class="commit-grid">
-      <article class="commit-card commit-card--texas">
+      <article class="commit-card commit-card--texas" data-athlete="marcus-lane">
         <div class="commit-card-visual" aria-hidden="true">
           <div class="commit-card-bg"></div>
           <div class="commit-card-pattern"></div>
@@ -667,7 +671,7 @@
         </div>
       </article>
 
-      <article class="commit-card commit-card--duke">
+      <article class="commit-card commit-card--duke" data-athlete="idris-vale">
         <div class="commit-card-visual" aria-hidden="true">
           <div class="commit-card-bg"></div>
           <div class="commit-card-pattern"></div>
@@ -695,48 +699,87 @@
     </div>
   </section>
 
-<!-- BRAND PARTNERSHIPS -->
+<!-- BRAND ALLIANCES -->
   <section id="brand" aria-labelledby="brand-heading">
     <div class="brand-inner brand-inner--center">
       <div class="section-head section-head--center">
         <div>
-          <span class="eyebrow">04 — Brand partnerships</span>
-          <h2 id="brand-heading">Fuel your brand with <em>elite talent.</em></h2>
+          <span class="eyebrow">04 — Brand alliances</span>
+          <h2 id="brand-heading">Brands our athletes <em>partner with.</em></h2>
+          <p class="desc">Real campaigns across apparel, food &amp; beverage, automotive, and consumer tech—from national names to regional activations on our roster.</p>
         </div>
       </div>
 
-      <div class="brand-cards" id="brand-cards">
-        <article class="brand-card">
-          <div class="brand-card-media" aria-hidden="true">
-            <span class="brand-card-index">01</span>
+      <div class="brand-alliances" id="brand-alliances">
+        <article class="brand-alliance">
+          <div class="brand-alliance-logo">
+            <img src="assets/roster/brands/nike.svg" alt="Nike" width="56" height="56" loading="lazy" decoding="async" />
           </div>
-          <div class="brand-card-body">
-            <h3>Custom Brand Activations</h3>
-            <p>Tailored campaigns spanning digital media, product integration, and long-term brand ambassadorships that integrate seamlessly with our athletes' personal brands.</p>
-          </div>
-        </article>
-        <article class="brand-card">
-          <div class="brand-card-media brand-card-media--appearances" aria-hidden="true">
-            <span class="brand-card-index">02</span>
-          </div>
-          <div class="brand-card-body">
-            <h3>In-Person Appearances</h3>
-            <p>Securing your roster for high-profile regional marketing events, corporate appearances, and media days where face-time with athletes drives measurable conversion.</p>
+          <div class="brand-alliance-body">
+            <p class="brand-alliance-category">Apparel</p>
+            <h3>Nike</h3>
+            <p class="brand-alliance-example">Apparel and footwear campaigns with football and basketball standouts—from product seeding to national spotlights.</p>
           </div>
         </article>
-        <article class="brand-card">
-          <div class="brand-card-media brand-card-media--local" aria-hidden="true">
-            <span class="brand-card-index">03</span>
+
+        <article class="brand-alliance">
+          <div class="brand-alliance-logo">
+            <img src="assets/roster/brands/gatorade.svg" alt="Gatorade" width="56" height="56" loading="lazy" decoding="async" />
           </div>
-          <div class="brand-card-body">
-            <h3>Hyper-Local Influence</h3>
-            <p>Capitalizing on immense regional loyalty of college football and basketball fanbases to capture specific target demographics with surgical precision.</p>
+          <div class="brand-alliance-body">
+            <p class="brand-alliance-category">Sports nutrition</p>
+            <h3>Gatorade</h3>
+            <p class="brand-alliance-example">Hydration partnerships built around game-day moments, training content, and sideline visibility with elite athletes.</p>
+          </div>
+        </article>
+
+        <article class="brand-alliance">
+          <div class="brand-alliance-logo">
+            <img src="assets/roster/brands/chipotle.svg" alt="Chipotle" width="56" height="56" loading="lazy" decoding="async" />
+          </div>
+          <div class="brand-alliance-body">
+            <p class="brand-alliance-category">QSR</p>
+            <h3>Chipotle</h3>
+            <p class="brand-alliance-example">Regional restaurant activations and social-first meal campaigns tied to campus markets and fan communities.</p>
+          </div>
+        </article>
+
+        <article class="brand-alliance">
+          <div class="brand-alliance-logo">
+            <img src="assets/roster/brands/ford.svg" alt="Ford" width="56" height="56" loading="lazy" decoding="async" />
+          </div>
+          <div class="brand-alliance-body">
+            <p class="brand-alliance-category">Automotive</p>
+            <h3>Ford</h3>
+            <p class="brand-alliance-example">Dealer events, vehicle integrations, and hometown appearances that connect athletes to local fan bases.</p>
+          </div>
+        </article>
+
+        <article class="brand-alliance">
+          <div class="brand-alliance-logo">
+            <img src="assets/roster/brands/celsius.png" alt="Celsius" width="56" height="56" loading="lazy" decoding="async" />
+          </div>
+          <div class="brand-alliance-body">
+            <p class="brand-alliance-category">Energy drink</p>
+            <h3>Celsius</h3>
+            <p class="brand-alliance-example">Campus sampling, training-day content, and performance-led storytelling with energy drink ambassadors.</p>
+          </div>
+        </article>
+
+        <article class="brand-alliance">
+          <div class="brand-alliance-logo">
+            <img src="assets/roster/brands/beats.svg" alt="Beats" width="56" height="56" loading="lazy" decoding="async" />
+          </div>
+          <div class="brand-alliance-body">
+            <p class="brand-alliance-category">Consumer tech</p>
+            <h3>Beats</h3>
+            <p class="brand-alliance-example">Audio lifestyle content, locker-room integrations, and product drops with culture-forward athletes.</p>
           </div>
         </article>
       </div>
 
       <div class="contact-cta">
-        <a href="contact-us.html" class="btn-outline btn-primary">Contact Us<svg class="arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 12L12 2M5 2h7v7"/></svg></a>
+        <a href="brand.html" class="btn-outline btn-primary">Explore Partnerships &amp; Opportunities<svg class="arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 12L12 2M5 2h7v7"/></svg></a>
       </div>
     </div>
   </section>
@@ -1045,6 +1088,8 @@
 <div id="agentation-root"></div>
 
 <script src="js/icons.js" defer></script>
+<script src="js/portraits.js" defer></script>
+<script src="js/athletes-data.js" defer></script>
 <script src="js/main.js" defer></script>
 <script src="js/agentation.bundle.js" defer></script>
 </body>

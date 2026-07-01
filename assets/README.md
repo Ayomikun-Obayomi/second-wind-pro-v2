@@ -19,8 +19,11 @@ The site references `assets/hero.mp4` which doesn't exist yet — the CSS gradie
 - **Specs:** 1920×1080 minimum, 15–25s seamless loop, muted, H.264 MP4 + WebM
 
 ### Athlete photography
-- **Files:** `athletes/marcus-lane.jpg`, `idris-vale.jpg`, etc.
-- **Specs:** 800×1000 minimum (4:5 aspect), editorial / action style, consistent color grade
+- **Files:** `assets/portraits/athletes/{slug}.jpg` (demo placeholders — replace before production)
+- **Agents / founder:** `assets/portraits/agents/{id}.jpg`
+- **Regenerate:** `node scripts/download-portraits.mjs --force`
+- **Sources (demo):** Curated Pexels/Unsplash — athletes use sports imagery; agents use professional headshots
+- **Specs (production):** 800×1000 minimum (4:5 aspect), editorial / action style, consistent color grade
 
 ### School logos
 - **Files:** `schools/texas.svg`, `ohio-state.svg`, `duke.svg`, etc.

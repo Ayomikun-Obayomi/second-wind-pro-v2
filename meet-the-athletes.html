@@ -6,6 +6,10 @@
   <meta name="description" content="Meet Second Wind Pro athletes — elite football and basketball talent represented for NIL partnerships." />
   <meta name="theme-color" content="#0d0e1a" />
 
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+
   <title>Meet the Athletes — Second Wind Pro</title>
 
   <!-- Fonts -->
@@ -132,15 +136,15 @@
     <div class="roster-stage">
     <div class="roster-toolbar">
       <div class="roster-tabs" role="group" aria-label="Filter roster by sport">
-        <button type="button" class="tab active" aria-pressed="true">All <span class="count">35</span></button>
-        <button type="button" class="tab" aria-pressed="false">Football <span class="count">24</span></button>
-        <button type="button" class="tab" aria-pressed="false">Basketball <span class="count">11</span></button>
+        <button type="button" class="tab active" aria-pressed="true" data-filter="all">All <span class="count">35</span></button>
+        <button type="button" class="tab" aria-pressed="false" data-filter="football">Football <span class="count">24</span></button>
+        <button type="button" class="tab" aria-pressed="false" data-filter="basketball">Basketball <span class="count">11</span></button>
       </div>
     </div>
 
     <div class="roster-grid" id="roster-grid">
       <article class="athlete-card" data-athlete="marcus-lane" data-sport="football">
-        <div class="athlete-photo">ML</div>
+        <div class="athlete-photo">ML<span class="sport-tag">Football</span></div>
         <div class="athlete-card-body">
           <div class="athlete-card-head">
             <h3 class="athlete-name">Marcus Lane</h3>
@@ -152,7 +156,7 @@
       </article>
 
       <article class="athlete-card" data-athlete="idris-vale" data-sport="basketball">
-        <div class="athlete-photo basketball">IV</div>
+        <div class="athlete-photo basketball">IV<span class="sport-tag">Basketball</span></div>
         <div class="athlete-card-body">
           <div class="athlete-card-head">
             <h3 class="athlete-name">Idris Vale</h3>
@@ -164,7 +168,7 @@
       </article>
 
       <article class="athlete-card" data-athlete="caleb-mooney" data-sport="football">
-        <div class="athlete-photo">CM</div>
+        <div class="athlete-photo">CM<span class="sport-tag">Football</span></div>
         <div class="athlete-card-body">
           <div class="athlete-card-head">
             <h3 class="athlete-name">Caleb Mooney</h3>
@@ -176,7 +180,7 @@
       </article>
 
       <article class="athlete-card" data-athlete="sienna-hart" data-sport="basketball">
-        <div class="athlete-photo basketball">SH</div>
+        <div class="athlete-photo basketball">SH<span class="sport-tag">Basketball</span></div>
         <div class="athlete-card-body">
           <div class="athlete-card-head">
             <h3 class="athlete-name">Sienna Hart</h3>
@@ -188,7 +192,7 @@
       </article>
 
       <article class="athlete-card" data-athlete="trey-holloway" data-sport="football">
-        <div class="athlete-photo">TH</div>
+        <div class="athlete-photo">TH<span class="sport-tag">Football</span></div>
         <div class="athlete-card-body">
           <div class="athlete-card-head">
             <h3 class="athlete-name">Trey Holloway</h3>
@@ -199,11 +203,359 @@
         </div>
       </article>
 
+      <article class="athlete-card" data-athlete="avery-collins" data-sport="basketball">
+        <div class="athlete-photo basketball">AC<span class="sport-tag">Basketball</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Avery Collins</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
       <article class="athlete-card" data-athlete="devon-park" data-sport="football">
-        <div class="athlete-photo">DP</div>
+        <div class="athlete-photo">DP<span class="sport-tag">Football</span></div>
         <div class="athlete-card-body">
           <div class="athlete-card-head">
             <h3 class="athlete-name">Devon Park</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="miles-carter" data-sport="basketball">
+        <div class="athlete-photo basketball">MC<span class="sport-tag">Basketball</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Miles Carter</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="jordan-blake" data-sport="football">
+        <div class="athlete-photo">JB<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Jordan Blake</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="jalen-brooks" data-sport="basketball">
+        <div class="athlete-photo basketball">JB<span class="sport-tag">Basketball</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Jalen Brooks</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="malik-rivers" data-sport="football">
+        <div class="athlete-photo">MR<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Malik Rivers</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="derek-lawson" data-sport="basketball">
+        <div class="athlete-photo basketball">DL<span class="sport-tag">Basketball</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Derek Lawson</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="chris-dalton" data-sport="football">
+        <div class="athlete-photo">CD<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Chris Dalton</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="kai-mendoza" data-sport="basketball">
+        <div class="athlete-photo basketball">KM<span class="sport-tag">Basketball</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Kai Mendoza</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="andre-coleman" data-sport="football">
+        <div class="athlete-photo">AC<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Andre Coleman</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="tyrese-holland" data-sport="basketball">
+        <div class="athlete-photo basketball">TH<span class="sport-tag">Basketball</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Tyrese Holland</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="tyler-nash" data-sport="football">
+        <div class="athlete-photo">TN<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Tyler Nash</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="brandon-tate" data-sport="basketball">
+        <div class="athlete-photo basketball">BT<span class="sport-tag">Basketball</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Brandon Tate</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="ryan-mercer" data-sport="football">
+        <div class="athlete-photo">RM<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Ryan Mercer</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="nico-alvarez" data-sport="basketball">
+        <div class="athlete-photo basketball">NA<span class="sport-tag">Basketball</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Nico Alvarez</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="darius-webb" data-sport="football">
+        <div class="athlete-photo">DW<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Darius Webb</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="jordan-ellis" data-sport="basketball">
+        <div class="athlete-photo basketball">JE<span class="sport-tag">Basketball</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Jordan Ellis</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="noah-griffin" data-sport="football">
+        <div class="athlete-photo">NG<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Noah Griffin</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="ethan-brooks" data-sport="football">
+        <div class="athlete-photo">EB<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Ethan Brooks</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="jamal-ortiz" data-sport="football">
+        <div class="athlete-photo">JO<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Jamal Ortiz</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="cameron-ellis" data-sport="football">
+        <div class="athlete-photo">CE<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Cameron Ellis</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="logan-pierce" data-sport="football">
+        <div class="athlete-photo">LP<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Logan Pierce</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="isaiah-grant" data-sport="football">
+        <div class="athlete-photo">IG<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Isaiah Grant</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="mason-reid" data-sport="football">
+        <div class="athlete-photo">MR<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Mason Reid</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="cole-bennett" data-sport="football">
+        <div class="athlete-photo">CB<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Cole Bennett</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="victor-santos" data-sport="football">
+        <div class="athlete-photo">VS<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Victor Santos</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="grant-holloway" data-sport="football">
+        <div class="athlete-photo">GH<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Grant Holloway</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="parker-walsh" data-sport="football">
+        <div class="athlete-photo">PW<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Parker Walsh</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="terrell-knox" data-sport="football">
+        <div class="athlete-photo">TK<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Terrell Knox</h3>
+            <p class="athlete-rank"></p>
+            <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
+          </div>
+          <a href="#" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+        </div>
+      </article>
+
+      <article class="athlete-card" data-athlete="sean-murphy" data-sport="football">
+        <div class="athlete-photo">SM<span class="sport-tag">Football</span></div>
+        <div class="athlete-card-body">
+          <div class="athlete-card-head">
+            <h3 class="athlete-name">Sean Murphy</h3>
             <p class="athlete-rank"></p>
             <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
           </div>
@@ -311,6 +663,8 @@
 <div id="agentation-root"></div>
 
 <script src="js/icons.js" defer></script>
+<script src="js/portraits.js" defer></script>
+<script src="js/athletes-data.js" defer></script>
 <script src="js/main.js" defer></script>
 <script src="js/agentation.bundle.js" defer></script>
 </body>
