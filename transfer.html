@@ -8,6 +8,7 @@
 
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
 
   <title>Transfers — Second Wind Pro</title>
@@ -44,15 +45,12 @@
           <li><a href="transfer.html" aria-current="page">Transfers</a></li>
         </ul>
       </li>
-      <li><a href="brand.html">Brand Partnerships</a></li>
       <li><a href="leadership.html">Leadership</a></li>
-      <li class="nav-dropdown nav-dropdown--has-link">
-        <span class="nav-dropdown-split">
-          <a href="about.html" class="nav-dropdown-link">Resources</a>
-          <button type="button" class="nav-dropdown-toggle" aria-label="Show Resources submenu" aria-haspopup="true" aria-expanded="false">
-            <svg class="nav-dropdown-chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5L5 6.5L8 3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </span>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-label="Show Resources menu" aria-haspopup="true" aria-expanded="false">
+          Resources
+          <svg class="nav-dropdown-chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5L5 6.5L8 3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
         <ul class="nav-submenu">
           <li><a href="about.html">About Us</a></li>
           <li><a href="careers.html">Careers</a></li>
@@ -81,7 +79,6 @@
             <li><a class="nav-drawer-sub-link" href="transfer.html" aria-current="page">Transfers</a></li>
           </ul>
         </li>
-        <li><a href="brand.html">Brand Partnerships</a></li>
         <li><a href="leadership.html">Leadership</a></li>
         <li class="nav-drawer-group">
           <button type="button" class="nav-drawer-trigger" aria-expanded="false" aria-controls="nav-drawer-sub">
@@ -103,8 +100,15 @@
   <section id="transfer" aria-labelledby="transfer-heading">
     <div class="section-head">
       <div>
-        <span class="eyebrow">03 — Transfers</span>
-        <h2 id="transfer-heading">Strategic placements <em>&amp; commitments.</em></h2>
+        <h2 id="transfer-heading">Where our athletes <em>commit next.</em></h2>
+        <p class="desc">Live transfer portal updates for represented college football talent—signings, destinations, and movement across programs.</p>
+        <div class="roster-tabs transfer-region-tabs" role="group" aria-label="Transfer destination conferences">
+          <button type="button" class="tab active" aria-pressed="true" data-transfer-pill="big-ten">Big Ten</button>
+          <button type="button" class="tab" aria-pressed="false" data-transfer-pill="sec">SEC</button>
+          <button type="button" class="tab" aria-pressed="false" data-transfer-pill="acc">ACC</button>
+          <button type="button" class="tab" aria-pressed="false" data-transfer-pill="big-12">Big 12</button>
+          <button type="button" class="tab" aria-pressed="false" data-transfer-pill="mountain-west">Mountain West</button>
+        </div>
       </div>
       <div class="transfer-live-bar" aria-live="polite">
         <div class="live-pill"><span class="live-dot" aria-hidden="true"></span>LIVE</div>
@@ -113,55 +117,251 @@
     </div>
 
     <div class="wire-list">
-      <div class="wire-row wire-row-live" data-transfer="marcus-lane" role="button" tabindex="0">
-        <span class="wire-date">02.14.26</span>
+      <div class="wire-row wire-row-live" data-transfer="salahadin-allah">
         <div class="wire-athlete">
-          <div class="wire-photo" aria-hidden="true">ML</div>
+          <div class="wire-photo" aria-hidden="true">SA</div>
           <div class="wire-athlete-copy">
-            <p class="wire-athlete-name">Marcus <em>Lane</em></p>
-            <span class="wire-athlete-sport">Football · Quarterback</span>
+            <p class="wire-athlete-name">Salahadin <em>Allah</em></p>
+            <span class="wire-athlete-sport">Football · RB</span>
           </div>
         </div>
-        <div class="wire-flow">
-          <div class="wire-school"><div class="logo" style="background:#7c1d1d">PH</div><span class="name">Phoenix Heritage HS</span></div>
-          <span class="wire-arrow" aria-hidden="true">→</span>
-          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/texas.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">University of Texas</span></div>
+        <div class="wire-row-meta">
+          <time class="wire-date" datetime="2026-02-04">02.04.26</time>
+          <span class="wire-badge portal">Portal Move</span>
         </div>
-        <span class="wire-badge committed">Committed</span>
+        <div class="wire-flow">
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/oregon-state.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Oregon State</span></div>
+          <span class="wire-arrow" aria-hidden="true">→</span>
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/iowa-state.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Iowa State</span></div>
+        </div>
       </div>
 
-      <div class="wire-row" data-transfer="devon-park" role="button" tabindex="0">
-        <span class="wire-date">01.30.26</span>
+      <div class="wire-row" data-transfer="justin-ross">
         <div class="wire-athlete">
-          <div class="wire-photo" aria-hidden="true">DP</div>
+          <div class="wire-photo" aria-hidden="true">JR</div>
           <div class="wire-athlete-copy">
-            <p class="wire-athlete-name">Devon <em>Park</em></p>
-            <span class="wire-athlete-sport">Football · Running Back</span>
+            <p class="wire-athlete-name">Justin <em>Ross</em></p>
+            <span class="wire-athlete-sport">Football · CB</span>
           </div>
         </div>
-        <div class="wire-flow">
-          <div class="wire-school"><div class="logo" style="background:#154733">OR</div><span class="name">University of Oregon</span></div>
-          <span class="wire-arrow" aria-hidden="true">→</span>
-          <div class="wire-school"><div class="logo" style="background:#a71930">OSU</div><span class="name">Ohio State University</span></div>
+        <div class="wire-row-meta">
+          <time class="wire-date" datetime="2026-03-06">03.06.26</time>
+          <span class="wire-badge portal">Portal Move</span>
         </div>
-        <span class="wire-badge portal">Portal Move</span>
+        <div class="wire-flow">
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/navy.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Navy</span></div>
+          <span class="wire-arrow" aria-hidden="true">→</span>
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/virginia.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Virginia</span></div>
+        </div>
       </div>
 
-      <div class="wire-row" data-transfer="idris-vale" role="button" tabindex="0">
-        <span class="wire-date">12.09.25</span>
+      <div class="wire-row" data-transfer="jason-oliver">
         <div class="wire-athlete">
-          <div class="wire-photo basketball" aria-hidden="true">IV</div>
+          <div class="wire-photo" aria-hidden="true">JO</div>
           <div class="wire-athlete-copy">
-            <p class="wire-athlete-name">Idris <em>Vale</em></p>
-            <span class="wire-athlete-sport">Basketball · Point Guard</span>
+            <p class="wire-athlete-name">Jason <em>Oliver</em></p>
+            <span class="wire-athlete-sport">Football · CB</span>
           </div>
         </div>
-        <div class="wire-flow">
-          <div class="wire-school"><div class="logo" style="background:#3d3d3d">MN</div><span class="name">Montverde Academy</span></div>
-          <span class="wire-arrow" aria-hidden="true">→</span>
-          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/duke.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Duke University</span></div>
+        <div class="wire-row-meta">
+          <time class="wire-date" datetime="2026-04-08">04.08.26</time>
+          <span class="wire-badge portal">Portal Move</span>
         </div>
-        <span class="wire-badge signed">Signed</span>
+        <div class="wire-flow">
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/sacramento-state.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Sacramento State</span></div>
+          <span class="wire-arrow" aria-hidden="true">→</span>
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/san-diego-state.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">San Diego State</span></div>
+        </div>
+      </div>
+
+      <div class="wire-row" data-transfer="dj-kelly">
+        <div class="wire-athlete">
+          <div class="wire-photo" aria-hidden="true">DK</div>
+          <div class="wire-athlete-copy">
+            <p class="wire-athlete-name">DJ <em>Kelly</em></p>
+            <span class="wire-athlete-sport">Football · CB</span>
+          </div>
+        </div>
+        <div class="wire-row-meta">
+          <time class="wire-date" datetime="2026-05-10">05.10.26</time>
+          <span class="wire-badge portal">Portal Move</span>
+        </div>
+        <div class="wire-flow">
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/toledo.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Toledo</span></div>
+          <span class="wire-arrow" aria-hidden="true">→</span>
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/james-madison.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">James Madison</span></div>
+        </div>
+      </div>
+
+      <div class="wire-row" data-transfer="nick-herman">
+        <div class="wire-athlete">
+          <div class="wire-photo" aria-hidden="true">NH</div>
+          <div class="wire-athlete-copy">
+            <p class="wire-athlete-name">Nick <em>Herman</em></p>
+            <span class="wire-athlete-sport">Football · RB</span>
+          </div>
+        </div>
+        <div class="wire-row-meta">
+          <time class="wire-date" datetime="2026-06-12">06.12.26</time>
+          <span class="wire-badge portal">Portal Move</span>
+        </div>
+        <div class="wire-flow">
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/drake.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Drake</span></div>
+          <span class="wire-arrow" aria-hidden="true">→</span>
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/james-madison.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">James Madison</span></div>
+        </div>
+      </div>
+
+      <div class="wire-row" data-transfer="chris-kalu">
+        <div class="wire-athlete">
+          <div class="wire-photo" aria-hidden="true">CK</div>
+          <div class="wire-athlete-copy">
+            <p class="wire-athlete-name">Chris <em>Kalu</em></p>
+            <span class="wire-athlete-sport">Football · DL</span>
+          </div>
+        </div>
+        <div class="wire-row-meta">
+          <time class="wire-date" datetime="2026-07-14">07.14.26</time>
+          <span class="wire-badge portal">Portal Move</span>
+        </div>
+        <div class="wire-flow">
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/western-new-mexico.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Western New Mexico</span></div>
+          <span class="wire-arrow" aria-hidden="true">→</span>
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/nevada.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Nevada</span></div>
+        </div>
+      </div>
+
+      <div class="wire-row" data-transfer="rj-chapman">
+        <div class="wire-athlete">
+          <div class="wire-photo" aria-hidden="true">RC</div>
+          <div class="wire-athlete-copy">
+            <p class="wire-athlete-name">RJ <em>Chapman</em></p>
+            <span class="wire-athlete-sport">Football · DB</span>
+          </div>
+        </div>
+        <div class="wire-row-meta">
+          <time class="wire-date" datetime="2026-08-16">08.16.26</time>
+          <span class="wire-badge portal">Portal Move</span>
+        </div>
+        <div class="wire-flow">
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/merrimack.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Merrimack</span></div>
+          <span class="wire-arrow" aria-hidden="true">→</span>
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/new-mexico-state.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">New Mexico State</span></div>
+        </div>
+      </div>
+
+      <div class="wire-row" data-transfer="jamai-east">
+        <div class="wire-athlete">
+          <div class="wire-photo" aria-hidden="true">JE</div>
+          <div class="wire-athlete-copy">
+            <p class="wire-athlete-name">Jamai <em>East</em></p>
+            <span class="wire-athlete-sport">Football · WR</span>
+          </div>
+        </div>
+        <div class="wire-row-meta">
+          <time class="wire-date" datetime="2026-09-18">09.18.26</time>
+          <span class="wire-badge portal">Portal Move</span>
+        </div>
+        <div class="wire-flow">
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/oregon-state.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Oregon State</span></div>
+          <span class="wire-arrow" aria-hidden="true">→</span>
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/eastern-washington.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Eastern Washington</span></div>
+        </div>
+      </div>
+
+      <div class="wire-row" data-transfer="justin-montgomery">
+        <div class="wire-athlete">
+          <div class="wire-photo" aria-hidden="true">JM</div>
+          <div class="wire-athlete-copy">
+            <p class="wire-athlete-name">Justin <em>Montgomery</em></p>
+            <span class="wire-athlete-sport">Football · RB</span>
+          </div>
+        </div>
+        <div class="wire-row-meta">
+          <time class="wire-date" datetime="2026-10-20">10.20.26</time>
+          <span class="wire-badge portal">Portal Move</span>
+        </div>
+        <div class="wire-flow">
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/presbyterian.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Presbyterian</span></div>
+          <span class="wire-arrow" aria-hidden="true">→</span>
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/west-georgia.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">West Georgia</span></div>
+        </div>
+      </div>
+
+      <div class="wire-row" data-transfer="tre-leonard">
+        <div class="wire-athlete">
+          <div class="wire-photo" aria-hidden="true">TL</div>
+          <div class="wire-athlete-copy">
+            <p class="wire-athlete-name">Tre <em>Leonard</em></p>
+            <span class="wire-athlete-sport">Football · RB</span>
+          </div>
+        </div>
+        <div class="wire-row-meta">
+          <time class="wire-date" datetime="2026-11-22">11.22.26</time>
+          <span class="wire-badge portal">Portal Move</span>
+        </div>
+        <div class="wire-flow">
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/james-madison.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">James Madison</span></div>
+          <span class="wire-arrow" aria-hidden="true">→</span>
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/prairie-view.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Prairie View A&M</span></div>
+        </div>
+      </div>
+
+      <div class="wire-row" data-transfer="fabian-duncan">
+        <div class="wire-athlete">
+          <div class="wire-photo" aria-hidden="true">FD</div>
+          <div class="wire-athlete-copy">
+            <p class="wire-athlete-name">Fabian <em>Duncan</em></p>
+            <span class="wire-athlete-sport">Football · RB</span>
+          </div>
+        </div>
+        <div class="wire-row-meta">
+          <time class="wire-date" datetime="2026-12-24">12.24.26</time>
+          <span class="wire-badge portal">Portal Move</span>
+        </div>
+        <div class="wire-flow">
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/allen.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Allen</span></div>
+          <span class="wire-arrow" aria-hidden="true">→</span>
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/johnson-c-smith.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Johnson C. Smith</span></div>
+        </div>
+      </div>
+
+      <div class="wire-row" data-transfer="quory-ambrose">
+        <div class="wire-athlete">
+          <div class="wire-photo" aria-hidden="true">QA</div>
+          <div class="wire-athlete-copy">
+            <p class="wire-athlete-name">Quory <em>Ambrose</em></p>
+            <span class="wire-athlete-sport">Football · OL</span>
+          </div>
+        </div>
+        <div class="wire-row-meta">
+          <time class="wire-date" datetime="2026-12-26">12.26.26</time>
+          <span class="wire-badge portal">Portal Move</span>
+        </div>
+        <div class="wire-flow">
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/presbyterian.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Presbyterian</span></div>
+          <span class="wire-arrow" aria-hidden="true">→</span>
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/harding.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Harding</span></div>
+        </div>
+      </div>
+
+      <div class="wire-row" data-transfer="jaden-turner">
+        <div class="wire-athlete">
+          <div class="wire-photo" aria-hidden="true">J</div>
+          <div class="wire-athlete-copy">
+            <p class="wire-athlete-name">Jaden <em>Turner</em></p>
+            <span class="wire-athlete-sport">Football · Football</span>
+          </div>
+        </div>
+        <div class="wire-row-meta">
+          <time class="wire-date" datetime="2026-12-28">12.28.26</time>
+          <span class="wire-badge portal">Portal Move</span>
+        </div>
+        <div class="wire-flow">
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/iowa-central.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">Iowa Central CC</span></div>
+          <span class="wire-arrow" aria-hidden="true">→</span>
+          <div class="wire-school"><div class="logo logo--img"><img src="assets/schools/utrgv.png" alt="" width="36" height="36" loading="lazy" /></div><span class="name">UTGRV</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -220,11 +420,11 @@
     </div>
 
     <div class="footer-bar">
-      <div class="footer-bar-brand">
-        <a href="index.html" class="footer-wordmark">Second Wind Pro</a>
+      <span class="footer-wordmark" aria-hidden="true"><span class="footer-wordmark-sw">SW</span><em class="footer-wordmark-p">P</em></span>
+      <div class="footer-bar-meta">
         <p class="footer-mission">An athlete-first NIL agency built to increase on-field earnings.</p>
+        <p class="footer-copy">© 2026 Second Wind Pro LLC. All Rights Reserved.</p>
       </div>
-      <p class="footer-copy">© 2026 Second Wind Pro LLC. All Rights Reserved.</p>
     </div>
   </div>
 </footer>
@@ -265,6 +465,7 @@
 <script src="js/icons.js" defer></script>
 <script src="js/portraits.js" defer></script>
 <script src="js/athletes-data.js" defer></script>
+<script src="js/demo-marketing-data.js" defer></script>
 <script src="js/main.js" defer></script>
 <script src="js/agentation.bundle.js" defer></script>
 </body>

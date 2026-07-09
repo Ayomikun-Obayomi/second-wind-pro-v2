@@ -13,6 +13,7 @@
 
     <div class="athlete-magazine-hero">
       <div class="athlete-magazine-hero-grid">
+        <div class="athlete-magazine-hero-main">
         <div class="athlete-magazine-visual">
           <div class="athlete-magazine-photo" id="athlete-magazine-photo" aria-hidden="true"></div>
         </div>
@@ -21,6 +22,7 @@
           <p class="athlete-magazine-position" id="athlete-magazine-position"></p>
           <p class="athlete-magazine-lead" id="athlete-magazine-lead"></p>
           <nav class="athlete-magazine-social" id="athlete-magazine-social" aria-label="Social media" hidden></nav>
+        </div>
         </div>
       </div>
     </div>
@@ -45,6 +47,27 @@
         </aside>
       </div>
     </div>
+
+    <nav class="athlete-magazine-pager" id="athlete-magazine-pager" aria-label="More athletes" hidden>
+      <div class="athlete-magazine-pager-inner">
+      <a class="athlete-magazine-pager-link athlete-magazine-pager-link--prev" data-pager="prev" href="#" hidden>
+        <span class="athlete-magazine-pager-label">
+          <svg class="athlete-magazine-pager-chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2L3 6.5L8 11"/></svg>
+          Previous
+        </span>
+        <span class="athlete-magazine-pager-name" data-pager-name></span>
+        <span class="athlete-magazine-pager-meta" data-pager-meta></span>
+      </a>
+      <a class="athlete-magazine-pager-link athlete-magazine-pager-link--next" data-pager="next" href="#" hidden>
+        <span class="athlete-magazine-pager-label">
+          Next
+          <svg class="athlete-magazine-pager-chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2l5 4.5L4 11"/></svg>
+        </span>
+        <span class="athlete-magazine-pager-name" data-pager-name></span>
+        <span class="athlete-magazine-pager-meta" data-pager-meta></span>
+      </a>
+      </div>
+    </nav>
   </article>
 
   <section class="athlete-magazine-empty" id="athlete-profile-empty" hidden>

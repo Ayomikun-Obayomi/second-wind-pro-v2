@@ -8,7 +8,7 @@ import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
-import { buildAthletesCatalog } from './generate-athletes-data.mjs';
+import { buildAthletesCatalogSync } from './generate-athletes-data.mjs';
 import { ATHLETE_PORTRAIT_SOURCES } from './athlete-portrait-sources.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -136,7 +136,7 @@ async function main() {
   fs.mkdirSync(athletesDir, { recursive: true });
   fs.mkdirSync(agentsDir, { recursive: true });
 
-  const catalog = buildAthletesCatalog();
+  const catalog = buildAthletesCatalogSync();
   writeAttribution(catalog);
 
   const jobs = [];

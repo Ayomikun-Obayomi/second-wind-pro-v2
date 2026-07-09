@@ -22,17 +22,24 @@ function partnerGetStartedUrl(athleteSlug) {
   return `get-started?${params.toString()}`;
 }
 
+function athletePageHref(slug, sport) {
+  const params = new URLSearchParams();
+  if (sport && sport !== 'all') params.set('sport', sport);
+  const query = params.toString();
+  return `/athlete/${encodeURIComponent(slug)}${query ? `?${query}` : ''}`;
+}
+
 function wirePartnerButtons(root = document) {
   root.querySelectorAll('.athlete-card[data-athlete] .partner-btn:not(.athlete-read-more)').forEach((btn) => {
     const slug = btn.closest('.athlete-card[data-athlete]')?.dataset.athlete;
     if (!slug) return;
 
-    const athlete = typeof ATHLETES !== 'undefined' ? ATHLETES[slug] : null;
     const url = partnerGetStartedUrl(slug);
-    const label = athlete ? `Partner with ${athlete.name}` : 'Partner with this athlete';
+    const label = 'Partner with this athlete';
 
     if (btn.tagName === 'A') {
       btn.href = url;
+      btn.textContent = label;
       btn.setAttribute('aria-label', label);
       return;
     }
@@ -61,73 +68,49 @@ function wirePartnerButtons(root = document) {
 document.addEventListener('DOMContentLoaded', () => wirePartnerButtons());
 
 const ADVISORS = {
-  'jordan-ellis': {
-    name: 'Jordan Ellis',
-    title: 'Head of Sports & COO',
-    initials: 'JE',
-    email: 'jordan.ellis@secondwind.pro',
-    phone: '(305) 555-0101',
-    bio: 'Jordan spent twelve years in Power Four front offices before co-founding Second Wind Pro. He is known for staying in the negotiation room until every term protects the athlete—not just the next season.',
-    disciplines: ['Football', 'Tennis'],
-    regions: ['National operations', 'Southeast hub', 'Texas corridor', 'East Coast'],
-    athletes: ['marcus-lane', 'devon-park', 'idris-vale'],
-  },
-  'luke-bramwell': {
-    name: 'Luke Bramwell',
-    title: 'Senior Agent · Football',
-    initials: 'LB',
-    email: 'luke.bramwell@secondwind.pro',
+  'luke-mazur': {
+    name: 'Luke Mazur',
+    title: 'Founder & CEO',
+    initials: 'LM',
+    email: 'luke@secondwind.pro',
     phone: '(512) 555-0108',
-    bio: 'Luke played defensive back at Florida State and moved into representation after helping teammates navigate the first NIL cycle. Families work with him for straight answers and contracts built around eligibility, not headlines.',
+    bio: 'Luke founded Second Wind Pro to give athletes an operating system for the NIL and pay-to-play era—combining deal strategy, data, and long-term wealth planning under one roof.',
     disciplines: ['Football'],
-    regions: ['Southeast', 'Texas'],
-    athletes: ['marcus-lane', 'caleb-mooney', 'trey-holloway', 'devon-park'],
+    regions: ['National', 'Southeast', 'Texas'],
+    athletes: [],
+    photoSrc: 'assets/portraits/agents/luke-mazur.jpg',
   },
-  'lenny-vasquez': {
-    name: 'Lenny Vasquez',
-    title: 'Senior Agent · Basketball',
-    initials: 'LV',
-    email: 'lenny.vasquez@secondwind.pro',
-    phone: '(718) 555-0114',
-    bio: 'Lenny grew up playing point guard in Brooklyn and started in D1 compliance before joining the agency. He represents guards and wings the way he wished someone had represented him—clear guidance, no pressure tactics.',
-    disciplines: ['Basketball'],
-    regions: ['East Coast', 'AAU circuits'],
-    athletes: ['idris-vale', 'sienna-hart'],
-  },
-  'mara-chen': {
-    name: 'Mara Chen',
-    title: 'Agent · Tennis',
-    initials: 'MC',
-    email: 'mara.chen@secondwind.pro',
-    phone: '(415) 555-0122',
-    bio: 'Mara was a nationally ranked junior before an injury led her to sports law. She still competes in local tournaments and brings an athlete\'s patience to families navigating school, travel, and sponsorship at the same time.',
-    disciplines: ['Tennis'],
-    regions: ['Junior-to-college pathways', 'National'],
+  'shane-simpson': {
+    name: 'Shane Simpson',
+    title: 'Senior Agent · Football',
+    initials: 'SS',
+    email: 'shane@secondwind.pro',
+    phone: '(614) 555-0136',
+    bio: 'Shane leads football representation across the transfer portal and NIL—structuring school-fit packages and brand partnerships that protect eligibility and long-term leverage.',
+    disciplines: ['Football'],
+    regions: ['Midwest', 'Southeast', 'National'],
     athletes: [],
   },
-  'eli-okonkwo': {
-    name: 'Eli Okonkwo',
+  'tony-storniolo': {
+    name: 'Tony Storniolo',
     title: 'Agent · Football',
-    initials: 'EO',
-    email: 'eli.okonkwo@secondwind.pro',
-    phone: '(614) 555-0136',
-    bio: 'Eli is a former Ohio State linebacker who began advising teammates on deals before NIL had a formal name. He focuses on linemen and defenders because those rooms are where leverage is built—and too often ignored.',
+    initials: 'TS',
+    email: 'tony@secondwind.pro',
+    phone: '(718) 555-0114',
+    bio: 'Tony advises football athletes on portal timing, roster leverage, and partnership-ready media—focused on specialists and high-upside placements.',
     disciplines: ['Football'],
-    regions: ['Midwest', 'Power Four'],
-    athletes: ['trey-holloway', 'caleb-mooney'],
-  },
-  'sofia-ruiz': {
-    name: 'Sofia Ruiz',
-    title: 'Agent · Basketball',
-    initials: 'SR',
-    email: 'sofia.ruiz@secondwind.pro',
-    phone: '(503) 555-0140',
-    bio: 'Sofia played at Oregon and spent four years in sportswear brand strategy before becoming an agent. She helps players tell their own story so partnerships feel authentic—not like a template every recruit gets.',
-    disciplines: ['Basketball'],
-    regions: ['West Coast', 'Prep-to-pro pipeline'],
-    athletes: ['sienna-hart'],
+    regions: ['Midwest', 'East Coast'],
+    athletes: [],
   },
 };
+
+(function patchAdvisorAthleteRosters() {
+  const map = globalThis.DEMO_MARKETING?.agentAthletes;
+  if (!map) return;
+  if (map['Luke Mazur']?.length) ADVISORS['luke-mazur'].athletes = map['Luke Mazur'].slice(0, 4);
+  if (map['Shane Simpson']?.length) ADVISORS['shane-simpson'].athletes = map['Shane Simpson'].slice(0, 4);
+  if (map['Tony Storniolo']?.length) ADVISORS['tony-storniolo'].athletes = map['Tony Storniolo'].slice(0, 4);
+})();
 
 function advisorByName(name) {
   if (!name) return null;
@@ -137,7 +120,7 @@ function advisorByName(name) {
 
 function advisorPhotoModifier(advisor) {
   if (!advisor) return '';
-  if (advisor.id === 'jordan-ellis') return ' athlete-magazine-agent-photo--exec';
+  if (advisor.id === 'luke-mazur') return ' athlete-magazine-agent-photo--exec';
   if (advisor.disciplines?.includes('Basketball')) return ' athlete-magazine-agent-photo--basketball';
   if (advisor.disciplines?.includes('Tennis')) return ' athlete-magazine-agent-photo--tennis';
   return '';
@@ -187,15 +170,6 @@ function phoneTelHref(phone) {
     return `${mm}.${dd}.${yy}`;
   }
 
-  function wireRowLabel(key) {
-    const a = ATHLETES[key];
-    if (!a) return 'View transfer';
-    if (a.from && a.to) {
-      return `View ${a.name} transfer from ${a.from.name} to ${a.to.name}`;
-    }
-    return `View ${a.name}`;
-  }
-
   const modalPanel = modal.querySelector('.modal');
   let lastFocus = null;
 
@@ -237,7 +211,7 @@ function phoneTelHref(phone) {
     if (globalThis.SW_PORTRAITS) {
       globalThis.SW_PORTRAITS.fillAthletePhoto($photo, key, a);
     } else {
-      $photo.textContent = a.photo;
+    $photo.textContent = a.photo;
     }
     $photo.className = 'modal-photo' + (a.basketball ? ' basketball' : '');
 
@@ -344,11 +318,12 @@ function phoneTelHref(phone) {
       if (e.target.closest('.athlete-read-more')) return;
       return;
     }
-    activateCard(e.target.closest('.athlete-card[data-athlete]'));
   });
 
   document.querySelectorAll('.athlete-card[data-athlete]').forEach((card) => {
     const isRosterPageCard = Boolean(card.closest('#roster.roster-page'));
+    const isCarouselCard = Boolean(card.closest('#roster-carousel'));
+    if (isCarouselCard) return;
     if (!isRosterPageCard) {
       card.setAttribute('role', 'button');
       card.setAttribute('tabindex', '0');
@@ -403,7 +378,8 @@ function phoneTelHref(phone) {
     }
     if (descText) descText.textContent = cardBioExcerpt(a.bio || a.presentability || '');
     if (readMore) {
-      readMore.href = `athlete.html?athlete=${encodeURIComponent(key)}`;
+      const activeFilter = document.querySelector('.roster-tabs .tab.active')?.dataset.filter;
+      readMore.href = athletePageHref(key, activeFilter);
       readMore.setAttribute('aria-label', `Read more about ${a.name}`);
     }
   });
@@ -417,20 +393,6 @@ function phoneTelHref(phone) {
     e.preventDefault();
     e.stopPropagation();
     open(trigger.dataset.athlete);
-  });
-
-  document.querySelectorAll('.wire-row').forEach((row) => {
-    const key = row.dataset.transfer;
-    if (!key) return;
-    row.setAttribute('aria-label', wireRowLabel(key));
-    const activate = () => open(key);
-    row.addEventListener('click', activate);
-    row.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        activate();
-      }
-    });
   });
 
   closeBtn.addEventListener('click', close);
@@ -458,6 +420,548 @@ function phoneTelHref(phone) {
 
 
 /* ------------------------------------------------------------
+   3. TRANSFER HEADER PILLS
+   ------------------------------------------------------------ */
+
+(function TransferHeaderPills() {
+  const transferSection = document.getElementById('transfer');
+  if (!transferSection) return;
+
+  const pills = transferSection.querySelectorAll('.transfer-region-tabs .tab');
+  if (!pills.length) return;
+
+  pills.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      pills.forEach((candidate) => {
+        const active = candidate === pill;
+        candidate.classList.toggle('active', active);
+        candidate.setAttribute('aria-pressed', String(active));
+      });
+    });
+  });
+})();
+
+
+/* ------------------------------------------------------------
+   2b. SCROLL CAROUSEL — touch scroll + nav sync
+   ------------------------------------------------------------ */
+
+function prefersReducedMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+function resolveScrollBehavior(behavior = 'smooth') {
+  if (behavior === 'auto') return 'auto';
+  return prefersReducedMotion() ? 'auto' : behavior;
+}
+
+function createScrollCarousel({
+  viewport,
+  track,
+  prev,
+  next,
+  dots,
+  getCards,
+  getMode = () => 'page',
+  getSnap = () => 'start',
+  getPerPage,
+  beforeNavigate,
+  activeCardSelector,
+  dotLabelPrefix = 'Athlete',
+}) {
+  if (!viewport || !track) return null;
+
+  function isMobileCarousel() {
+    return window.matchMedia('(max-width: 980px)').matches;
+  }
+
+  function lastCardEndScrollLeft() {
+    const cards = getCards();
+    if (!cards.length) return 0;
+    const lastCard = cards[cards.length - 1];
+    return Math.max(0, cardOffsetInTrack(lastCard) + lastCard.offsetWidth - viewport.clientWidth);
+  }
+
+  function gapPx() {
+    return parseFloat(getComputedStyle(track).gap) || 16;
+  }
+
+  function cardWidth() {
+    const cards = getCards();
+    return cards[0]?.offsetWidth || 0;
+  }
+
+  function updateTrackSpacer() {
+    const width = cardWidth();
+    const spacer = width ? Math.max(0, viewport.clientWidth - width) : 0;
+    track.style.setProperty('--carousel-end-spacer', `${spacer}px`);
+  }
+
+  function visibleCount() {
+    const cards = getCards();
+    const width = cardWidth();
+    if (!width) return 1;
+    const gap = gapPx();
+    return Math.max(1, Math.min(cards.length, Math.floor((viewport.clientWidth + gap) / (width + gap))));
+  }
+
+  function perPageCount() {
+    const cards = getCards();
+    if (!cards.length) return 1;
+    const perPage = getPerPage?.() ?? visibleCount();
+    return Math.max(1, Math.min(cards.length, perPage));
+  }
+
+  function maxScrollLeft() {
+    const cards = getCards();
+    if (!cards.length) return 0;
+
+    const nativeMax = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+
+    if (getMode() === 'step') {
+      return nativeMax;
+    }
+
+    const pages = pageCount();
+    const lastPageStart = pageStartOffset(Math.max(0, pages - 1));
+    const endAligned = lastCardEndScrollLeft();
+
+    return Math.max(0, lastPageStart, endAligned, nativeMax);
+  }
+
+  function alignToPageScroll(page, behavior = 'auto') {
+    const left = Math.max(0, Math.min(pageScrollLeft(page), maxScrollLeft()));
+    if (Math.abs(viewport.scrollLeft - left) <= 2) return;
+    viewport.scrollTo({ left, behavior: resolveScrollBehavior(behavior) });
+  }
+
+  function cardOffsetInTrack(card) {
+    if (!card || !track.contains(card)) return 0;
+
+    let left = 0;
+    let node = card;
+    while (node && node !== track) {
+      left += node.offsetLeft;
+      node = node.parentElement;
+    }
+    return left - track.offsetLeft;
+  }
+
+  function currentCardIndex() {
+    const cards = getCards();
+    if (!cards.length) return 0;
+
+    const scrollLeft = viewport.scrollLeft;
+    const max = maxScrollLeft();
+
+    if (max > 0 && scrollLeft >= max - 4) {
+      for (let i = cards.length - 1; i >= 0; i -= 1) {
+        if (scrollLeftForIndex(i) <= scrollLeft + 4) {
+          return i;
+        }
+      }
+      return cards.length - 1;
+    }
+
+    let closest = 0;
+    let minDist = Infinity;
+    cards.forEach((card, i) => {
+      const offset = cardOffsetInTrack(card);
+      const dist = Math.abs(scrollLeft - offset);
+      if (dist < minDist) {
+        minDist = dist;
+        closest = i;
+      }
+    });
+    return closest;
+  }
+
+  function pageCount() {
+    const cards = getCards();
+    if (!cards.length) return 0;
+    if (getMode() === 'page') {
+      return Math.ceil(cards.length / perPageCount());
+    }
+    return cards.length;
+  }
+
+  function pageStartOffset(page) {
+    const cards = getCards();
+    const perPage = perPageCount();
+    const card = cards[Math.min(page * perPage, cards.length - 1)];
+    if (!card) return 0;
+
+    if (getSnap() === 'center') {
+      return cardOffsetInTrack(card) - (viewport.clientWidth - card.offsetWidth) / 2;
+    }
+    return cardOffsetInTrack(card);
+  }
+
+  function pageScrollLeft(page) {
+    const cards = getCards();
+    const pages = pageCount();
+    if (!cards.length) return 0;
+
+    const index = Math.max(0, Math.min(page, pages - 1));
+    if (index === 0) return 0;
+
+    if (getMode() === 'page' && index >= pages - 1) {
+      const lastCard = cards[cards.length - 1];
+      if (getSnap() === 'center') {
+        return cardOffsetInTrack(lastCard) - (viewport.clientWidth - lastCard.offsetWidth) / 2;
+      }
+      return Math.max(pageStartOffset(index), lastCardEndScrollLeft());
+    }
+
+    return pageStartOffset(index);
+  }
+
+  function scrollToPage(page, behavior = 'smooth') {
+    const left = Math.max(0, Math.min(pageScrollLeft(page), maxScrollLeft()));
+    viewport.scrollTo({ left, behavior: resolveScrollBehavior(behavior) });
+  }
+
+  function currentPageIndex() {
+    const pages = pageCount();
+    if (!pages) return 0;
+
+    const max = maxScrollLeft();
+    if (max <= 0) return 0;
+    if (viewport.scrollLeft >= max - 4) return pages - 1;
+
+    let bestPage = 0;
+    let bestDist = Infinity;
+    for (let p = 0; p < pages; p += 1) {
+      const offset = Math.max(0, Math.min(pageScrollLeft(p), max));
+      const dist = Math.abs(viewport.scrollLeft - offset);
+      if (dist < bestDist) {
+        bestDist = dist;
+        bestPage = p;
+      }
+    }
+    return bestPage;
+  }
+
+  function currentIndex() {
+    if (getMode() === 'page') {
+      return currentPageIndex();
+    }
+    return currentCardIndex();
+  }
+
+  function scrollToCard(card, behavior = 'smooth') {
+    if (!card) return;
+
+    let left;
+    if (getSnap() === 'center') {
+      left = cardOffsetInTrack(card) - (viewport.clientWidth - card.offsetWidth) / 2;
+    } else {
+      left = cardOffsetInTrack(card);
+    }
+
+    viewport.scrollTo({
+      left: Math.max(0, Math.min(left, maxScrollLeft())),
+      behavior: resolveScrollBehavior(behavior),
+    });
+  }
+
+  function scrollLeftForIndex(index) {
+    const cards = getCards();
+    if (!cards.length) return 0;
+
+    if (getMode() === 'page') {
+      return Math.max(0, Math.min(pageScrollLeft(index), maxScrollLeft()));
+    }
+
+    const card = cards[Math.max(0, Math.min(index, cards.length - 1))];
+    if (!card) return 0;
+
+    if (getSnap() === 'center') {
+      return Math.max(0, Math.min(
+        cardOffsetInTrack(card) - (viewport.clientWidth - card.offsetWidth) / 2,
+        maxScrollLeft(),
+      ));
+    }
+
+    return Math.max(0, Math.min(cardOffsetInTrack(card), maxScrollLeft()));
+  }
+
+  function isNearIndex(index, threshold = 6) {
+    const pages = pageCount();
+    const max = maxScrollLeft();
+
+    if (getMode() === 'step' && index === pages - 1 && max > 0 && viewport.scrollLeft >= max - threshold) {
+      return true;
+    }
+
+    return Math.abs(viewport.scrollLeft - scrollLeftForIndex(index)) <= threshold;
+  }
+
+  let scrollRaf = 0;
+  let settleTimer = 0;
+  let pendingNavIndex = null;
+  let settleAttempts = 0;
+  let activeIndex = 0;
+
+  function navIndex() {
+    if (pendingNavIndex !== null) return pendingNavIndex;
+    return activeIndex;
+  }
+
+  function onScroll() {
+    if (pendingNavIndex !== null) return;
+    cancelAnimationFrame(scrollRaf);
+    scrollRaf = requestAnimationFrame(updateNav);
+  }
+
+  function alignToIndex(index, behavior = 'auto') {
+    const cards = getCards();
+    if (!cards.length) return;
+
+    const i = Math.max(0, Math.min(index, cards.length - 1));
+    if (getMode() === 'page') {
+      alignToPageScroll(i, behavior);
+      return;
+    }
+    scrollToCard(cards[i], behavior);
+  }
+
+  function finishNavigation(targetIndex) {
+    const pages = pageCount();
+    const index = Math.max(0, Math.min(targetIndex, pages - 1));
+
+    if (!isNearIndex(index)) {
+      alignToIndex(index, 'auto');
+    }
+
+    if (!isNearIndex(index)) {
+      settleAttempts += 1;
+      if (settleAttempts < 12) {
+        settleNav();
+        return;
+      }
+    }
+
+    settleAttempts = 0;
+    activeIndex = index;
+    pendingNavIndex = null;
+    updateNav();
+  }
+
+  function settleNav() {
+    window.clearTimeout(settleTimer);
+    settleTimer = window.setTimeout(() => {
+      if (pendingNavIndex === null) return;
+      finishNavigation(pendingNavIndex);
+    }, 150);
+  }
+
+  function scrollToIndex(i, behavior = 'smooth') {
+    const cards = getCards();
+    if (!cards.length) return;
+
+    const pages = pageCount();
+    const index = Math.max(0, Math.min(i, pages - 1));
+    window.clearTimeout(settleTimer);
+    settleAttempts = 0;
+    pendingNavIndex = index;
+    syncNavToPage(index);
+
+    if (getMode() === 'page') {
+      scrollToPage(index, behavior);
+    } else {
+      scrollToCard(cards[index], behavior);
+    }
+
+    if (behavior === 'auto') {
+      finishNavigation(index);
+      return;
+    }
+    settleNav();
+  }
+
+  function syncNavToPage(pageIndex) {
+    const pages = pageCount();
+    const index = Math.max(0, Math.min(pageIndex, pages - 1));
+
+    if (prev) prev.disabled = index <= 0;
+    if (next) next.disabled = index >= pages - 1;
+
+    dots?.querySelectorAll('.roster-dot').forEach((dot, i) => {
+      const active = i === index;
+      dot.classList.toggle('active', active);
+      dot.setAttribute('aria-selected', String(active));
+    });
+  }
+
+  function renderDots() {
+    if (!dots) return;
+    const pages = pageCount();
+    const mode = getMode();
+    dots.hidden = pages <= 1;
+    dots.innerHTML = '';
+    for (let i = 0; i < pages; i += 1) {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'roster-dot';
+      dot.setAttribute('role', 'tab');
+      const label = mode === 'page'
+        ? `${dotLabelPrefix} group ${i + 1} of ${pages}`
+        : `${dotLabelPrefix} ${i + 1} of ${pages}`;
+      dot.setAttribute('aria-label', label);
+      dot.setAttribute('aria-selected', String(i === navIndex()));
+      if (i === navIndex()) dot.classList.add('active');
+      dot.addEventListener('click', () => {
+        beforeNavigate?.();
+        scrollToIndex(i);
+      });
+      dots.appendChild(dot);
+    }
+  }
+
+  function updateNav() {
+    const cards = getCards();
+    const index = navIndex();
+    const mode = getMode();
+    const pages = pageCount();
+
+    if (!cards.length) {
+      if (prev) prev.disabled = true;
+      if (next) next.disabled = true;
+      return;
+    }
+
+    if (prev) prev.disabled = index <= 0;
+    if (next) next.disabled = index >= pages - 1;
+
+    dots?.querySelectorAll('.roster-dot').forEach((dot, i) => {
+      const active = i === index;
+      dot.classList.toggle('active', active);
+      dot.setAttribute('aria-selected', String(active));
+    });
+
+    if (mode === 'step' && activeCardSelector) {
+      track.querySelectorAll(activeCardSelector).forEach((card) => {
+        card.classList.remove('is-active');
+        card.removeAttribute('aria-selected');
+      });
+      const activeCard = cards[Math.min(index, cards.length - 1)];
+      if (activeCard) {
+        activeCard.classList.add('is-active');
+        activeCard.setAttribute('aria-selected', 'true');
+      }
+    }
+  }
+
+  function goPrev() {
+    beforeNavigate?.();
+    scrollToIndex(Math.max(0, navIndex() - 1));
+  }
+
+  function goNext() {
+    beforeNavigate?.();
+    scrollToIndex(Math.min(pageCount() - 1, navIndex() + 1));
+  }
+
+  function onScrollEnd() {
+    window.clearTimeout(settleTimer);
+    if (pendingNavIndex !== null) {
+      finishNavigation(pendingNavIndex);
+      return;
+    }
+    if (getMode() === 'step') {
+      const cards = getCards();
+      const max = maxScrollLeft();
+      if (cards.length && max > 0 && viewport.scrollLeft >= max - 4) {
+        activeIndex = cards.length - 1;
+        updateNav();
+        return;
+      }
+      if (isNearIndex(activeIndex)) {
+        updateNav();
+        return;
+      }
+      const index = currentCardIndex();
+      alignToIndex(index, 'auto');
+      activeIndex = index;
+    } else {
+      activeIndex = currentIndex();
+    }
+    updateNav();
+  }
+
+  prev?.addEventListener('click', goPrev);
+  next?.addEventListener('click', goNext);
+  viewport.addEventListener('scroll', onScroll, { passive: true });
+  viewport.addEventListener('pointerdown', () => {
+    pendingNavIndex = null;
+    activeIndex = currentIndex();
+  }, { passive: true });
+  if ('onscrollend' in viewport) {
+    viewport.addEventListener('scrollend', onScrollEnd, { passive: true });
+  } else {
+    let scrollEndTimer = 0;
+    viewport.addEventListener('scroll', () => {
+      if (pendingNavIndex !== null) return;
+      window.clearTimeout(scrollEndTimer);
+      scrollEndTimer = window.setTimeout(onScrollEnd, 120);
+    }, { passive: true });
+  }
+
+  function onLayoutChange() {
+    updateTrackSpacer();
+    renderDots();
+    const index = navIndex();
+    scrollToIndex(index, 'auto');
+  }
+
+  window.addEventListener('resize', onLayoutChange);
+
+  updateTrackSpacer();
+  requestAnimationFrame(() => {
+    updateTrackSpacer();
+    renderDots();
+    updateNav();
+  });
+
+  return {
+    reset() {
+      activeIndex = 0;
+      updateTrackSpacer();
+      scrollToIndex(0, 'auto');
+      renderDots();
+      updateNav();
+    },
+    refresh() {
+      updateTrackSpacer();
+      activeIndex = currentIndex();
+      renderDots();
+      updateNav();
+    },
+    onLayoutChange,
+  };
+}
+
+const ROSTER_DESKTOP_CARD_WIDTH = 300;
+const ROSTER_DESKTOP_GAP = 16;
+const ROSTER_DESKTOP_VIEWPORT = 1400;
+
+function rosterDesktopPerPage() {
+  return Math.max(
+    1,
+    Math.floor((ROSTER_DESKTOP_VIEWPORT + ROSTER_DESKTOP_GAP) / (ROSTER_DESKTOP_CARD_WIDTH + ROSTER_DESKTOP_GAP)),
+  );
+}
+
+function rosterCarouselMode() {
+  return 'step';
+}
+
+function rosterPerPage() {
+  return undefined;
+}
+
+/* ------------------------------------------------------------
    3. ROSTER CAROUSEL + TABS
    ------------------------------------------------------------ */
 
@@ -473,52 +977,27 @@ function phoneTelHref(phone) {
   const next = rosterSection?.querySelector('.roster-next');
   const dots = document.getElementById('roster-dots');
   const tabs = document.querySelectorAll('.roster-tabs .tab');
-  if (!cardRoot || (!isGrid && (!carousel || !viewport))) return;
-
-  let index = 0;
+  if (!cardRoot || (!isGrid && (!carousel || !viewport || !track))) return;
 
   function visibleCards() {
     return [...cardRoot.querySelectorAll('.athlete-card')].filter((c) => c.dataset.hidden !== 'true');
   }
 
-  function stepPx() {
-    const cards = visibleCards();
-    if (!cards.length) return 0;
-    const gap = parseFloat(getComputedStyle(track).gap) || 16;
-    return cards[0].offsetWidth + gap;
-  }
+  const scrollCarousel = !isGrid
+    ? createScrollCarousel({
+      viewport,
+      track,
+      prev,
+      next,
+      dots,
+      getCards: visibleCards,
+      getMode: rosterCarouselMode,
+      getSnap: () => 'start',
+      getPerPage: rosterPerPage,
+    })
+    : null;
 
-  function renderDots() {
-    if (!dots || isGrid) return;
-    const cards = visibleCards();
-    dots.innerHTML = '';
-    cards.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = 'roster-dot';
-      dot.setAttribute('role', 'tab');
-      dot.setAttribute('aria-label', `Athlete ${i + 1}`);
-      dot.setAttribute('aria-selected', String(i === index));
-      if (i === index) dot.classList.add('active');
-      dot.addEventListener('click', () => { index = i; update(); });
-      dots.appendChild(dot);
-    });
-  }
-
-  function update() {
-    if (isGrid || !track) return;
-    const cards = visibleCards();
-    if (!cards.length) return;
-    const max = Math.max(0, cards.length - 1);
-    if (index > max) index = 0;
-    if (index < 0) index = max;
-    track.style.transform = `translateX(-${index * stepPx()}px)`;
-    dots?.querySelectorAll('.roster-dot').forEach((dot, i) => {
-      const active = i === index;
-      dot.classList.toggle('active', active);
-      dot.setAttribute('aria-selected', String(active));
-    });
-  }
+  window.matchMedia('(max-width: 980px)').addEventListener('change', () => scrollCarousel?.onLayoutChange());
 
   function applyFilter(sport) {
     cardRoot.querySelectorAll('.athlete-card').forEach((card) => {
@@ -530,17 +1009,7 @@ function phoneTelHref(phone) {
       card.setAttribute('tabindex', show ? '0' : '-1');
       card.setAttribute('aria-hidden', show ? 'false' : 'true');
     });
-    if (!isGrid) {
-      index = 0;
-      renderDots();
-      update();
-    }
-  }
-
-  if (!isGrid) {
-    prev?.addEventListener('click', () => { index -= 1; update(); });
-    next?.addEventListener('click', () => { index += 1; update(); });
-    window.addEventListener('resize', update);
+    scrollCarousel?.reset();
   }
 
   tabs.forEach((tab) => {
@@ -556,10 +1025,7 @@ function phoneTelHref(phone) {
   });
 
   cardRoot.querySelectorAll('.athlete-card').forEach((c) => { c.dataset.hidden = 'false'; });
-  if (!isGrid) {
-    renderDots();
-    update();
-  }
+  scrollCarousel?.reset();
 })();
 
 
@@ -882,113 +1348,34 @@ function phoneTelHref(phone) {
   const dots = document.getElementById('leadership-dots');
   if (!carousel || !viewport) return;
 
-  let index = 0;
-
   function visibleCards() {
     return [...track.querySelectorAll('.advisor-card')].filter((c) => c.dataset.hidden !== 'true');
   }
 
-  function stepPx() {
-    const cards = visibleCards();
-    if (!cards.length) return 0;
-    const gap = parseFloat(getComputedStyle(track).gap) || 16;
-    return cards[0].offsetWidth + gap;
-  }
-
-  function visibleCount() {
-    const cards = visibleCards();
-    const gap = parseFloat(getComputedStyle(track).gap) || 16;
-    const cardW = cards[0]?.offsetWidth || 0;
-    if (!cardW) return 1;
-    const vw = viewport.clientWidth;
-    return Math.max(1, Math.min(cards.length, Math.floor((vw + gap) / (cardW + gap))));
-  }
-
-  function maxIndex() {
-    return Math.max(0, visibleCards().length - visibleCount());
-  }
-
-  function pageCount() {
-    return maxIndex() + 1;
-  }
-
-  function renderDots() {
-    if (!dots) return;
-    const pages = pageCount();
-    dots.hidden = pages <= 1;
-    dots.innerHTML = '';
-    for (let i = 0; i < pages; i++) {
-      const dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = 'roster-dot';
-      dot.setAttribute('role', 'tab');
-      dot.setAttribute('aria-label', `Advisor group ${i + 1} of ${pages}`);
-      dot.setAttribute('aria-selected', String(i === index));
-      if (i === index) dot.classList.add('active');
-      dot.addEventListener('click', () => {
-        closeExpanded();
-        index = i;
-        update();
-      });
-      dots.appendChild(dot);
-    }
-  }
-
-  function update() {
-    const cards = visibleCards();
-    const max = maxIndex();
-    if (!cards.length) {
-      track.style.transform = 'translateX(0)';
-      if (prev) prev.disabled = true;
-      if (next) next.disabled = true;
-      return;
-    }
-    if (index > max) index = max;
-    if (index < 0) index = 0;
-    track.style.transform = `translateX(-${index * stepPx()}px)`;
-    track.querySelectorAll('.advisor-card').forEach((card) => {
-      card.classList.remove('is-active');
-      card.removeAttribute('aria-selected');
-    });
-    const activeCard = cards[index];
-    if (activeCard) {
-      activeCard.classList.add('is-active');
-      activeCard.setAttribute('aria-selected', 'true');
-    }
-    dots?.querySelectorAll('.roster-dot').forEach((dot, i) => {
-      const active = i === index;
-      dot.classList.toggle('active', active);
-      dot.setAttribute('aria-selected', String(active));
-    });
-    if (prev) prev.disabled = index <= 0;
-    if (next) next.disabled = index >= max;
-  }
+  const scrollCarousel = createScrollCarousel({
+    viewport,
+    track,
+    prev,
+    next,
+    dots,
+    getCards: visibleCards,
+    getMode: () => 'step',
+    getSnap: () => 'start',
+    beforeNavigate: closeExpanded,
+    dotLabelPrefix: 'Advisor',
+  });
 
   afterFilter = () => {
-    index = 0;
-    renderDots();
-    update();
+    scrollCarousel?.reset();
   };
 
-  prev?.addEventListener('click', () => {
-    closeExpanded();
-    index -= 1;
-    update();
-  });
-  next?.addEventListener('click', () => {
-    closeExpanded();
-    index += 1;
-    update();
-  });
-  window.addEventListener('resize', () => {
-    const prevIndex = index;
-    renderDots();
-    index = Math.min(prevIndex, maxIndex());
-    update();
-  });
+  track.style.transform = '';
+  scrollCarousel?.reset();
 
-  renderDots();
-  update();
+  window.matchMedia('(max-width: 980px)').addEventListener('change', () => {
+    track.style.transform = '';
+    scrollCarousel?.onLayoutChange();
+  });
 })();
 
 
@@ -1102,44 +1489,19 @@ function phoneTelHref(phone) {
     requestAnimationFrame(tick);
   }
 
-  const DEAL_QUEUE = [
-    {
-      title: 'Marcus Lane',
-      type: 'Apparel + camp appearances',
-      offer: '$420K',
-      term: '2 yr',
-      status: 'Counter sent',
-      feed: [
-        { role: 'Agent', msg: 'Counter filed · apparel + 2 camp days' },
-        { role: 'Brand', msg: 'Requested social deliverables breakdown' },
-      ],
-      agent: 'Luke Bramwell',
-    },
-    {
-      title: 'Idris Vale',
-      type: 'Transfer portal · Duke fit',
-      offer: '$310K',
-      term: '1 yr',
-      status: 'In review',
-      feed: [
-        { role: 'Agent', msg: 'School fit memo sent to family' },
-        { role: 'NCAA', msg: '14 days left in transfer window' },
-      ],
-      agent: 'Lenny Vasquez',
-    },
-    {
-      title: 'Devon Park',
-      type: 'HS commit · NIL package',
-      offer: '$185K',
-      term: '3 yr',
-      status: 'Signed',
-      feed: [
-        { role: 'Agent', msg: 'Package locked · compliance filed' },
-        { role: 'Brand', msg: 'Regional apparel deal executed' },
-      ],
-      agent: 'Luke Bramwell',
-    },
-  ];
+  const DEAL_QUEUE = (globalThis.DEMO_MARKETING?.deals || []).map((deal) => ({
+    slug: deal.slug,
+    title: deal.title,
+    type: deal.type,
+    offer: deal.offer,
+    term: deal.term,
+    status: deal.status,
+    feed: deal.feed,
+    agent: deal.agent,
+    initials: deal.initials,
+  }));
+
+  const demoFeatured = globalThis.DEMO_MARKETING?.perfAthlete || DEAL_QUEUE[0]?.title || 'Represented athlete';
 
   const PERF_PROFILES = [
     {
@@ -1197,7 +1559,7 @@ function phoneTelHref(phone) {
 
   const TECH_PROFILES = [
     {
-      label: 'Marcus Lane · portfolio',
+      label: `${demoFeatured} · portfolio`,
       hero: '$847,500',
       delta: '+18.4% vs last month',
       panelLabel: 'Sync',
@@ -1319,11 +1681,21 @@ function phoneTelHref(phone) {
     },
   ];
 
+  function mktSchoolMarkHtml(row) {
+    if (row.logoSrc) {
+      return `<span class="mkt-school-mark logo--img"><img src="${row.logoSrc}" alt="" width="36" height="36" loading="lazy" /></span>`;
+    }
+    if (row.mark) {
+      return `<span class="mkt-school-mark">${row.mark}</span>`;
+    }
+    return '';
+  }
+
   function renderLedgerRows(list, rows, { active = 0 } = {}) {
     if (!list) return;
     list.innerHTML = rows.map((row, i) => (
       `<button type="button" class="mkt-school-row${i === active ? ' on' : ''}" data-row="${i}">`
-      + `<span class="mkt-school-mark">${row.mark}</span>`
+      + mktSchoolMarkHtml(row)
       + `<span class="mkt-school-copy"><strong>${row.title}</strong><span>${row.sub}</span></span>`
       + `<em class="mkt-school-amt${row.amt.startsWith('+') ? ' up' : ''}">${row.amt}</em>`
       + '</button>'
@@ -1363,6 +1735,26 @@ function phoneTelHref(phone) {
       renderFeed(data.feed);
     }
 
+    function hydrateQueueLabels() {
+      const portraits = globalThis.SW_PORTRAITS;
+      items.forEach((item, i) => {
+        const data = DEAL_QUEUE[i];
+        if (!data) return;
+        const nameEl = item.querySelector('.mkt-queue-name');
+        const subEl = item.querySelector('.mkt-queue-sub');
+        const avEl = item.querySelector('.mkt-queue-av');
+        if (nameEl) nameEl.textContent = data.title;
+        if (subEl) subEl.textContent = data.type;
+        if (avEl && data.slug && portraits && typeof ATHLETES !== 'undefined' && ATHLETES[data.slug]) {
+          portraits.fillAthletePhoto(avEl, data.slug, ATHLETES[data.slug]);
+        } else if (avEl && data.initials) {
+          avEl.textContent = data.initials;
+        }
+      });
+    }
+
+    hydrateQueueLabels();
+
     function setQueue(active) {
       const i = parseInt(active.dataset.q, 10);
       items.forEach((item) => item.classList.toggle('on', item === active));
@@ -1394,7 +1786,10 @@ function phoneTelHref(phone) {
 
   function wireKpi(mktRoot) {
     const tabs = [...mktRoot.querySelectorAll('.mkt-seg-tab[data-perf]')];
-    if (!tabs.length) return;
+  if (!tabs.length) return;
+
+    const $chromeCount = mktRoot.querySelector('.mkt-chrome-count');
+    if ($chromeCount && demoFeatured) $chromeCount.textContent = demoFeatured;
 
     const $label = mktRoot.querySelector('.mkt-perf-label');
     const $hero = mktRoot.querySelector('.mkt-perf-hero');
@@ -1694,7 +2089,7 @@ function phoneTelHref(phone) {
     const amts = [$a0, $a1, $a2];
 
     function setStageState(step) {
-      tabs.forEach((tab) => {
+  tabs.forEach((tab) => {
         const n = parseInt(tab.dataset.stage, 10);
         tab.classList.toggle('on', n === step);
         tab.classList.toggle('done', n < step);
@@ -1753,6 +2148,9 @@ function phoneTelHref(phone) {
   function wireTech(mktRoot) {
     const tabs = [...mktRoot.querySelectorAll('.mkt-seg-tab[data-tech]')];
     if (!tabs.length) return;
+
+    const $chromeCount = mktRoot.querySelector('.mkt-chrome-count');
+    if ($chromeCount && demoFeatured) $chromeCount.textContent = demoFeatured;
 
     const $label = mktRoot.querySelector('.mkt-tech-label');
     const $hero = mktRoot.querySelector('.mkt-tech-hero');
@@ -2299,7 +2697,7 @@ function phoneTelHref(phone) {
   function closeAll() {
     dropdowns.forEach((dropdown) => {
       const btn = dropdownTrigger(dropdown);
-      const menu = dropdown.querySelector('.nav-submenu');
+  const menu = dropdown.querySelector('.nav-submenu');
       if (!btn || !menu) return;
       menu.style.display = '';
       btn.setAttribute('aria-expanded', 'false');
@@ -2311,9 +2709,9 @@ function phoneTelHref(phone) {
     const menu = dropdown.querySelector('.nav-submenu');
     if (!btn || !menu) return;
 
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const open = menu.style.display === 'block';
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = menu.style.display === 'block';
       closeAll();
       if (!open) {
         menu.style.display = 'block';
@@ -2372,8 +2770,85 @@ function phoneTelHref(phone) {
     const params = new URLSearchParams(location.search);
     const fromQuery = params.get('athlete');
     if (fromQuery) return fromQuery;
+
+    const pathMatch = location.pathname.match(/\/athlete\/([^/]+)\/?$/);
+    if (pathMatch) return decodeURIComponent(pathMatch[1]);
+
     const fromHash = location.hash.replace(/^#/, '');
     return fromHash || '';
+  }
+
+  function profileSportFilter() {
+    const sport = new URLSearchParams(location.search).get('sport');
+    return sport === 'football' || sport === 'basketball' ? sport : 'all';
+  }
+
+  function athleteProfileUrl(slug, sport = profileSportFilter()) {
+    return athletePageHref(slug, sport);
+  }
+
+  function athleteOrderForFilter(sport, currentKey) {
+    const fullOrder = typeof ATHLETE_ORDER !== 'undefined' ? ATHLETE_ORDER : Object.keys(ATHLETES);
+    if (!sport || sport === 'all') return fullOrder;
+
+    const filtered = fullOrder.filter((slug) => {
+      const athlete = ATHLETES[slug];
+      if (!athlete) return false;
+      return sport === 'basketball' ? athlete.basketball : !athlete.basketball;
+    });
+
+    if (currentKey && !filtered.includes(currentKey)) return fullOrder;
+    return filtered;
+  }
+
+  function setHeadNavLink(rel, href) {
+    const existing = document.querySelector(`link[rel="${rel}"]`);
+    if (!href) {
+      existing?.remove();
+      return;
+    }
+    const link = existing || document.createElement('link');
+    link.rel = rel;
+    link.href = href;
+    if (!existing) document.head.appendChild(link);
+  }
+
+  function renderPager(currentKey) {
+    const pager = document.getElementById('athlete-magazine-pager');
+    if (!pager) return;
+
+    const sport = profileSportFilter();
+    const order = athleteOrderForFilter(sport, currentKey);
+    const index = order.indexOf(currentKey);
+    const prevKey = index > 0 ? order[index - 1] : null;
+    const nextKey = index >= 0 && index < order.length - 1 ? order[index + 1] : null;
+
+    pager.querySelectorAll('[data-pager]').forEach((link) => {
+      const direction = link.dataset.pager;
+      const key = direction === 'prev' ? prevKey : nextKey;
+      const athlete = key ? ATHLETES[key] : null;
+
+      if (!athlete) {
+        link.hidden = true;
+        link.removeAttribute('href');
+        return;
+      }
+
+      link.hidden = false;
+      link.removeAttribute('hidden');
+      link.href = athleteProfileUrl(key, sport);
+      link.setAttribute('aria-label', `${direction === 'prev' ? 'Previous' : 'Next'} athlete: ${athlete.name}`);
+
+      const nameEl = link.querySelector('[data-pager-name]');
+      const metaEl = link.querySelector('[data-pager-meta]');
+      if (nameEl) nameEl.textContent = athlete.name;
+      if (metaEl) metaEl.textContent = athlete.position || '';
+    });
+
+    pager.hidden = !prevKey && !nextKey;
+    if (!pager.hidden) pager.removeAttribute('hidden');
+    setHeadNavLink('prev', prevKey ? athleteProfileUrl(prevKey, sport) : null);
+    setHeadNavLink('next', nextKey ? athleteProfileUrl(nextKey, sport) : null);
   }
 
   function splitBio(bio) {
@@ -2383,15 +2858,20 @@ function phoneTelHref(phone) {
     return { lead: match[1].trim(), body: match[2].trim() };
   }
 
-  function renderMeta(label, value) {
+  function renderMetaRow(label, value, { path = false } = {}) {
     if (!value) return '';
-    return `<dt>${label}</dt><dd>${value}</dd>`;
+    const ddClass = path ? ' class="athlete-magazine-meta-path"' : '';
+    return `<div class="athlete-magazine-meta-row"><dt>${label}</dt><dd${ddClass}>${value}</dd></div>`;
+  }
+
+  function renderMeta(label, value) {
+    return renderMetaRow(label, value);
   }
 
   function magazineSchoolLogo(school) {
     if (!school) return '';
     if (school.logoSrc) {
-      return `<div class="logo logo--img"><img src="${school.logoSrc}" alt="" width="36" height="36" loading="lazy" decoding="async" /></div>`;
+      return `<div class="logo logo--img"><img src="${school.logoSrc}" alt="" width="28" height="28" loading="lazy" decoding="async" /></div>`;
     }
     return `<div class="logo" style="background:${school.color}">${school.logo}</div>`;
   }
@@ -2432,7 +2912,6 @@ function phoneTelHref(phone) {
 
   function pathMetaLabel(a) {
     if (a.status === 'portal') return 'Transfer';
-    if (a.status === 'signed') return 'Signing';
     return 'Commitment';
   }
 
@@ -2875,7 +3354,7 @@ function phoneTelHref(phone) {
     const metaEl = document.getElementById('athlete-magazine-meta');
     if (metaEl) {
       const pathBlock = a.from && a.to
-        ? `<dt>${pathMetaLabel(a)}</dt><dd class="athlete-magazine-meta-path">${renderMagazinePath(a.from, a.to)}</dd>`
+        ? renderMetaRow(pathMetaLabel(a), renderMagazinePath(a.from, a.to), { path: true })
         : renderMeta('University', a.university);
       metaEl.innerHTML = [
         pathBlock,
@@ -2892,6 +3371,8 @@ function phoneTelHref(phone) {
       partnerCta.href = partnerGetStartedUrl(key);
       partnerCta.setAttribute('aria-label', `Partner with ${a.name}`);
     }
+
+    renderPager(key);
 
     root.hidden = false;
     if (empty) empty.hidden = true;
@@ -2988,7 +3469,7 @@ function phoneTelHref(phone) {
       const linkEl = context.querySelector('[data-athlete-profile]');
       if (nameEl) nameEl.textContent = athlete.name;
       if (linkEl) {
-        linkEl.href = `athlete.html?athlete=${encodeURIComponent(athleteSlug)}`;
+        linkEl.href = athletePageHref(athleteSlug);
         linkEl.setAttribute('aria-label', `View ${athlete.name} profile`);
       }
       context.hidden = false;
@@ -3426,6 +3907,14 @@ function phoneTelHref(phone) {
     }
   });
 
+  document.querySelectorAll('.wire-row[data-transfer]').forEach((row) => {
+    const slug = row.dataset.transfer;
+    const photo = row.querySelector('.wire-photo');
+    if (!photo || !slug) return;
+    const athlete = typeof ATHLETES !== 'undefined' ? ATHLETES[slug] : null;
+    portraits.fillAthletePhoto(photo, slug, athlete);
+  });
+
   document.querySelectorAll('.advisor-card[data-advisor]').forEach((card) => {
     const id = card.dataset.advisor;
     const photo = card.querySelector('.advisor-photo');
@@ -3436,6 +3925,41 @@ function phoneTelHref(phone) {
   if (founder) {
     portraits.applyPortraitImage(founder, portraits.founderPortraitSrc(), 'Luke Mazur, founder portrait');
   }
+})();
+
+
+/* ------------------------------------------------------------
+   10c. BRAND STEP CARDS — ambient illustration motion
+   ------------------------------------------------------------ */
+
+(function BrandStepMotion() {
+  const track = document.getElementById('brand-cards');
+  const section = document.getElementById('brand');
+  if (!track || !section) return;
+
+  const mqReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (mqReduced.matches) {
+    track.classList.add('is-inview');
+    return;
+  }
+
+  track.classList.add('brand-grid-track--motion');
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      track.classList.toggle('is-inview', entry.isIntersecting);
+    },
+    { threshold: 0.15, rootMargin: '0px 0px -6% 0px' }
+  );
+
+  observer.observe(section);
+
+  mqReduced.addEventListener('change', () => {
+    if (mqReduced.matches) {
+      track.classList.add('is-inview');
+      observer.disconnect();
+    }
+  });
 })();
 
 

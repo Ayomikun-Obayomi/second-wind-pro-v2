@@ -91,6 +91,11 @@ All tokens are defined in `css/tokens.css` as CSS custom properties on `:root`. 
 | `--radius-md` | `8px` | Modal cells, inputs |
 | `--radius-lg` | `12px` | Cards |
 | `--radius-pill` | `100px` | Sport filter tabs, partner button, nav CTA |
+| `--nested-r-inner` | `4px` (`--radius-sm`) | Inner radius in concentric nested corners |
+| `--nested-r-pad-y` | `8px` (`--s-2`) | Vertical padding between inner child and outer card |
+| `--nested-r-outer` | `12px` (`--radius-lg`) | Outer card radius when corner-nested |
+
+> **Nested corners:** Inner (the current border radii) + Padding (vertical) = outer the final border radii of the card. See `.cursor/rules/nested-border-radius.mdc`.
 
 > **Section CTAs** (`.btn-outline`, `.btn-outline.btn-primary`) use **`--btn-radius`** → `var(--radius-sm)` (4px). Nav CTA and partner buttons use `--radius-pill`.
 

@@ -8,6 +8,7 @@
 
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
 
   <title>Leadership — Second Wind Pro</title>
@@ -44,15 +45,12 @@
           <li><a href="transfer.html">Transfers</a></li>
         </ul>
       </li>
-      <li><a href="brand.html">Brand Partnerships</a></li>
       <li><a href="leadership.html" aria-current="page">Leadership</a></li>
-      <li class="nav-dropdown nav-dropdown--has-link">
-        <span class="nav-dropdown-split">
-          <a href="about.html" class="nav-dropdown-link">Resources</a>
-          <button type="button" class="nav-dropdown-toggle" aria-label="Show Resources submenu" aria-haspopup="true" aria-expanded="false">
-            <svg class="nav-dropdown-chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5L5 6.5L8 3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </span>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-label="Show Resources menu" aria-haspopup="true" aria-expanded="false">
+          Resources
+          <svg class="nav-dropdown-chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5L5 6.5L8 3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
         <ul class="nav-submenu">
           <li><a href="about.html">About Us</a></li>
           <li><a href="careers.html">Careers</a></li>
@@ -81,7 +79,6 @@
             <li><a class="nav-drawer-sub-link" href="transfer.html">Transfers</a></li>
           </ul>
         </li>
-        <li><a href="brand.html">Brand Partnerships</a></li>
         <li><a href="leadership.html" aria-current="page">Leadership</a></li>
         <li class="nav-drawer-group">
           <button type="button" class="nav-drawer-trigger" aria-expanded="false" aria-controls="nav-drawer-sub">
@@ -112,98 +109,56 @@
       <div class="leadership-stage">
         <div class="leadership-toolbar roster-toolbar">
           <div class="roster-tabs" role="group" aria-label="Filter agents by type">
-            <button type="button" class="tab active" aria-pressed="true" data-filter="all">All <span class="count">6</span></button>
+            <button type="button" class="tab active" aria-pressed="true" data-filter="all">All <span class="count">3</span></button>
             <button type="button" class="tab" aria-pressed="false" data-filter="leadership">Leadership <span class="count">1</span></button>
-            <button type="button" class="tab" aria-pressed="false" data-filter="senior">Senior Agents <span class="count">2</span></button>
-            <button type="button" class="tab" aria-pressed="false" data-filter="agent">Agents <span class="count">3</span></button>
+            <button type="button" class="tab" aria-pressed="false" data-filter="senior">Senior Agents <span class="count">1</span></button>
+            <button type="button" class="tab" aria-pressed="false" data-filter="agent">Agents <span class="count">1</span></button>
           </div>
         </div>
 
         <div class="leadership-grid" id="leadership-grid" role="region" aria-label="Executive leadership and agent profiles">
           <div class="leadership-showcase">
           <div class="leadership-grid-track" id="leadership-track">
-          <article class="advisor-card" data-advisor="jordan-ellis" data-agent-type="leadership" aria-label="Jordan Ellis, Head of Sports & COO">
+          <article class="advisor-card" data-advisor="luke-mazur" data-agent-type="leadership" aria-label="Luke Mazur, Founder &amp; CEO">
             <div class="advisor-photo advisor-photo--exec">
               <div class="advisor-photo-surface">
-                <span class="advisor-initials">JE</span>
-              </div>
-            </div>
-            <div class="advisor-card-head">
-              <h3 class="advisor-name">
-                <span class="advisor-first">Jordan</span>
-                <span class="advisor-last">Ellis</span>
-              </h3>
-              <p class="advisor-title">Head of Sports & COO</p>
-            </div>
-          </article>
-          <article class="advisor-card" data-advisor="luke-bramwell" data-agent-type="senior" aria-label="Luke Bramwell, Senior Agent · Football">
-            <div class="advisor-photo">
-              <div class="advisor-photo-surface">
-                <span class="advisor-initials">LB</span>
+                <span class="advisor-initials">LM</span>
               </div>
             </div>
             <div class="advisor-card-head">
               <h3 class="advisor-name">
                 <span class="advisor-first">Luke</span>
-                <span class="advisor-last">Bramwell</span>
+                <span class="advisor-last">Mazur</span>
+              </h3>
+              <p class="advisor-title">Founder &amp; CEO</p>
+            </div>
+          </article>
+          <article class="advisor-card" data-advisor="shane-simpson" data-agent-type="senior" aria-label="Shane Simpson, Senior Agent · Football">
+            <div class="advisor-photo">
+              <div class="advisor-photo-surface">
+                <span class="advisor-initials">SS</span>
+              </div>
+            </div>
+            <div class="advisor-card-head">
+              <h3 class="advisor-name">
+                <span class="advisor-first">Shane</span>
+                <span class="advisor-last">Simpson</span>
               </h3>
               <p class="advisor-title">Senior Agent · Football</p>
             </div>
           </article>
-          <article class="advisor-card" data-advisor="lenny-vasquez" data-agent-type="senior" aria-label="Lenny Vasquez, Senior Agent · Basketball">
-            <div class="advisor-photo advisor-photo--basketball">
-              <div class="advisor-photo-surface">
-                <span class="advisor-initials">LV</span>
-              </div>
-            </div>
-            <div class="advisor-card-head">
-              <h3 class="advisor-name">
-                <span class="advisor-first">Lenny</span>
-                <span class="advisor-last">Vasquez</span>
-              </h3>
-              <p class="advisor-title">Senior Agent · Basketball</p>
-            </div>
-          </article>
-          <article class="advisor-card" data-advisor="mara-chen" data-agent-type="agent" aria-label="Mara Chen, Agent · Tennis">
-            <div class="advisor-photo advisor-photo--tennis">
-              <div class="advisor-photo-surface">
-                <span class="advisor-initials">MC</span>
-              </div>
-            </div>
-            <div class="advisor-card-head">
-              <h3 class="advisor-name">
-                <span class="advisor-first">Mara</span>
-                <span class="advisor-last">Chen</span>
-              </h3>
-              <p class="advisor-title">Agent · Tennis</p>
-            </div>
-          </article>
-          <article class="advisor-card" data-advisor="eli-okonkwo" data-agent-type="agent" aria-label="Eli Okonkwo, Agent · Football">
+          <article class="advisor-card" data-advisor="tony-storniolo" data-agent-type="agent" aria-label="Tony Storniolo, Agent · Football">
             <div class="advisor-photo">
               <div class="advisor-photo-surface">
-                <span class="advisor-initials">EO</span>
+                <span class="advisor-initials">TS</span>
               </div>
             </div>
             <div class="advisor-card-head">
               <h3 class="advisor-name">
-                <span class="advisor-first">Eli</span>
-                <span class="advisor-last">Okonkwo</span>
+                <span class="advisor-first">Tony</span>
+                <span class="advisor-last">Storniolo</span>
               </h3>
               <p class="advisor-title">Agent · Football</p>
-            </div>
-          </article>
-          <article class="advisor-card" data-advisor="sofia-ruiz" data-agent-type="agent" aria-label="Sofia Ruiz, Agent · Basketball">
-            <div class="advisor-photo advisor-photo--basketball">
-              <div class="advisor-photo-surface">
-                <span class="advisor-initials">SR</span>
-              </div>
-            </div>
-            <div class="advisor-card-head">
-              <h3 class="advisor-name">
-                <span class="advisor-first">Sofia</span>
-                <span class="advisor-last">Ruiz</span>
-              </h3>
-              <p class="advisor-title">Agent · Basketball</p>
             </div>
           </article>
           </div>
@@ -305,11 +260,11 @@
     </div>
 
     <div class="footer-bar">
-      <div class="footer-bar-brand">
-        <a href="index.html" class="footer-wordmark">Second Wind Pro</a>
+      <span class="footer-wordmark" aria-hidden="true"><span class="footer-wordmark-sw">SW</span><em class="footer-wordmark-p">P</em></span>
+      <div class="footer-bar-meta">
         <p class="footer-mission">An athlete-first NIL agency built to increase on-field earnings.</p>
+        <p class="footer-copy">© 2026 Second Wind Pro LLC. All Rights Reserved.</p>
       </div>
-      <p class="footer-copy">© 2026 Second Wind Pro LLC. All Rights Reserved.</p>
     </div>
   </div>
 </footer>
@@ -320,6 +275,7 @@
 <script src="js/icons.js" defer></script>
 <script src="js/portraits.js" defer></script>
 <script src="js/athletes-data.js" defer></script>
+<script src="js/demo-marketing-data.js" defer></script>
 <script src="js/main.js" defer></script>
 <script src="js/agentation.bundle.js" defer></script>
 </body>

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { buildAthletesCatalog } from './generate-athletes-data.mjs';
+import { buildAthletesCatalogSync } from './generate-athletes-data.mjs';
 import {
   HANDCRAFTED_SLUGS,
   HANDCRAFTED_SOCIAL,
@@ -317,7 +317,7 @@ window.MAGAZINE_STORIES = ${storiesJson};
 `;
 }
 
-const athletes = buildAthletesCatalog();
+const athletes = buildAthletesCatalogSync();
 const social = { ...HANDCRAFTED_SOCIAL };
 const stories = { ...HANDCRAFTED_STORIES };
 

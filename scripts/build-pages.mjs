@@ -32,10 +32,13 @@ import { execSync } from 'child_process';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, '..');
 execSync('node scripts/generate-athletes-data.mjs', { cwd: root, stdio: 'inherit' });
+execSync('node scripts/generate-transfers-data.mjs', { cwd: root, stdio: 'inherit' });
+execSync('node scripts/generate-demo-marketing-data.mjs', { cwd: root, stdio: 'inherit' });
 execSync('node scripts/generate-athlete-magazine-data.mjs', { cwd: root, stdio: 'inherit' });
 const indexPath = path.join(root, 'index.html');
 const leadershipLanding = fs.readFileSync(path.join(__dirname, 'snippets/leadership-landing.html'), 'utf8').trim();
 const transferLanding = fs.readFileSync(path.join(__dirname, 'snippets/transfer-landing.html'), 'utf8').trim();
+const brandLanding = fs.readFileSync(path.join(__dirname, 'snippets/brand-landing.html'), 'utf8').trim();
 const joinLanding = fs.readFileSync(path.join(__dirname, 'snippets/join-landing.html'), 'utf8').trim();
 const getStartedMain = fs.readFileSync(path.join(__dirname, 'snippets/get-started-main.html'), 'utf8').trim();
 const aboutMain = fs.readFileSync(path.join(__dirname, 'snippets/about-main.html'), 'utf8').trim();
@@ -94,17 +97,14 @@ function nav(current) {
           <li>${link('transfer.html', 'Transfers', 'transfer')}</li>
         </ul>
       </li>
-      <li>${link('brand.html', 'Brand Partnerships', 'brand')}</li>
       <li>${link('leadership.html', 'Leadership', 'leadership')}</li>
-      <li class="nav-dropdown nav-dropdown--has-link">
-        <span class="nav-dropdown-split">
-          <a href="about.html" class="nav-dropdown-link"${current === 'about' ? ' aria-current="page"' : ''}>Resources</a>
-          <button type="button" class="nav-dropdown-toggle" aria-label="Show Resources submenu" aria-haspopup="true" aria-expanded="false">
-            <svg class="nav-dropdown-chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5L5 6.5L8 3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </span>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-label="Show Resources menu" aria-haspopup="true" aria-expanded="false">
+          Resources
+          <svg class="nav-dropdown-chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5L5 6.5L8 3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
         <ul class="nav-submenu">
-          <li><a href="about.html">About Us</a></li>
+          <li>${link('about.html', 'About Us', 'about')}</li>
           <li>${link('careers.html', 'Careers', 'careers')}</li>
         </ul>
       </li>
@@ -131,7 +131,6 @@ function nav(current) {
             <li>${link('transfer.html', 'Transfers', 'transfer').replace('<a ', '<a class="nav-drawer-sub-link" ')}</li>
           </ul>
         </li>
-        <li>${link('brand.html', 'Brand Partnerships', 'brand')}</li>
         <li>${link('leadership.html', 'Leadership', 'leadership')}</li>
         <li class="nav-drawer-group">
           <button type="button" class="nav-drawer-trigger" aria-expanded="false" aria-controls="nav-drawer-sub">
@@ -166,7 +165,7 @@ function transferForLanding(html) {
     .replace('wire-row wire-row-live', 'wire-row')
     .replace(
       '<h2 id="transfer-heading">Strategic placements <em>&amp; commitments.</em></h2>\n      </div>',
-      '<h2 id="transfer-heading">Strategic placements <em>&amp; commitments.</em></h2>\n        <p class="desc">Confirmed signings and commitments from athletes we represent.</p>\n      </div>'
+      '<h2 id="transfer-heading">Strategic placements, <em>made visible.</em></h2>\n        <p class="desc">Confirmed signings and portal commitments from the college football athletes we represent.</p>\n      </div>'
     );
 }
 
@@ -190,6 +189,12 @@ function pageTail({ withAthleteMagazineData = false } = {}) {
       '<script src="js/athletes-data.js" defer></script>\n<script src="js/main.js" defer></script>'
     );
   }
+  if (!scripts.includes('demo-marketing-data.js')) {
+    scripts = scripts.replace(
+      '<script src="js/main.js" defer></script>',
+      '<script src="js/demo-marketing-data.js" defer></script>\n<script src="js/main.js" defer></script>'
+    );
+  }
   if (withAthleteMagazineData) {
     scripts = scripts.replace(
       '<script src="js/main.js" defer></script>',
@@ -199,12 +204,18 @@ function pageTail({ withAthleteMagazineData = false } = {}) {
   return scripts;
 }
 
-function page({ file, title, description, current, main, withModal = false, withTemplates = false, withAthleteMagazineData = false }) {
+function page({ file, title, description, current, main, withModal = false, withTemplates = false, withAthleteMagazineData = false, rootAssets = false }) {
   const pageHead = head
     .replace(/<title>.*?<\/title>/, `<title>${title}</title>`)
     .replace(
       /content="Second Wind Pro — the modern athlete's NIL agency\.[^"]*"/,
       `content="${description}"`
+    )
+    .replace(
+      /<meta charset="UTF-8" \/>/,
+      rootAssets
+        ? '<meta charset="UTF-8" />\n  <base href="/" />'
+        : '<meta charset="UTF-8" />'
     );
 
   const templates = withTemplates
@@ -242,7 +253,9 @@ function rosterCarouselFrom(html) {
   return html.slice(s, end).trim();
 }
 
-const rosterLanding = rosterCarouselFrom(index);
+const rosterLanding = fs.existsSync(path.join(__dirname, 'snippets/roster-landing.html'))
+  ? fs.readFileSync(path.join(__dirname, 'snippets/roster-landing.html'), 'utf8').trim()
+  : rosterCarouselFrom(index);
 const athletesPage = mainFrom('meet-the-athletes.html');
 const transfer = mainFrom('transfer.html');
 const brand = mainFrom('brand.html');
@@ -277,6 +290,7 @@ page({
   current: 'athletes',
   main: athleteProfileMain,
   withAthleteMagazineData: true,
+  rootAssets: true,
 });
 
 page({
@@ -357,11 +371,11 @@ function buildIndexFromPages() {
 
   const landingMain = `${landingCore}
 
-${rosterCarouselFrom(currentIndex)}
+${rosterLanding}
 
 ${transferLanding}
 
-${mainFrom('brand.html')}
+${brandLanding}
 
 ${leadershipLandingFrom(currentIndex)}
 

@@ -108,6 +108,9 @@ Base unit: 4px. Scale uses tokens `--s-1` through `--s-9`.
 - **M-03.** Modal opens with `display:flex` instant, no entrance animation. Snappy is correct here — animation delays interaction.
 - **M-04.** Every animation gated by `@media (prefers-reduced-motion: reduce)`. Marquee pauses. Transform transitions become opacity-only.
 - **M-05.** Never animate text content (no character-by-character typewriter). Never animate the nav or primary CTAs (delays interaction).
+- **M-06.** **Roster carousel:** step nav at all breakpoints — prev/next advances one card, start-aligned snap, smooth native scroll (~400ms settle), **unchanged card sizes** (300px desktop, ~280px mobile). Last card end-aligns so the final athlete is never clipped. **Leadership carousel:** step nav; mobile uses horizontal swipe (`overflow-x: auto`, scroll-snap); desktop uses button nav with `overflow-x: hidden`.
+- **M-07.** Carousel motion is **native scroll continuity only** — no crossfade, slide transforms, scale-on-page-change, or autoplay on content carousels. Swipe uses OS momentum; button/dot nav may use `scrollTo({ behavior: 'smooth' })`.
+- **M-08.** Programmatic carousel scroll uses `behavior: 'auto'` when `prefers-reduced-motion: reduce` (see `resolveScrollBehavior` in `js/main.js`). Mobile carousels use `scroll-snap-type: x mandatory` and `scroll-snap-align: start` on cards; snap is disabled under reduced motion. Scroll listeners sync dots only — never drive transforms from `scrollLeft`.
 
 ---
 
@@ -116,9 +119,11 @@ Base unit: 4px. Scale uses tokens `--s-1` through `--s-9`.
 ### Card
 - bg: `--surface`
 - border: 1px solid `--line`
-- radius: 8–10px (`--radius-md`)
+- radius: derived when corner-nested — `--nested-r-outer` = `--nested-r-inner` + `--nested-r-pad-y`; otherwise `--radius-md`–`--radius-lg`
 - padding: `--s-4`
 - hover: border → `--line-strong`
+
+**Nested corners (R05-NR):** Inner (the current border radii) + Padding (vertical) = outer the final border radii of the card. Reference: `.about-uni-pop__card`. Full rule: `.cursor/rules/nested-border-radius.mdc`.
 
 ### Button (primary)
 - bg: `--purple`

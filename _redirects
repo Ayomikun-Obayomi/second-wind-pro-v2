@@ -1,0 +1,2 @@
+/athlete/:slug  /athlete.html?athlete=:slug  200
+/athlete        /meet-the-athletes.html       301

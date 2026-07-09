@@ -129,7 +129,7 @@ The footer **Speak With an Agent** link must follow the same rules as every othe
 
 ## Reduced motion
 
-`prefers-reduced-motion: reduce` short-circuits animations and transitions site-wide. Scroll-to-top and carousel behavior respect the same media query in `js/main.js`.
+`prefers-reduced-motion: reduce` short-circuits animations and transitions site-wide. Scroll-to-top, services stack, and carousel prev/next/dot navigation use `resolveScrollBehavior()` in `js/main.js` so programmatic scroll is instant (`auto`) instead of smooth. Mobile carousel scroll-snap is also disabled under reduced motion. Touch swipe remains user-controlled.
 
 ---
 
