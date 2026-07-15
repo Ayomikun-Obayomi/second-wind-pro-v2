@@ -169,13 +169,44 @@ function rosterCardHtml(slug, a) {
       </article>`;
 }
 
+const CLASS_ABBR = [
+  [/redh?shirt\s+freshman/i, 'RS Fr'],
+  [/redh?shirt\s+sophomore/i, 'RS So'],
+  [/redh?shirt\s+junior/i, 'RS Jr'],
+  [/redh?shirt\s+senior/i, 'RS Sr'],
+  [/^freshman$/i, 'Fr'],
+  [/^sophomore$/i, 'So'],
+  [/^junior$/i, 'Jr'],
+  [/^senior$/i, 'Sr'],
+];
+
+function abbreviateClass(klass) {
+  const raw = String(klass || '').trim();
+  if (!raw) return '';
+  for (const [re, abbr] of CLASS_ABBR) {
+    if (re.test(raw)) return abbr;
+  }
+  return raw;
+}
+
+function carouselMeta(a) {
+  const team = a.university || a.to?.name || '';
+  const parts = String(a.position || '').split('·').map((s) => s.trim()).filter(Boolean);
+  const role = parts[0] || '';
+  const klass = abbreviateClass(parts[1] || '');
+  // ESPN-style hierarchy under the name: team → class → position
+  return { team, klass, role };
+}
+
 function carouselCardHtml(slug, a) {
+  const { team, klass, role } = carouselMeta(a);
+  const meta = [team, klass, role].filter(Boolean).join(' · ');
   return `      <article class="athlete-card" data-athlete="${slug}" data-sport="football">
         <div class="athlete-photo">${a.photo}<span class="sport-tag">Football</span></div>
         <div class="athlete-info">
           <div class="athlete-card-header">
             <h3>${a.name}</h3>
-            <div class="position">${a.position}</div>
+            ${meta ? `<p class="athlete-meta">${meta}</p>` : ''}
           </div>
           <a href="get-started?athlete=${slug}&interest=brand" class="partner-btn">Partner with this athlete</a>
         </div>

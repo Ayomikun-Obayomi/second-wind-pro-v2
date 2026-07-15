@@ -2381,6 +2381,47 @@ function rosterPerPage() {
     }
   }
 
+  function clearMktFit(mktRoot) {
+    if (!mktRoot) return;
+    mktRoot.style.zoom = '';
+    const body = mktRoot.querySelector('.mkt-body');
+    if (body) body.style.zoom = '';
+  }
+
+  function fitMktToFrame(mktRoot) {
+    if (!mktRoot) return;
+    const win = mktRoot.querySelector('.mkt-window') || mktRoot;
+    const visual = mktRoot.closest('.svc-stack-visual');
+
+    if (!mqMobile.matches) {
+      clearMktFit(mktRoot);
+      return;
+    }
+
+    // Reset, measure natural size, then zoom the whole illustration into the frame.
+    clearMktFit(mktRoot);
+    void mktRoot.offsetHeight;
+
+    const frame = visual || win;
+    const availW = Math.max(0, frame.clientWidth - 8);
+    const availH = Math.max(0, frame.clientHeight - 8);
+    const needW = Math.max(win.scrollWidth, win.offsetWidth, 1);
+    const needH = Math.max(win.scrollHeight, win.offsetHeight, 1);
+    const scale = Math.min(1, availW / needW, availH / needH);
+
+    if (scale < 0.995) {
+      // Slightly under-scale so content clears the rounded frame.
+      mktRoot.style.zoom = String(Math.max(0.5, scale * 0.94));
+    }
+  }
+
+  function scheduleFitMkt(mktRoot) {
+    if (!mktRoot) return;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => fitMktToFrame(mktRoot));
+    });
+  }
+
   function bootMktVisual(mktRoot, { wire = true } = {}) {
     if (!mktRoot) return;
     animateBars(mktRoot);
@@ -2400,6 +2441,7 @@ function rosterPerPage() {
       mktRoot.dataset.wired = '1';
     }
     startMktAuto(mktRoot);
+    scheduleFitMkt(mktRoot);
   }
 
   function playMktEntrance(mktRoot) {
@@ -2562,8 +2604,17 @@ function rosterPerPage() {
 
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', () => {
+    const activeMkt = panels[activeIndex]?.querySelector('.mkt');
+    if (activeMkt) scheduleFitMkt(activeMkt);
     if (mqMobile.matches || scrollLock) return;
     onScroll();
+  });
+
+  mqMobile.addEventListener('change', () => {
+    panels.forEach((panel) => {
+      const mkt = panel.querySelector('.mkt');
+      if (mkt) scheduleFitMkt(mkt);
+    });
   });
 
   setActive(0, { fromScroll: true, animate: false });

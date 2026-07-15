@@ -3942,12 +3942,26 @@ a.btn-tertiary {
   line-height: 1.15;
   margin: 0;
 }
+
+/* Meta under name: team · class · position */
+.athlete-info .athlete-meta,
 .athlete-info .position {
+  margin: 0;
   font-family: var(--font-mono);
   font-size: 10px;
-  letter-spacing: .16em;
+  letter-spacing: .06em;
   text-transform: uppercase;
   color: var(--muted-2);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+#roster:not(.roster-page) .athlete-info .athlete-meta {
+  font-size: 9px;
+  letter-spacing: .04em;
 }
 
 .athlete-card-header {
@@ -10457,7 +10471,7 @@ a.partner-btn {
     position: relative;
     width: 100%;
     max-width: min(100%, 480px);
-    aspect-ratio: 1;
+    aspect-ratio: 4 / 5;
     min-height: 0;
     margin-inline: auto;
     margin-top: 0;
@@ -10479,6 +10493,7 @@ a.partner-btn {
     height: 100%;
     min-height: 0;
     flex: 1 1 auto;
+    overflow: hidden;
   }
 
   .svc-stack-panel,
@@ -10494,13 +10509,70 @@ a.partner-btn {
     height: 100%;
     min-height: 0;
     flex: 1 1 auto;
+    overflow: hidden;
   }
 
   .svc-stack-visual .mkt-body {
     flex: 1 1 auto;
     min-height: 0;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
+  }
+
+  /* Compact marketing chrome so UI mockups fit the rectangular phone card */
+  .svc-stack-visual .mkt-chrome {
+    padding: 6px 8px;
+  }
+
+  .svc-stack-visual .mkt-chrome-title,
+  .svc-stack-visual .mkt-chrome .live-pill {
+    font-size: 10px;
+  }
+
+  .svc-stack-visual .mkt-body {
+    padding: 6px 8px 8px;
+    gap: 5px;
+  }
+
+  .svc-stack-visual .mkt-deal-stats,
+  .svc-stack-visual .mkt-stat-grid,
+  .svc-stack-visual .mkt-kpi-grid {
+    gap: 4px;
+  }
+
+  .svc-stack-visual .mkt-deal-stat,
+  .svc-stack-visual .mkt-stat,
+  .svc-stack-visual .mkt-kpi {
+    padding: 5px 6px;
+  }
+
+  .svc-stack-visual .mkt-deal-stat strong,
+  .svc-stack-visual .mkt-stat strong,
+  .svc-stack-visual .mkt-kpi strong {
+    font-size: 10px;
+  }
+
+  .svc-stack-visual .mkt-deal-stat label,
+  .svc-stack-visual .mkt-stat label,
+  .svc-stack-visual .mkt-kpi label {
+    font-size: 8px;
+  }
+
+  .svc-stack-visual .mkt-panel {
+    padding: 6px 8px;
+    gap: 4px;
+  }
+
+  .svc-stack-visual .mkt-panel span {
+    font-size: 8px;
+  }
+
+  .svc-stack-visual .mkt-panel strong {
+    font-size: 10px;
+  }
+
+  .svc-stack-visual .mkt-line {
+    font-size: 10px;
+    padding: 4px 0;
   }
 
   .svc-stack-visual .mkt-body > .mkt-panel:last-child,
@@ -10522,6 +10594,35 @@ a.partner-btn {
   .svc-stack-visual .mkt-queue {
     border-right: none;
     border-bottom: 1px solid var(--line);
+    padding: 5px;
+    max-height: 42%;
+  }
+
+  .svc-stack-visual .mkt-queue-item {
+    grid-template-columns: 24px 1fr auto;
+    gap: 6px;
+    padding: 6px 6px;
+    border-radius: 6px;
+  }
+
+  .svc-stack-visual .mkt-queue-av {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    font-size: 8px;
+  }
+
+  .svc-stack-visual .mkt-queue-name {
+    font-size: 11px;
+  }
+
+  .svc-stack-visual .mkt-queue-sub {
+    font-size: 9px;
+    margin-top: 1px;
+  }
+
+  .svc-stack-visual .mkt-queue-status {
+    font-size: 8px;
   }
 
   .svc-stack-panel {
@@ -10668,6 +10769,71 @@ a.partner-btn {
   #brand.brand-page .brand-grid-track {
     grid-template-columns: 1fr;
     gap: var(--s-4);
+  }
+
+  /*
+   * Brand step illustrations: Step 3 (booking) naturally fits the 16:9
+   * visual (~79% height). Steps 1–2 windows are taller and overflow.
+   * Densify their chrome/body, then scale the absolute illus layer so the
+   * window matches Step 3’s fitted size (height + similar width).
+   */
+  #brand.brand-page .brand-step-illus--details .brand-step-window-chrome,
+  #brand.brand-page .brand-step-illus--fit .brand-step-window-chrome {
+    padding: 5px 10px;
+  }
+
+  #brand.brand-page .brand-step-illus--details .brand-step-window-body,
+  #brand.brand-page .brand-step-illus--fit .brand-step-window-body {
+    gap: 5px;
+    padding: 8px;
+  }
+
+  #brand.brand-page .brand-step-illus--details .brand-step-field {
+    gap: 2px;
+    padding: 5px 8px;
+  }
+
+  #brand.brand-page .brand-step-illus--details .brand-step-field-label {
+    font-size: 8px;
+  }
+
+  #brand.brand-page .brand-step-illus--details .brand-step-field-value {
+    font-size: 10px;
+  }
+
+  #brand.brand-page .brand-step-illus--details .brand-step-chip {
+    padding: 3px 6px;
+    font-size: 8px;
+  }
+
+  #brand.brand-page .brand-step-illus--fit .brand-step-agent-row {
+    gap: 6px;
+    padding: 5px 8px;
+  }
+
+  #brand.brand-page .brand-step-illus--fit .brand-step-agent-av {
+    width: 22px;
+    height: 22px;
+    font-size: 9px;
+  }
+
+  #brand.brand-page .brand-step-illus--fit .brand-step-agent-copy strong {
+    font-size: 10px;
+  }
+
+  #brand.brand-page .brand-step-illus--fit .brand-step-agent-copy span,
+  #brand.brand-page .brand-step-illus--fit .brand-step-agent-score {
+    font-size: 8px;
+  }
+
+  #brand.brand-page .brand-step-illus--fit .brand-step-match-badge {
+    padding: 2px 6px;
+    font-size: 8px;
+  }
+
+  #brand.brand-page .brand-step-illus--details {
+    transform: scale(0.95);
+    transform-origin: center center;
   }
 
   #brand.brand-page .brand-lead {
@@ -10859,7 +11025,7 @@ a.partner-btn {
   .svc-stack-panels {
     max-width: 100%;
     width: 100%;
-    aspect-ratio: 1;
+    aspect-ratio: 4 / 5;
   }
 
   .svc-stack-tab-label,
@@ -10870,12 +11036,12 @@ a.partner-btn {
   }
 
   .svc-stack-visual .mkt-body {
-    padding: 10px 12px 12px;
-    gap: 8px;
+    padding: 6px 8px 8px;
+    gap: 5px;
   }
 
   .svc-stack-visual .mkt-body--pane {
-    min-height: 320px;
+    min-height: 0;
   }
 
   #roster .roster-controls,
