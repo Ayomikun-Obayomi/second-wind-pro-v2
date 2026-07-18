@@ -907,24 +907,6 @@ a.btn-tertiary {
   font-weight: var(--fw-bold);
 }
 
-.about-quote-band {
-  padding: var(--s-7) var(--gutter);
-  border-bottom: 1px solid var(--line);
-  background: color-mix(in srgb, var(--purple-deep) 14%, var(--bg));
-}
-
-.about-quote-inner {
-  max-width: min(720px, var(--container));
-  margin: 0 auto;
-}
-
-#about .about-quote-role {
-  display: block;
-  margin-top: var(--s-1);
-  font-size: var(--t-xs);
-  color: var(--muted-2);
-}
-
 #about-serve {
   padding: var(--s-7) var(--gutter);
 }
@@ -1000,7 +982,9 @@ a.btn-tertiary {
 }
 
 #leadership .section-head,
-#leadership .leadership-carousel {
+#leadership .leadership-carousel,
+#testimonials .section-head,
+#testimonials .testimonials-bento {
   max-width: var(--container);
   margin-left: auto;
   margin-right: auto;
@@ -3662,6 +3646,16 @@ a.btn-tertiary {
   padding: 0;
   margin-bottom: 0;
   flex: 1 1 auto;
+}
+
+/* Pill-filter headers: 8px heading→desc, 16px before pills (matches #testimonials) */
+#roster .section-head {
+  margin-bottom: var(--s-4);
+}
+
+#roster .section-head .desc,
+#transfer .section-head .desc {
+  margin-top: var(--s-2);
 }
 
 .roster-tabs {
@@ -9512,6 +9506,309 @@ a.partner-btn {
   color: var(--cream);
 }
 
+/* ===== 10c. TESTIMONIALS — Willow L-brick bento ===== */
+
+#testimonials {
+  padding: var(--s-7) var(--gutter);
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(ellipse at 88% 8%, rgba(109, 40, 217, 0.12), transparent 52%),
+    var(--bg);
+}
+
+.testimonials-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  /* CQ on parent so bento rows can size from column width (not self-referential cqw). */
+  container-type: inline-size;
+  container-name: testimonials;
+}
+
+#testimonials .section-head {
+  width: 100%;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 0;
+  text-align: left;
+}
+
+#testimonials .section-head > div {
+  width: 100%;
+  max-width: 720px;
+  margin: 0;
+  text-align: left;
+}
+
+#testimonials .section-head h2 {
+  margin: 0;
+}
+
+#testimonials .testimonials-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  width: 100%;
+  margin: var(--s-4) 0 0;
+  padding: 0;
+  border: 0;
+}
+
+#testimonials .testimonials-tabs .tab {
+  border-radius: var(--radius-pill);
+}
+
+/* L-brick: wider photo col + two quote cols; photo rowspan fills L-shape.
+   Row height is locked to the photo column’s 4/5 aspect so Company (Marcus)
+   and Agents (Jordan) tall tiles share identical dimensions regardless of
+   quote copy length or split side-portrait content. */
+.testimonials-bento {
+  --testimonials-pad: var(--s-4);
+  --testimonials-gap: var(--s-3);
+  --testimonials-photo-col-fr: 1.2;
+  --testimonials-cols-fr-sum: 3.2;
+  /* photoH = photoColW × 5/4; each row = (photoH − gap) / 2 */
+  --testimonials-photo-row: calc(
+    (
+      ((100cqw - 2 * var(--testimonials-gap)) * var(--testimonials-photo-col-fr) / var(--testimonials-cols-fr-sum))
+      * 5 / 4
+      - var(--testimonials-gap)
+    ) / 2
+  );
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: var(--testimonials-photo-row) var(--testimonials-photo-row);
+  grid-auto-rows: unset;
+  grid-auto-flow: dense;
+  gap: var(--testimonials-gap);
+  width: 100%;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.testimonials-card {
+  position: relative;
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.testimonials-card[data-hidden="true"],
+.testimonials-card[hidden] {
+  display: none;
+}
+
+.testimonials-card--quote,
+.testimonials-card-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--s-2);
+  padding: var(--testimonials-pad);
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.testimonials-card--quote {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.testimonials-card-quote {
+  margin: 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  font-family: var(--font-sans);
+  font-size: var(--t-md);
+  font-weight: var(--fw-medium);
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: var(--cream);
+}
+
+.testimonials-mark {
+  display: block;
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--purple-bright);
+}
+
+.testimonials-attribution {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin: 0;
+  margin-top: auto;
+  padding-top: 0;
+}
+
+.testimonials-meta {
+  min-width: 0;
+}
+
+.testimonials-card cite {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--t-sm);
+  font-style: normal;
+  font-weight: var(--fw-medium);
+  color: var(--purple-bright);
+}
+
+.testimonials-role {
+  display: block;
+  margin-top: var(--s-1);
+  font-size: var(--t-xs);
+  color: var(--muted-2);
+}
+
+/* Quote avatars — fixed 48² circle. Prefer wider view-box (less zoom) so
+   crowns stay inside; keep top inset at 0. */
+.testimonials-avatar {
+  --testimonial-avatar-x: center;
+  --testimonial-avatar-y: center;
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: var(--testimonial-avatar-x) var(--testimonial-avatar-y);
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+/* Priya: face-centered square master — crop torso, leave crown breathing room. */
+.testimonials-avatar[src*="priya-n"] {
+  --testimonial-avatar-x: center;
+  --testimonial-avatar-y: 42%;
+  object-view-box: inset(0% 18% 40% 18%);
+}
+
+/* Chris: padded source — helmet crown visible, crop lower action. */
+.testimonials-avatar[src*="chris-m"] {
+  --testimonial-avatar-x: 42%;
+  --testimonial-avatar-y: 36%;
+  object-view-box: inset(2% 16% 48% 16%);
+}
+
+/* Ava: padded source — ponytail + crown in circle. */
+.testimonials-avatar[src*="ava-k"] {
+  --testimonial-avatar-x: 48%;
+  --testimonial-avatar-y: 36%;
+  object-view-box: inset(2% 16% 48% 16%);
+}
+
+/* Tall portrait — Marcus L / Jordan T; spans both rows (no caption overlay).
+   Desktop height comes from bento’s 4/5 row lock so both tabs match. */
+.testimonials-card--photo {
+  grid-column: 1;
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  padding: var(--s-2);
+  background: var(--surface-2);
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Bento photos (tall + side): fixed frame + cover.
+   Frame is overflow:hidden (card) with 4:5 lock; assets are ~4:5 headroom
+   exports so cover barely crops. Face framing via object-position only —
+   no CSS scale (shrink looks letterboxed; zoom is a Sean-roster hack). */
+.testimonials-card--photo img,
+.testimonials-card-side img {
+  --testimonial-photo-x: center;
+  --testimonial-photo-y: top;
+  object-fit: cover;
+  object-position: var(--testimonial-photo-x) var(--testimonial-photo-y);
+}
+
+.testimonials-card--photo img {
+  display: block;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+}
+
+/* Marcus / Jordan: center-top face framing (knobs for micro-nudges). */
+.testimonials-card--photo img[src*="marcus-l"],
+.testimonials-card--photo img[src*="jordan-t"] {
+  --testimonial-photo-x: center;
+  --testimonial-photo-y: top;
+}
+
+/* Wide split: quote + inset side portrait (fills cols 2–3 under the quote pair) */
+.testimonials-card--split {
+  grid-column: 2 / span 2;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+}
+
+.testimonials-card-copy {
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto;
+}
+
+.testimonials-card--split .testimonials-attribution {
+  display: block;
+}
+
+/* Willows-style side slot: stretch with the split row; photo is inset + rounded. */
+.testimonials-card-side {
+  position: relative;
+  flex: 0 0 40%;
+  max-width: 40%;
+  min-width: 0;
+  min-height: 0;
+  align-self: stretch;
+  box-sizing: border-box;
+  background: transparent;
+  overflow: hidden;
+}
+
+/* Absolute fill with EXPLICIT w/h — replaced elems ignore inset stretch when
+   width/height are auto (intrinsic 900² blew past the slot). Even inset +
+   nested radius matches the tall-tile photo treatment. */
+.testimonials-card-side img {
+  position: absolute;
+  inset: var(--s-3);
+  display: block;
+  width: calc(100% - 2 * var(--s-3));
+  height: calc(100% - 2 * var(--s-3));
+  max-width: none;
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+}
+
+/* Denise: side slot is shorter than 4:5 — center (not top) so cover
+   crops white headroom + lower body evenly and keeps the face in frame. */
+.testimonials-card-side img[src*="denise-r"] {
+  --testimonial-photo-x: center;
+  --testimonial-photo-y: center;
+}
+
 /* ===== 11. JOIN ===== */
 
 .join {
@@ -10216,7 +10513,8 @@ a.partner-btn {
   #roster,
   #transfer,
   #brand,
-  #leadership {
+  #leadership,
+  #testimonials {
     padding-left: var(--gutter-mobile);
     padding-right: var(--gutter-mobile);
   }
@@ -10375,6 +10673,91 @@ a.partner-btn {
       "controls";
   }
 
+  .testimonials-inner {
+    gap: var(--s-5);
+  }
+
+  #testimonials .section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  #testimonials .section-head > div {
+    max-width: none;
+  }
+
+  #testimonials .testimonials-tabs {
+    margin-top: var(--s-4);
+  }
+
+  .testimonials-bento {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    grid-auto-rows: auto;
+    grid-auto-flow: row;
+  }
+
+  .testimonials-card--quote,
+  .testimonials-card--photo,
+  .testimonials-card--split {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .testimonials-card--photo {
+    min-height: min(320px, 58vw);
+    aspect-ratio: 4 / 5;
+    height: auto;
+  }
+
+  .testimonials-card--quote,
+  .testimonials-card-copy {
+    overflow: visible;
+  }
+
+  .testimonials-card--split {
+    flex-direction: column;
+  }
+
+  .testimonials-card-side {
+    flex: none;
+    max-width: none;
+    width: 100%;
+    height: min(240px, 42vw);
+    padding: 0;
+  }
+
+  /* Even Willows inset on mobile — matches tall-tile padding rhythm. */
+  .testimonials-card-side img {
+    position: absolute;
+    inset: 0 var(--s-3) var(--s-3);
+    width: calc(100% - 2 * var(--s-3));
+    height: calc(100% - var(--s-3));
+  }
+
+  .testimonials-avatar[src*="priya-n"] {
+    --testimonial-avatar-x: center;
+    --testimonial-avatar-y: 42%;
+    object-view-box: inset(0% 16% 38% 16%);
+  }
+
+  .testimonials-avatar[src*="chris-m"] {
+    --testimonial-avatar-x: 42%;
+    --testimonial-avatar-y: 36%;
+    object-view-box: inset(2% 14% 46% 14%);
+  }
+
+  .testimonials-avatar[src*="ava-k"] {
+    --testimonial-avatar-x: 48%;
+    --testimonial-avatar-y: 36%;
+    object-view-box: inset(2% 14% 46% 14%);
+  }
+
+  .testimonials-card-quote {
+    font-size: var(--t-md);
+  }
+
   #leadership.leadership-page .leadership-grid-track,
   #leadership.leadership-page .leadership-grid-track.is-filter-leadership,
   #leadership.leadership-page .leadership-grid-track.is-filter-senior,
@@ -10386,7 +10769,7 @@ a.partner-btn {
   #leadership.leadership-page .section-head {
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--s-3);
+    gap: var(--s-2);
   }
 
   #leadership.leadership-page .section-head .desc {
@@ -10484,12 +10867,25 @@ a.partner-btn {
   }
 
   #transfer .transfer-region-tabs {
+    margin-top: var(--s-4);
     margin-bottom: var(--s-4);
   }
 
   #transfer .section-head {
     margin-bottom: var(--s-4);
     gap: var(--s-4);
+  }
+
+  #transfer .section-head .desc {
+    margin-top: var(--s-2);
+  }
+
+  #roster .section-head {
+    margin-bottom: var(--s-4);
+  }
+
+  #roster .section-head .desc {
+    margin-top: var(--s-2);
   }
 
   #transfer .wire-list {

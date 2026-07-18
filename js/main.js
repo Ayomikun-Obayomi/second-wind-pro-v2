@@ -9,6 +9,7 @@
      5. ServicesStack    — Square-style sticky scroll tabs
      6. TransferLive      — live ticker timestamp
      7. NavDropdown       — Resources keyboard support
+     8. TestimonialsFilter — Company/Agents pills + bento card groups
    ============================================================ */
 
 /* ------------------------------------------------------------
@@ -378,7 +379,7 @@ function phoneTelHref(phone) {
     }
     if (descText) descText.textContent = cardBioExcerpt(a.bio || a.presentability || '');
     if (readMore) {
-      const activeFilter = document.querySelector('.roster-tabs .tab.active')?.dataset.filter;
+      const activeFilter = document.querySelector('#roster .roster-tabs .tab.active')?.dataset.filter;
       readMore.href = athletePageHref(key, activeFilter);
       readMore.setAttribute('aria-label', `Read more about ${a.name}`);
     }
@@ -976,7 +977,11 @@ function rosterPerPage() {
   const prev = rosterSection?.querySelector('.roster-prev');
   const next = rosterSection?.querySelector('.roster-next');
   const dots = document.getElementById('roster-dots');
-  const tabs = document.querySelectorAll('.roster-tabs .tab');
+  // Scope to #roster only — other sections reuse .roster-tabs for pill styles
+  // (e.g. testimonials) and must not drive athlete filtering.
+  const tabs = rosterSection
+    ? [...rosterSection.querySelectorAll('.roster-tabs .tab')]
+    : [];
   if (!cardRoot || (!isGrid && (!carousel || !viewport || !track))) return;
 
   function visibleCards() {
@@ -4011,6 +4016,52 @@ function rosterPerPage() {
       observer.disconnect();
     }
   });
+})();
+
+
+/* ------------------------------------------------------------
+   10d. TESTIMONIALS — Company/Agents pills filter bento cards
+   ------------------------------------------------------------ */
+
+(function TestimonialsFilter() {
+  const section = document.getElementById('testimonials');
+  if (!section) return;
+
+  const bento = document.getElementById('testimonials-bento');
+  const tabs = [...section.querySelectorAll('.testimonials-tabs .tab')];
+  const cards = [...section.querySelectorAll('.testimonials-card')];
+  if (!bento || !tabs.length || !cards.length) return;
+
+  let group = tabs.find((t) => t.classList.contains('active'))?.dataset.testimonialGroup || 'company';
+
+  function applyGroup() {
+    cards.forEach((card) => {
+      const on = card.dataset.group === group;
+      card.dataset.hidden = on ? 'false' : 'true';
+      card.hidden = !on;
+    });
+
+    tabs.forEach((tab) => {
+      const on = tab.dataset.testimonialGroup === group;
+      tab.classList.toggle('active', on);
+      tab.setAttribute('aria-selected', String(on));
+    });
+  }
+
+  function setGroup(nextGroup) {
+    if (!nextGroup || nextGroup === group) return;
+    group = nextGroup;
+    applyGroup();
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', (e) => {
+      e.preventDefault();
+      setGroup(tab.dataset.testimonialGroup);
+    });
+  });
+
+  applyGroup();
 })();
 
 

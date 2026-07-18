@@ -97,6 +97,7 @@
 
   /* Buttons — section CTAs */
   --btn-font:         var(--font-sans); /* Geist — not mono; partner + outline CTAs */
+  --btn-font-size:    var(--t-sm); /* 13px — section / nav / partner CTAs */
   --btn-padding-y:    14px;
   --btn-padding-x:    26px;
   --btn-gap:          12px;
@@ -119,7 +120,7 @@
   --partner-btn-border:          1px solid var(--partner-btn-bg); /* match primary 1px border box */
   --partner-btn-hover-border:    1px solid var(--partner-btn-hover-bg);
   --partner-btn-font:            var(--btn-font); /* Geist — not mono */
-  --partner-btn-font-size:       var(--t-sm); /* 13px — match .btn-outline */
+  --partner-btn-font-size:       var(--btn-font-size); /* alias — one source of truth */
   --partner-btn-font-weight:     var(--fw-medium);
   --partner-btn-letter-spacing:  0.02em; /* title case — was 0.08em for ALL CAPS */
   --partner-btn-radius:          var(--btn-radius); /* --radius-sm / 4px — nested cards */

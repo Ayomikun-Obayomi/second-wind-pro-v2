@@ -63,7 +63,7 @@ All tokens are defined in `css/tokens.css` as CSS custom properties on `:root`. 
 | `--t-base` | `15px` — body copy |
 | `--t-display` | `clamp(46px, 8vw, 72px)` — hero headline |
 
-**Conventions:** Form labels / eyebrows use `--font-mono`, uppercase, wide letter-spacing. Section CTAs (`.btn-outline`) use `--btn-font` → `--font-sans` (Geist), sentence case, padding `--btn-padding-*` → `14px` / `26px`. Partner buttons share section primary size/colors (`--t-sm`, `--btn-radius`) with compact padding (`--partner-btn-padding-*` → `9px` / `16px`) and Geist sans labels. Headlines use `--font-sans` (bold). Display italics use `--purple-bright`.
+**Conventions:** Form labels / eyebrows use `--font-mono`, uppercase, wide letter-spacing. Section CTAs (`.btn-outline`), Partner CTAs (`.partner-btn`), and Nav CTA (`.nav-cta`) share label size **`--btn-font-size`** → `var(--t-sm)` (`13px`); partner aliases via `--partner-btn-font-size` → `var(--btn-font-size)`. Section CTAs use `--btn-font` → `--font-sans` (Geist), sentence case, padding `--btn-padding-*` → `14px` / `26px`. Partner buttons share section primary colors / radius (`--btn-radius`) with compact padding (`--partner-btn-padding-*` → `9px` / `16px`) and Geist sans labels. Headlines use `--font-sans` (bold). Display italics use `--purple-bright`.
 
 ---
 
@@ -113,11 +113,12 @@ All tokens are defined in `css/tokens.css` as CSS custom properties on `:root`. 
 
 ## Buttons (section CTAs)
 
-Tokens: `--btn-font`, `--btn-padding-y` (`14px`), `--btn-padding-x` (`26px`), `--btn-gap`, `--btn-letter-spacing`, `--btn-radius` (`var(--radius-sm)` / 4px).
+Tokens: `--btn-font`, `--btn-font-size` (`var(--t-sm)` / `13px`), `--btn-padding-y` (`14px`), `--btn-padding-x` (`26px`), `--btn-gap`, `--btn-letter-spacing`, `--btn-radius` (`var(--radius-sm)` / 4px).
 
 | Token | Maps to | Role |
 |---|---|---|
 | `--btn-font` | `--font-sans` (`Geist`) | Label font for `.btn-outline`, `.partner-btn`, and partner CTAs — **not** Geist Mono |
+| `--btn-font-size` | `--t-sm` (`13px`) | Shared label size for `.btn-outline`, `.nav-cta`, and `.partner-btn` |
 | `--btn-padding-y` / `-x` | `14px` / `26px` | Padding for section CTAs (`.btn-outline` / `.btn-primary`) |
 | `--btn-secondary-border` | `--line-strong` | Secondary default outline |
 | `--btn-secondary-text` | `--cream` | Secondary default label + arrow |
@@ -158,11 +159,11 @@ Tokens: `--btn-font`, `--btn-padding-y` (`14px`), `--btn-padding-x` (`26px`), `-
 
 ### Nav CTA (`.nav-cta`)
 
-Header **Get Started** — same primary color family (`--btn-primary-*`) and type (`--btn-font`, `--t-sm`, sentence case), but **compact padding** (`--partner-btn-padding-*` → `9px` / `16px`) so the header stays dense. In-page / section **Get Started** uses `.btn-outline.btn-primary` at `--btn-padding-*` (`14px` / `26px`).
+Header **Get Started** — same primary color family (`--btn-primary-*`) and type (`--btn-font`, `--btn-font-size`, sentence case), with **its own compact padding** (`9px var(--s-4)` → `9px` / `16px` on desktop). Not wired through `--btn-padding-*` or `--partner-btn-padding-*`. Mobile overrides: `10px 14px` (≤980px), `10px 12px` on the tighter breakpoint. In-page / section **Get Started** uses `.btn-outline.btn-primary` at `--btn-padding-*` (`14px` / `26px`).
 
 ### Partner CTA (`.partner-btn`)
 
-Roster / meet-the-athletes **Partner with this athlete** / **Read more** (and athlete profile magazine CTA) share **section primary color**; padding stays compact and is **not** aliased to section `--btn-padding-*`.
+Roster / meet-the-athletes **Partner with this athlete** / **Read more** (and athlete profile magazine CTA) share **section primary color**; padding stays compact via **explicit** `--partner-btn-padding-*` (`9px` / `16px`) and is **not** aliased to section `--btn-padding-*`.
 
 | Token | Maps to | Role |
 |---|---|---|
@@ -171,7 +172,7 @@ Roster / meet-the-athletes **Partner with this athlete** / **Read more** (and at
 | `--partner-btn-hover-bg` | `--btn-primary-hover-bg` → `--purple-bright` | Hover fill |
 | `--partner-btn-hover-text` | `--btn-primary-text` → `--on-purple` | Hover label |
 | `--partner-btn-font` | `--btn-font` → `--font-sans` (`Geist`) | Proportional sans — **not** mono |
-| `--partner-btn-font-size` | `--t-sm` (`13px`) | Same as section CTAs |
+| `--partner-btn-font-size` | `--btn-font-size` → `--t-sm` (`13px`) | Alias — same as section / nav CTAs |
 | `--partner-btn-font-weight` | `--fw-medium` (`500`) | Medium |
 | `--partner-btn-letter-spacing` | `0.02em` | Title-case tracking |
 | `--partner-btn-radius` | `--btn-radius` → `--radius-sm` (`4px`) | Same as section CTAs / nested cards |

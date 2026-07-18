@@ -41,3 +41,16 @@ Fictional roster names do **not** represent the pictured athletes. Replace with 
 | Tyrese Holland (`tyrese-holland`) | Azzi Fudd (UConn) — John Mac / CC BY-SA 2.0 | CC BY-SA 2.0 |
 | Victor Santos (`victor-santos`) | Jayden Daniels (LSU) — Wikimedia Commons / CC BY-SA 2.0 | CC BY-SA 2.0 |
 
+## Testimonials (demo placeholders)
+
+Speaker avatars in `testimonials/` are copies of existing demo portraits (not real clients). Fictional names do not represent the pictured people.
+
+| Speaker | Source file |
+|---|---|
+| Marcus L. (`marcus-l`) | `athletes/cameron-ellis.jpg` |
+| Priya N. (`priya-n`) | `agents/mara-chen.jpg` |
+| Denise R. (`denise-r`) | `agents/sofia-ruiz.jpg` |
+| Jordan T. (`jordan-t`) | `athletes/jordan-blake.jpg` |
+| Chris M. (`chris-m`) | `athletes/chris-dalton.jpg` |
+| Ava K. (`ava-k`) | `athletes/sienna-hart.jpg` |
+

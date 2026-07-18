@@ -21,8 +21,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/tokens.css?v=btn-pad-14x26" />
-  <link rel="stylesheet" href="css/style.css?v=btn-pad-14x26" />
+  <link rel="stylesheet" href="css/tokens.css?v=marcus-priya-fix-4" />
+  <link rel="stylesheet" href="css/style.css?v=marcus-priya-fix-4" />
 </head>
 <body>
 
@@ -135,7 +135,7 @@
   <section id="services" aria-labelledby="services-heading">
     <div class="section-head">
       <div>
-        <span class="eyebrow">What we do</span>
+        <span class="eyebrow">02 — What we do</span>
         <h2 id="services-heading">Six pillars of <em>elite representation.</em></h2>
       </div>
     </div>
@@ -860,11 +860,121 @@
     </div>
   </section>
 
+<!-- TESTIMONIALS — Willow L-brick bento (tall attributed photo + quotes with avatars + wide split) -->
+  <section id="testimonials" class="testimonials" aria-labelledby="testimonials-heading">
+    <div class="testimonials-inner">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">04 — Testimonials</span>
+          <h2 id="testimonials-heading">Proof from the people we <em>represent.</em></h2>
+          <div class="testimonials-tabs roster-tabs" role="tablist" aria-label="Testimonial source">
+            <button type="button" class="tab active" role="tab" id="testimonials-tab-company" aria-selected="true" aria-controls="testimonials-bento" data-testimonial-group="company">Company</button>
+            <button type="button" class="tab" role="tab" id="testimonials-tab-agents" aria-selected="false" aria-controls="testimonials-bento" data-testimonial-group="agents">Agents</button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="testimonials-bento"
+        id="testimonials-bento"
+        role="region"
+        aria-label="Client testimonials"
+        aria-live="polite"
+      >
+        <!-- Company: Marcus L tall portrait + quote pair + wide split -->
+        <figure class="testimonials-card testimonials-card--photo" data-group="company" data-hidden="false">
+          <img src="assets/portraits/testimonials/marcus-l.jpg?v=marcus-priya-fix-4" alt="Marcus L., defensive back" width="960" height="1200" loading="lazy" decoding="async" />
+        </figure>
+
+        <article class="testimonials-card testimonials-card--quote" data-group="company" data-hidden="false">
+          <span class="testimonials-mark" aria-hidden="true">“</span>
+          <p class="testimonials-card-quote">They didn’t pitch me a highlight reel. They walked the portal calendar, named the leverage points, and told me what to wait on—even when waiting was uncomfortable.</p>
+          <footer class="testimonials-attribution">
+            <div class="testimonials-meta">
+              <cite>Marcus L.</cite>
+              <span class="testimonials-role">Defensive back · SEC transfer</span>
+            </div>
+          </footer>
+        </article>
+
+        <article class="testimonials-card testimonials-card--quote" data-group="company" data-hidden="false">
+          <span class="testimonials-mark" aria-hidden="true">“</span>
+          <p class="testimonials-card-quote">Our activation brief finally had an owner. Second Wind matched the athlete, protected eligibility, and kept the campaign tight—no last-minute compliance scramble.</p>
+          <footer class="testimonials-attribution">
+            <div class="testimonials-meta">
+              <cite>Priya N.</cite>
+              <span class="testimonials-role">Brand partnerships lead · regional CPG</span>
+            </div>
+            <img class="testimonials-avatar" src="assets/portraits/testimonials/priya-n.jpg?v=marcus-priya-fix-4" alt="" width="48" height="48" loading="lazy" decoding="async" />
+          </footer>
+        </article>
+
+        <article class="testimonials-card testimonials-card--split" data-group="company" data-hidden="false">
+          <div class="testimonials-card-copy">
+            <span class="testimonials-mark" aria-hidden="true">“</span>
+            <p class="testimonials-card-quote">As a parent, I needed someone who spoke NIL without the pressure sell. They explained the money, the risk, and the long game—then let us decide.</p>
+            <footer class="testimonials-attribution">
+              <div class="testimonials-meta">
+                <cite>Denise R.</cite>
+                <span class="testimonials-role">Parent of rostered athlete</span>
+              </div>
+            </footer>
+          </div>
+          <div class="testimonials-card-side">
+            <img src="assets/portraits/testimonials/denise-r.jpg?v=heads-fix-20260718i" alt="" width="900" height="1188" loading="lazy" decoding="async" />
+          </div>
+        </article>
+
+        <!-- Agents: Jordan T tall portrait (same card style as Marcus) + quote pair with avatars + wide quote (no side portrait) -->
+        <figure class="testimonials-card testimonials-card--photo" data-group="agents" data-hidden="true" hidden>
+          <img src="assets/portraits/testimonials/jordan-t.jpg?v=heads-fix-20260718i" alt="Jordan T., wide receiver" width="757" height="946" loading="lazy" decoding="async" />
+        </figure>
+
+        <article class="testimonials-card testimonials-card--quote" data-group="agents" data-hidden="true" hidden>
+          <span class="testimonials-mark" aria-hidden="true">“</span>
+          <p class="testimonials-card-quote">Tony knows specialist value. He treated my film and my leverage like a craft—not a volume deal—and the placement matched where I could actually play.</p>
+          <footer class="testimonials-attribution">
+            <div class="testimonials-meta">
+              <cite>Chris M.</cite>
+              <span class="testimonials-role">Specialist · represented by Tony Storniolo</span>
+            </div>
+            <img class="testimonials-avatar" src="assets/portraits/testimonials/chris-m.jpg?v=heads-fix-20260718i" alt="" width="48" height="48" loading="lazy" decoding="async" />
+          </footer>
+        </article>
+
+        <article class="testimonials-card testimonials-card--quote" data-group="agents" data-hidden="true" hidden>
+          <span class="testimonials-mark" aria-hidden="true">“</span>
+          <p class="testimonials-card-quote">Luke thinks past the signing. Every conversation came back to eligibility, earnings, and what still matters five years out—not just the next announcement.</p>
+          <footer class="testimonials-attribution">
+            <div class="testimonials-meta">
+              <cite>Ava K.</cite>
+              <span class="testimonials-role">Athlete · advised with Luke Mazur</span>
+            </div>
+            <img class="testimonials-avatar" src="assets/portraits/testimonials/ava-k.jpg?v=heads-fix-20260718i" alt="" width="48" height="48" loading="lazy" decoding="async" />
+          </footer>
+        </article>
+
+        <article class="testimonials-card testimonials-card--split" data-group="agents" data-hidden="true" hidden>
+          <div class="testimonials-card-copy">
+            <span class="testimonials-mark" aria-hidden="true">“</span>
+            <p class="testimonials-card-quote">Shane didn’t vanish after the commitment. He stayed on portal timing, school fit, and what the NIL package had to look like so I wasn’t guessing at midnight.</p>
+            <footer class="testimonials-attribution">
+              <div class="testimonials-meta">
+                <cite>Jordan T.</cite>
+                <span class="testimonials-role">Wide receiver · represented by Shane Simpson</span>
+              </div>
+            </footer>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
 <!-- LATEST MOVEMENT -->
   <section id="transfer" aria-labelledby="transfer-heading">
     <div class="section-head">
       <div>
-        <span class="eyebrow">03 — Transfers</span>
+        <span class="eyebrow">05 — Transfers</span>
         <h2 id="transfer-heading">Strategic placements, <em>made visible.</em></h2>
         <p class="desc">Confirmed signings and portal commitments from the college football athletes we represent.</p>
       </div>
@@ -934,7 +1044,7 @@
     <div class="brand-inner">
       <div class="section-head brand-page-head">
         <div class="brand-page-head-copy">
-          <span class="eyebrow">04 — Brand partnerships</span>
+          <span class="eyebrow">06 — Brand partnerships</span>
           <h2 id="brand-heading">Partnerships &amp; <em>opportunities.</em></h2>
           <p class="desc brand-lead">From first brief to booked call in three steps. Share what you're building, get matched with a strategist who knows your category, and schedule a short intro conversation—we typically respond within 48 hours.</p>
         </div>
@@ -1106,7 +1216,7 @@
     <div class="leadership-inner">
       <div class="section-head">
         <div>
-          <span class="eyebrow">05 — Leadership &amp; agents</span>
+          <span class="eyebrow">07 — Leadership &amp; agents</span>
           <h2 id="leadership-heading">Executive Horsepower Behind Every <em>Deal.</em></h2>
         </div>
         <p class="desc">Athletes and corporate partners work directly with strategists who negotiate at the highest level—scaling agent presence, protecting market value, and streamlining modern NIL representation.</p>
@@ -1219,13 +1329,16 @@
 
 <!-- JOIN -->
   <section class="join" id="join" aria-labelledby="join-heading">
-    <span class="eyebrow">06 — Join the roster</span>
+    <span class="eyebrow">08 — Join the roster</span>
     <h2 id="join-heading"><span>We represent <em>the elite.</em></span><span>If you're ready, <em>let's talk.</em></span></h2>
     <div class="join-cta">
       <a href="get-started.html" class="btn-outline btn-primary"><span class="btn-label">Get Started</span><svg class="arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 12L12 2M5 2h7v7"/></svg></a>
       <a href="contact-us.html" class="btn-outline"><span class="btn-label">Speak With an Agent</span><svg class="arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 12L12 2M5 2h7v7"/></svg></a>
     </div>
   </section>
+
+
+
 </main>
 
 <!-- FOOTER -->
@@ -1322,6 +1435,6 @@
 <script src="js/portraits.js" defer></script>
 <script src="js/athletes-data.js" defer></script>
 <script src="js/demo-marketing-data.js" defer></script>
-<script src="js/main.js?v=cta-case-hover-1" defer></script>
+<script src="js/main.js?v=testimonials-photos-back-1" defer></script>
 </body>
 </html>
