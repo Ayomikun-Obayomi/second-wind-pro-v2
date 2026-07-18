@@ -27,6 +27,7 @@ function defaultBio(entry) {
 
 const PHOTO_POSITION_OVERRIDES = {
   'jaiden-allos': 'center 0%',
+  'sean-brady': 'center 75%',
 };
 
 const PHOTO_POSITION_ROSTER_OVERRIDES = {
@@ -38,7 +39,7 @@ const PHOTO_POSITION_ROSTER_OVERRIDES = {
   'malik-diaby': 'center top',
   'maddox-arnold': 'center top',
   'wynden-ho-ohuli': 'center top',
-  'sean-brady': 'center 30%',
+  'sean-brady': 'center 75%',
 };
 
 function attachPortraitMeta(slug, data) {

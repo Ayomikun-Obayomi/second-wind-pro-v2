@@ -123,7 +123,8 @@
       return;
     }
     img.style.objectPosition = position;
-    img.style.transformOrigin = position;
+    // Keep origin centered so athlete-specific CSS scale/translateY nudges stay predictable.
+    img.style.transformOrigin = 'center center';
   }
 
   function fillAthletePhoto(el, slug, athlete) {

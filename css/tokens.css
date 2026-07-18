@@ -96,6 +96,7 @@
   --modal-padding:    calc(var(--s-4) + var(--s-2)); /* 24px */
 
   /* Buttons — section CTAs */
+  --btn-font:         var(--font-sans); /* Geist — not mono; partner + outline CTAs */
   --btn-padding-y:    14px;
   --btn-padding-x:    26px;
   --btn-gap:          12px;
@@ -109,6 +110,21 @@
   --btn-primary-text:   var(--on-purple);
   --btn-primary-hover-bg: var(--purple-bright);
   --btn-focus-ring:     var(--focus);
+
+  /* Partner CTA — same color/border/radius as section primary; compact padding */
+  --partner-btn-bg:              var(--btn-primary-bg);       /* --purple */
+  --partner-btn-text:            var(--btn-primary-text);     /* --on-purple */
+  --partner-btn-hover-bg:        var(--btn-primary-hover-bg); /* --purple-bright */
+  --partner-btn-hover-text:      var(--btn-primary-text);
+  --partner-btn-border:          1px solid var(--partner-btn-bg); /* match primary 1px border box */
+  --partner-btn-hover-border:    1px solid var(--partner-btn-hover-bg);
+  --partner-btn-font:            var(--btn-font); /* Geist — not mono */
+  --partner-btn-font-size:       var(--t-sm); /* 13px — match .btn-outline */
+  --partner-btn-font-weight:     var(--fw-medium);
+  --partner-btn-letter-spacing:  0.02em; /* title case — was 0.08em for ALL CAPS */
+  --partner-btn-radius:          var(--btn-radius); /* --radius-sm / 4px — nested cards */
+  --partner-btn-padding-y:       9px;  /* compact — not aliased to section --btn-padding-* */
+  --partner-btn-padding-x:       16px;
 
   /* Placeholder photo gradients (swap when real photography lands) */
   --photo-football-from: #3C096C;

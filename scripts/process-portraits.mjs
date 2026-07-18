@@ -41,7 +41,7 @@ const PHOTO_POSITION_ROSTER_OVERRIDES = {
   'malik-diaby': 'center top',
   'maddox-arnold': 'center top',
   'wynden-ho-ohuli': 'center top',
-  'sean-brady': 'center 30%',
+  'sean-brady': 'center 75%',
 };
 
 function parseObjectPosition(position = 'center top') {

@@ -319,8 +319,8 @@ const ATHLETES = {
       "logoSrc": "assets/schools/gardner-webb.png"
     },
     "photoSrc": "assets/portraits/athletes/sean-brady.jpg",
-    "photoPosition": "center 22%",
-    "photoPositionRoster": "center 30%"
+    "photoPosition": "center center",
+    "photoPositionRoster": "center center"
   },
   "rj-chapman": {
     "name": "RJ Chapman",

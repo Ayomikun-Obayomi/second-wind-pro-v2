@@ -64,22 +64,50 @@ function initials(name) {
     .toUpperCase();
 }
 
-function transferDate(index, windowYear) {
-  const year = String(windowYear || '2026').slice(-2);
-  const month = String(Math.min(12, 2 + index)).padStart(2, '0');
-  const day = String(Math.min(28, 4 + index * 2)).padStart(2, '0');
-  return { display: `${month}.${day}.${year}`, iso: `20${year}-${month}-${day}` };
+function transferDate(_index, windowYear) {
+  const year = String(windowYear || '2026').replace(/\D/g, '').slice(0, 4) || '2026';
+  return { display: year, iso: year };
+}
+
+const CLASS_ABBR = [
+  [/redh?shirt\s+freshman/i, 'RS Fr'],
+  [/redh?shirt\s+sophomore/i, 'RS So'],
+  [/redh?shirt\s+junior/i, 'RS Jr'],
+  [/redh?shirt\s+senior/i, 'RS Sr'],
+  [/^freshman$/i, 'Fr'],
+  [/^sophomore$/i, 'So'],
+  [/^junior$/i, 'Jr'],
+  [/^senior$/i, 'Sr'],
+];
+
+function abbreviateClass(klass) {
+  const raw = String(klass || '').trim();
+  if (!raw) return '';
+  for (const [re, abbr] of CLASS_ABBR) {
+    if (re.test(raw)) return abbr;
+  }
+  return raw;
+}
+
+/** Grade · position under the name (no school — destinations live in the wire flow). */
+function rosterStyleMeta(_transfer, rosterRow) {
+  const parts = String(rosterRow?.positionLine || '').split('·').map((s) => s.trim()).filter(Boolean);
+  const role = parts[0] || rosterRow?.position || '';
+  const klass = abbreviateClass(parts[1] || rosterRow?.year || '');
+  return [klass, role].filter(Boolean).join(' · ');
 }
 
 function athleteMeta(slug, rosterBySlug) {
   const row = rosterBySlug[slug];
   if (!row) {
-    return { initials: initials(slug), positionLine: 'Football', agent: 'Second Wind Pro' };
+    return { initials: initials(slug), positionLine: 'Football', agent: 'Second Wind Pro', year: '' };
   }
   return {
     initials: row.photo,
     positionLine: row.positionLine,
     agent: row.agent,
+    year: row.year || '',
+    school: row.school || '',
   };
 }
 
@@ -88,6 +116,7 @@ function commitCardHtml(transfer, rosterBySlug, index) {
   const meta = athleteMeta(transfer.slug, rosterBySlug);
   const date = transferDate(index, transfer.window);
   const theme = CARD_THEMES[index % CARD_THEMES.length];
+  const roleMeta = rosterStyleMeta(transfer, rosterBySlug[transfer.slug]);
 
   return `      <article class="commit-card ${theme}" data-athlete="${transfer.slug}">
         <div class="commit-card-visual" aria-hidden="true">
@@ -102,7 +131,7 @@ function commitCardHtml(transfer, rosterBySlug, index) {
           <div class="commit-card-head">
             <div class="commit-card-identity">
               <h3 class="commit-card-name">${first}${last ? ` <em>${last}</em>` : ''}</h3>
-              <p class="commit-card-role">${transfer.sport} · ${meta.positionLine.split(' · ')[0] || 'Athlete'}</p>
+              <p class="commit-card-role">${roleMeta}</p>
             </div>
             <div class="commit-card-meta">
               <time class="commit-card-date" datetime="${date.iso}">${date.display}</time>
@@ -123,7 +152,7 @@ function wireRowHtml(transfer, rosterBySlug, index) {
   const meta = athleteMeta(transfer.slug, rosterBySlug);
   const date = transferDate(index, transfer.window);
   const liveClass = index === 0 ? ' wire-row-live' : '';
-  const pos = meta.positionLine.split(' · ')[0] || 'Athlete';
+  const roleMeta = rosterStyleMeta(transfer, rosterBySlug[transfer.slug]);
   const sportClass = transfer.sport?.toLowerCase() === 'basketball' ? ' basketball' : '';
 
   return `      <div class="wire-row${liveClass}" data-transfer="${transfer.slug}">
@@ -131,7 +160,7 @@ function wireRowHtml(transfer, rosterBySlug, index) {
           <div class="wire-photo${sportClass}" aria-hidden="true">${meta.initials}</div>
           <div class="wire-athlete-copy">
             <p class="wire-athlete-name">${first}${last ? ` <em>${last}</em>` : ''}</p>
-            <span class="wire-athlete-sport">${transfer.sport} · ${pos}</span>
+            <span class="wire-athlete-sport">${roleMeta}</span>
           </div>
         </div>
         <div class="wire-row-meta">

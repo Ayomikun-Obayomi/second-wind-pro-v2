@@ -35,7 +35,7 @@ function wirePartnerButtons(root = document) {
     if (!slug) return;
 
     const url = partnerGetStartedUrl(slug);
-    const label = 'Partner with this athlete';
+    const label = 'Partner with this Athlete';
 
     if (btn.tagName === 'A') {
       btn.href = url;
