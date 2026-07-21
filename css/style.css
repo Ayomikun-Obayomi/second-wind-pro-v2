@@ -9711,6 +9711,11 @@ a.partner-btn {
   object-view-box: inset(2% 16% 48% 16%);
 }
 
+/* Desktop keeps tall tile / Denise side portrait — in-card avatars are mobile-only. */
+.testimonials-avatar--mobile {
+  display: none;
+}
+
 /* Tall portrait — Marcus L / Jordan T; spans both rows (no caption overlay).
    Desktop height comes from bento’s 4/5 row lock so both tabs match. */
 .testimonials-card--photo {
@@ -10457,22 +10462,32 @@ a.partner-btn {
     min-width: 44px;
   }
 
+  /* Mobile CTAs: tighter padding (was 10×18 / 8×14) while keeping ≥44px touch height. */
   .nav-cta {
     font-size: var(--t-sm);
     font-weight: var(--fw-medium);
     letter-spacing: 0.02em;
     text-transform: none;
     min-height: 44px;
-    padding: var(--partner-btn-padding-y) var(--partner-btn-padding-x);
-    border-radius: 8px;
+    padding: 6px 12px;
+    border-radius: var(--btn-radius);
+    box-sizing: border-box;
+  }
+
+  .btn-outline {
+    min-height: 44px;
+    padding: 8px 14px;
+    box-sizing: border-box;
   }
 
   .partner-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--partner-btn-padding-y) var(--partner-btn-padding-x);
+    min-height: 44px;
+    padding: 8px 12px;
     border-radius: var(--partner-btn-radius);
+    box-sizing: border-box;
   }
 
   body.nav-open {
@@ -10627,19 +10642,38 @@ a.partner-btn {
   #roster .roster-controls {
     width: 100%;
     max-width: 100%;
-    justify-content: flex-end;
+    justify-content: center;
   }
 
   #roster .roster-nav-group {
     width: auto;
     max-width: 100%;
-    justify-content: flex-end;
+    justify-content: center;
+  }
+
+  /* Tighter chrome on small viewports — long page-dot rows + 44px arrows read oversized */
+  #roster .roster-nav {
+    width: 36px;
+    height: 36px;
+  }
+
+  #roster .roster-dots {
+    gap: 5px;
+  }
+
+  #roster .roster-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  #roster .roster-dot.active {
+    width: 16px;
   }
 
   #roster:not(.roster-page) .roster-viewport {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    --carousel-card-size: min(280px, calc(100vw - (var(--gutter-mobile) * 2) - 48px));
+    --carousel-card-size: min(240px, calc(100vw - (var(--gutter-mobile) * 2) - 48px));
   }
 
   #leadership:not(.leadership-page) .leadership-viewport {
@@ -10705,10 +10739,9 @@ a.partner-btn {
     grid-row: auto;
   }
 
+  /* Hide separate tall photo tiles — Marcus/Jordan images live in quote cards. */
   .testimonials-card--photo {
-    min-height: min(320px, 58vw);
-    aspect-ratio: 4 / 5;
-    height: auto;
+    display: none;
   }
 
   .testimonials-card--quote,
@@ -10716,24 +10749,51 @@ a.partner-btn {
     overflow: visible;
   }
 
+  /* Denise / Jordan: drop Willows side portrait; card reads as a Priya-style
+     quote. Desktop copy uses flex:1 1 0 + height:100% for the split row —
+     with the side hidden that collapses the card (~34px) and overflow:hidden
+     clips the quote. Size to content instead. */
   .testimonials-card--split {
     flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+
+  .testimonials-card--split .testimonials-card-copy {
+    flex: 1 1 auto;
+    height: auto;
+    min-height: auto;
   }
 
   .testimonials-card-side {
-    flex: none;
-    max-width: none;
-    width: 100%;
-    height: min(240px, 42vw);
-    padding: 0;
+    display: none;
   }
 
-  /* Even Willows inset on mobile — matches tall-tile padding rhythm. */
-  .testimonials-card-side img {
-    position: absolute;
-    inset: 0 var(--s-3) var(--s-3);
-    width: calc(100% - 2 * var(--s-3));
-    height: calc(100% - var(--s-3));
+  .testimonials-card--split .testimonials-attribution {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--s-3);
+  }
+
+  .testimonials-avatar--mobile {
+    display: block;
+  }
+
+  /* Marcus: face-centered crop to match Priya circle treatment. */
+  .testimonials-avatar[src*="marcus-l"] {
+    --testimonial-avatar-x: center;
+    --testimonial-avatar-y: 28%;
+    object-view-box: inset(0% 14% 42% 14%);
+  }
+
+  /* Jordan / Denise: mobile uses face-square masters (*-avatar); center in circle.
+     Tall jordan-t.jpg / denise-r.jpg stay desktop-only — do not apply tall-portrait insets. */
+  .testimonials-avatar[src*="jordan-t"],
+  .testimonials-avatar[src*="denise-r"] {
+    --testimonial-avatar-x: center;
+    --testimonial-avatar-y: center;
+    object-view-box: none;
   }
 
   .testimonials-avatar[src*="priya-n"] {
@@ -10755,7 +10815,7 @@ a.partner-btn {
   }
 
   .testimonials-card-quote {
-    font-size: var(--t-md);
+    font-size: var(--t-base); /* 15px — desktop stays --t-md (17px) */
   }
 
   #leadership.leadership-page .leadership-grid-track,
@@ -10848,13 +10908,15 @@ a.partner-btn {
     justify-content: flex-end;
   }
 
-  .athlete-card,
-  .athlete-photo {
-    flex: 0 0 min(280px, calc(100vw - (var(--gutter-mobile) * 2) - 40px));
-    width: min(280px, calc(100vw - (var(--gutter-mobile) * 2) - 40px));
+  /* Size the card only — flex-basis on .athlete-photo (column flex) crushed 4/5 into a square */
+  .athlete-card {
+    flex: 0 0 min(240px, calc(100vw - (var(--gutter-mobile) * 2) - 40px));
+    width: min(240px, calc(100vw - (var(--gutter-mobile) * 2) - 40px));
   }
 
   .athlete-photo {
+    flex: 0 0 auto;
+    width: 100%;
     height: auto;
     aspect-ratio: 4 / 5;
   }
@@ -11456,7 +11518,7 @@ a.partner-btn {
 
   .nav-cta {
     min-height: 44px;
-    padding: var(--partner-btn-padding-y) var(--partner-btn-padding-x);
+    padding: 6px 12px;
     font-size: 12px;
   }
 
@@ -11525,7 +11587,13 @@ a.partner-btn {
     min-height: 0;
   }
 
-  #roster .roster-controls,
+  #roster .roster-controls {
+    width: 100%;
+    justify-content: center;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+
   #leadership .leadership-controls {
     width: 100%;
     justify-content: flex-end;
@@ -11533,10 +11601,20 @@ a.partner-btn {
     padding-inline: 0;
   }
 
-  .athlete-card,
+  .athlete-card {
+    flex: 0 0 min(220px, calc(100vw - (var(--gutter-mobile) * 2) - 32px));
+    width: min(220px, calc(100vw - (var(--gutter-mobile) * 2) - 32px));
+  }
+
   .athlete-photo {
-    flex: 0 0 min(260px, calc(100vw - (var(--gutter-mobile) * 2) - 32px));
-    width: min(260px, calc(100vw - (var(--gutter-mobile) * 2) - 32px));
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+  }
+
+  #roster:not(.roster-page) .roster-viewport {
+    --carousel-card-size: min(220px, calc(100vw - (var(--gutter-mobile) * 2) - 40px));
   }
 
   #roster.roster-page .roster-grid {
