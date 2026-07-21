@@ -165,7 +165,7 @@ function rosterCardHtml(slug, a) {
             <p class="athlete-rank"></p>
             <p class="athlete-card-desc"><span class="athlete-card-desc-text"></span></p>
           </div>
-          <a href="/athlete/${slug}" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
+          <a href="athlete.html?athlete=${slug}" class="partner-btn athlete-read-more"><span class="btn-label">Read more</span></a>
         </div>
       </article>`;
 }

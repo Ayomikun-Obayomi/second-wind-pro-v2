@@ -6237,9 +6237,12 @@ a.partner-btn {
     background var(--dur-mid) var(--ease-out);
 }
 
-.wire-row:hover {
-  padding-left: var(--s-6);
-  background: linear-gradient(90deg, rgba(184, 157, 255, 0.06), transparent);
+/* Fine-pointer only — avoids sticky hover/lift on touch (incl. transfer.html mobile) */
+@media (hover: hover) and (pointer: fine) {
+  .wire-row:hover {
+    padding-left: var(--s-6);
+    background: linear-gradient(90deg, rgba(184, 157, 255, 0.06), transparent);
+  }
 }
 
 .athlete-card[role="button"] {
@@ -8897,13 +8900,18 @@ a.partner-btn {
   background: var(--cream);
   color: var(--bg);
   cursor: pointer;
-  font-size: 20px;
-  line-height: 1;
-  display: grid;
-  place-items: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
   transition:
     background var(--dur-fast) var(--ease-out),
     border-color var(--dur-fast) var(--ease-out);
+}
+
+#leadership.leadership-page .leadership-detail-close-icon {
+  display: block;
+  flex-shrink: 0;
 }
 
 #leadership.leadership-page .leadership-detail-close:hover,
@@ -9088,6 +9096,15 @@ a.partner-btn {
   gap: var(--s-2);
   font-size: 12px;
   line-height: 1.2;
+}
+
+a.leadership-roster-link.tab {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: var(--muted);
+  cursor: pointer;
 }
 
 #leadership.leadership-page .leadership-roster-link.tab:hover,
@@ -10480,12 +10497,24 @@ a.partner-btn {
     box-sizing: border-box;
   }
 
-  .partner-btn {
+  /* Partner CTA: 12px / 6×12. Keep min-height:0 so padding isn't bloated by 44px touch target. */
+  a.partner-btn,
+  .partner-btn,
+  a.athlete-magazine-cta,
+  .athlete-magazine-cta,
+  a.btn-outline.athlete-magazine-cta,
+  a.btn-outline.btn-primary.athlete-magazine-cta,
+  #roster.roster-page a.partner-btn,
+  #roster.roster-page .partner-btn,
+  #roster.roster-page a.athlete-read-more,
+  #roster.roster-page .athlete-read-more {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 44px;
-    padding: 8px 12px;
+    min-height: 0;
+    height: auto;
+    font-size: 12px;
+    padding: 6px 12px;
     border-radius: var(--partner-btn-radius);
     box-sizing: border-box;
   }
@@ -10512,6 +10541,9 @@ a.partner-btn {
 
   :root {
     --gutter: var(--gutter-mobile);
+    --partner-btn-font-size: 12px;
+    --partner-btn-padding-y: 6px;
+    --partner-btn-padding-x: 12px;
   }
 
   section {
@@ -10578,8 +10610,12 @@ a.partner-btn {
     font-size: clamp(22px, 5.5vw, 28px);
   }
 
-  .roster-tabs {
+  /* Header filter pills: 8px (--s-2) gap on mobile (matches desktop) */
+  .roster-tabs,
+  #testimonials .testimonials-tabs,
+  #transfer .transfer-region-tabs {
     flex-wrap: wrap;
+    gap: var(--s-2);
   }
 
   .roster-toolbar {
@@ -10929,13 +10965,14 @@ a.partner-btn {
   }
 
   #transfer .transfer-region-tabs {
+    gap: var(--s-2);
     margin-top: var(--s-4);
-    margin-bottom: var(--s-4);
+    margin-bottom: var(--s-2);
   }
 
   #transfer .section-head {
     margin-bottom: var(--s-4);
-    gap: var(--s-4);
+    gap: var(--s-2);
   }
 
   #transfer .section-head .desc {
@@ -10950,9 +10987,26 @@ a.partner-btn {
     margin-top: var(--s-2);
   }
 
-  #transfer .wire-list {
-    margin-top: var(--s-4);
-    padding-top: var(--s-4);
+  #transfer.transfer-page .wire-list {
+    margin-top: var(--s-3);
+    padding-top: 0;
+  }
+
+  /* Touch: no hover lift/tint (desktop hover gated via (hover:hover); belt+suspenders) */
+  #transfer .wire-row:hover,
+  #transfer.transfer-page .wire-row:hover {
+    padding-left: 0;
+    background: transparent;
+    transform: none;
+    box-shadow: none;
+    border-color: var(--line);
+  }
+
+  #transfer .commit-card:hover,
+  #transfer.transfer-page .commit-card:hover {
+    border-color: var(--line);
+    box-shadow: none;
+    transform: none;
   }
 
   .services-stack {
@@ -11199,10 +11253,6 @@ a.partner-btn {
     flex-direction: column;
   }
 
-  #transfer .wire-list > .wire-row:first-child {
-    padding-top: 0;
-  }
-
   #transfer .wire-list .wire-row {
     row-gap: var(--s-5);
   }
@@ -11216,7 +11266,10 @@ a.partner-btn {
     padding: var(--s-4) 0;
   }
 
-  .wire-row:hover { padding-left: 0; }
+  .wire-row:hover {
+    padding-left: 0;
+    background: transparent;
+  }
 
   .wire-athlete {
     grid-column: 1;
@@ -11244,19 +11297,27 @@ a.partner-btn {
     color: var(--muted-2);
   }
 
+  /* Match athlete magazine path: school → school on one horizontal line.
+     Span full row (not just col 1) so badge-column width isn't wasted;
+     wrap instead of scroll-clipping the destination name off-screen. */
   .wire-flow {
     display: flex;
     flex-direction: row;
     align-items: center;
     flex-wrap: wrap;
-    gap: clamp(8px, 1.4vw, 12px);
-    grid-column: 1;
+    column-gap: var(--s-3);
+    row-gap: var(--s-2);
+    grid-column: 1 / -1;
     grid-row: 2;
     margin-top: var(--s-4);
+    min-width: 0;
+    width: 100%;
+    overflow-x: visible;
   }
 
   .wire-flow .wire-arrow {
-    margin-right: 4px;
+    margin-right: 0;
+    flex-shrink: 0;
   }
 
   .wire-flow .wire-school:nth-child(1),
@@ -11265,8 +11326,33 @@ a.partner-btn {
     grid-column: auto;
   }
 
+  /* Beat base .wire-flow .wire-school:nth-child(n) { min-width: 0 } */
+  .wire-flow .wire-school,
+  .wire-flow .wire-school:nth-child(1),
+  .wire-flow .wire-school:nth-child(3) {
+    flex: 0 0 auto;
+    min-width: max-content;
+  }
+
+  /* Match athlete magazine path density so longer names stay on one line */
+  .wire-row .wire-flow .wire-school .logo {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+  }
+
   .wire-flow .wire-school .name {
-    white-space: normal;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+    flex-shrink: 0;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  /* Transfer page only — denser school names on mobile */
+  #transfer .wire-flow .wire-school .name {
+    font-size: 12px;
   }
   .brand-cards,
   .brand-alliances {
@@ -11307,6 +11393,15 @@ a.partner-btn {
 
   #brand.brand-page .brand-stage {
     gap: var(--s-5);
+  }
+
+  /* Step cards → Launch Partnership CTA: 22px on mobile */
+  #brand.brand-page .brand-showcase {
+    gap: var(--s-5);
+  }
+
+  #brand.brand-page .contact-cta.brand-page-cta {
+    margin-top: 0;
   }
 
   #brand.brand-page .brand-grid-track {

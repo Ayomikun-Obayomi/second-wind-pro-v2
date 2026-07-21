@@ -24,10 +24,12 @@ function partnerGetStartedUrl(athleteSlug) {
 }
 
 function athletePageHref(slug, sport) {
+  // Relative query URL works on Studio (/playground/…), plain static servers,
+  // and Netlify. Pretty /athlete/:slug still works when typed (via _redirects / npm run dev).
   const params = new URLSearchParams();
+  params.set('athlete', slug);
   if (sport && sport !== 'all') params.set('sport', sport);
-  const query = params.toString();
-  return `/athlete/${encodeURIComponent(slug)}${query ? `?${query}` : ''}`;
+  return `athlete.html?${params.toString()}`;
 }
 
 function wirePartnerButtons(root = document) {
@@ -387,14 +389,6 @@ function phoneTelHref(phone) {
 
   const hashKey = location.hash.replace(/^#/, '');
   if (hashKey && ATHLETES[hashKey]) open(hashKey);
-
-  document.getElementById('leadership-detail-roster')?.addEventListener('click', (e) => {
-    const trigger = e.target.closest('[data-athlete]');
-    if (!trigger) return;
-    e.preventDefault();
-    e.stopPropagation();
-    open(trigger.dataset.athlete);
-  });
 
   closeBtn.addEventListener('click', close);
   modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
@@ -1117,13 +1111,13 @@ function rosterPerPage() {
     slugs.forEach((slug) => {
       const athlete = ATHLETES[slug];
       if (!athlete) return;
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'leadership-roster-link tab';
-      btn.dataset.athlete = slug;
-      btn.textContent = athlete.name;
-      btn.setAttribute('aria-label', `View ${athlete.name} profile`);
-      container.appendChild(btn);
+      const link = document.createElement('a');
+      link.className = 'leadership-roster-link tab';
+      link.href = athletePageHref(slug);
+      link.dataset.athlete = slug;
+      link.textContent = athlete.name;
+      link.setAttribute('aria-label', `View ${athlete.name} profile`);
+      container.appendChild(link);
     });
   }
 

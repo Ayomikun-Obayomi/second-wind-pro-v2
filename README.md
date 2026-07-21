@@ -15,9 +15,14 @@ Marketing site for Second Wind Pro: athlete-first NIL representation, brand part
 # Rebuild inner pages from snippets after editing scripts/snippets/*
 node scripts/build-pages.mjs
 
-# Optional: serve locally
+# Preferred: local server with pretty /athlete/:slug rewrites
+npm run dev
+
+# Also fine: plain static server (athlete links use athlete.html?athlete=…)
 npx serve .
 ```
+
+Athlete profile links use relative `athlete.html?athlete={slug}` so they work under Studio (`/playground/…`), plain static servers, and Netlify. Pretty `/athlete/:slug` URLs still resolve via `_redirects` (Netlify) or `npm run dev`.
 
 ## Pages
 
