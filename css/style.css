@@ -911,6 +911,263 @@ a.btn-tertiary {
   padding: var(--s-7) var(--gutter);
 }
 
+#about-serve .section-head {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+#about-serve .section-head > div {
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+  margin-right: auto;
+  text-align: left;
+}
+
+#about-serve .section-head .desc {
+  max-width: none;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  text-align: left;
+}
+
+/* How we serve — compact card illustrations (About only) */
+#about-serve .brand-card-media {
+  min-height: 224px;
+  padding: var(--s-4);
+  justify-content: stretch;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(109, 40, 217, 0.08), transparent 58%),
+    linear-gradient(180deg, var(--surface-3) 0%, var(--surface) 100%);
+}
+
+#about-serve .brand-card-media--appearances {
+  min-height: 224px;
+  background:
+    radial-gradient(ellipse at 0% 100%, rgba(184, 157, 255, 0.05), transparent 55%),
+    linear-gradient(180deg, var(--surface-3) 0%, var(--surface) 100%);
+}
+
+#about-serve .brand-card-media--local {
+  min-height: 224px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(34, 197, 94, 0.08), transparent 60%),
+    linear-gradient(180deg, var(--surface-3) 0%, var(--surface) 100%);
+}
+
+#about-serve .serve-scene {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 192px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background:
+    linear-gradient(180deg, rgba(26, 29, 46, 0.92) 0%, rgba(21, 23, 42, 0.88) 100%);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+}
+
+#about-serve .serve-scene--uni,
+#about-serve .serve-scene--tech {
+  gap: 12px;
+}
+
+#about-serve .serve-scene-chrome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+
+#about-serve .serve-scene-count {
+  color: var(--purple-bright);
+}
+
+#about-serve .serve-chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  justify-content: space-evenly;
+  gap: 6px;
+  min-height: 0;
+}
+
+#about-serve .serve-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+#about-serve .serve-chip.on {
+  border-color: rgba(184, 157, 255, 0.22);
+  background: rgba(109, 40, 217, 0.1);
+}
+
+#about-serve .serve-av {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+#about-serve .serve-av img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#about-serve .serve-chip-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+#about-serve .serve-chip-copy strong {
+  font-size: 12px;
+  font-weight: var(--fw-semibold);
+  color: var(--cream);
+  line-height: 1.2;
+}
+
+#about-serve .serve-chip-copy em {
+  font-style: normal;
+  font-size: 10px;
+  color: var(--muted-2);
+  line-height: 1.2;
+}
+
+#about-serve .serve-chip.on .serve-chip-copy em {
+  color: var(--purple-bright);
+}
+
+#about-serve .serve-uni-logos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  gap: 8px;
+  min-height: 0;
+}
+
+#about-serve .serve-uni-logos li {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+}
+
+#about-serve .serve-uni-logos img {
+  display: block;
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+#about-serve .serve-uni-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+#about-serve .serve-uni-tags span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--purple-bright);
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(109, 40, 217, 0.06);
+}
+
+#about-serve .serve-metric {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "label delta"
+    "value value";
+  gap: 2px 8px;
+  align-items: baseline;
+}
+
+#about-serve .serve-metric label {
+  grid-area: label;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+
+#about-serve .serve-metric strong {
+  grid-area: value;
+  font-size: 28px;
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--cream);
+}
+
+#about-serve .serve-metric em {
+  grid-area: delta;
+  justify-self: end;
+  font-style: normal;
+  font-size: 11px;
+  font-weight: var(--fw-medium);
+  color: #86efac;
+}
+
+#about-serve .serve-bars {
+  display: flex;
+  align-items: flex-end;
+  flex: 1 1 auto;
+  gap: 6px;
+  min-height: 72px;
+  height: auto;
+  margin-top: 2px;
+}
+
+#about-serve .serve-bars span {
+  flex: 1;
+  height: var(--h, 50%);
+  border-radius: 4px 4px 2px 2px;
+  background: linear-gradient(180deg, var(--purple-bright) 0%, var(--purple-deep) 100%);
+  opacity: 0.85;
+}
+
+#about-serve .serve-bars span:nth-child(even) {
+  opacity: 0.55;
+}
+
 @media (max-width: 980px) {
   #about .about-intro-head {
     flex-direction: column;
