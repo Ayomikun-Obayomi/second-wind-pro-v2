@@ -9834,10 +9834,8 @@ a.leadership-roster-link.tab {
   border-radius: var(--radius-pill);
 }
 
-/* L-brick: wider photo col + two quote cols; photo rowspan fills L-shape.
-   Row height is locked to the photo column’s 4/5 aspect so Company (Marcus)
-   and Agents (Jordan) tall tiles share identical dimensions regardless of
-   quote copy length or split side-portrait content. */
+/* L-brick when a tall photo is visible. Row height locks to the photo
+   column’s 4/5 aspect. Without a visible photo, falls back to 2-col quotes. */
 .testimonials-bento {
   --testimonials-pad: var(--s-4);
   --testimonials-gap: var(--s-3);
@@ -9862,6 +9860,16 @@ a.leadership-roster-link.tab {
   align-items: stretch;
 }
 
+/* Company tab has no tall photo — 2-col quote grid + full-width wide quote. */
+.testimonials-bento:not(:has(.testimonials-card--photo:not([hidden]))) {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: auto auto;
+}
+
+.testimonials-bento:not(:has(.testimonials-card--photo:not([hidden]))) .testimonials-card--quote-wide {
+  grid-column: 1 / -1;
+}
+
 .testimonials-card {
   position: relative;
   margin: 0;
@@ -9879,8 +9887,7 @@ a.leadership-roster-link.tab {
   display: none;
 }
 
-.testimonials-card--quote,
-.testimonials-card-copy {
+.testimonials-card--quote {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -9890,9 +9897,6 @@ a.leadership-roster-link.tab {
   height: 100%;
   min-height: 0;
   overflow: hidden;
-}
-
-.testimonials-card--quote {
   grid-column: span 1;
   grid-row: span 1;
 }
@@ -9971,6 +9975,13 @@ a.leadership-roster-link.tab {
   object-view-box: inset(0% 18% 40% 18%);
 }
 
+/* Marcus: tall portrait master — face-centered crop to match Priya circle. */
+.testimonials-avatar[src*="marcus-l"] {
+  --testimonial-avatar-x: center;
+  --testimonial-avatar-y: 28%;
+  object-view-box: inset(0% 14% 42% 14%);
+}
+
 /* Chris: padded source — helmet crown visible, crop lower action. */
 .testimonials-avatar[src*="chris-m"] {
   --testimonial-avatar-x: 42%;
@@ -9985,9 +9996,12 @@ a.leadership-roster-link.tab {
   object-view-box: inset(2% 16% 48% 16%);
 }
 
-/* Desktop keeps tall tile / Denise side portrait — in-card avatars are mobile-only. */
-.testimonials-avatar--mobile {
-  display: none;
+/* Jordan / Denise: face-square masters — center in circle. */
+.testimonials-avatar[src*="jordan-t"],
+.testimonials-avatar[src*="denise-r"] {
+  --testimonial-avatar-x: center;
+  --testimonial-avatar-y: center;
+  object-view-box: none;
 }
 
 /* Tall portrait — Marcus L / Jordan T; spans both rows (no caption overlay).
@@ -10005,19 +10019,10 @@ a.leadership-roster-link.tab {
   overflow: hidden;
 }
 
-/* Bento photos (tall + side): fixed frame + cover.
-   Frame is overflow:hidden (card) with 4:5 lock; assets are ~4:5 headroom
-   exports so cover barely crops. Face framing via object-position only —
-   no CSS scale (shrink looks letterboxed; zoom is a Sean-roster hack). */
-.testimonials-card--photo img,
-.testimonials-card-side img {
+/* Bento tall photos: fixed frame + cover. Face framing via object-position. */
+.testimonials-card--photo img {
   --testimonial-photo-x: center;
   --testimonial-photo-y: top;
-  object-fit: cover;
-  object-position: var(--testimonial-photo-x) var(--testimonial-photo-y);
-}
-
-.testimonials-card--photo img {
   display: block;
   width: 100%;
   flex: 1 1 auto;
@@ -10025,6 +10030,8 @@ a.leadership-roster-link.tab {
   height: 100%;
   border-radius: var(--radius-md);
   background: var(--surface-2);
+  object-fit: cover;
+  object-position: var(--testimonial-photo-x) var(--testimonial-photo-y);
 }
 
 /* Marcus / Jordan: center-top face framing (knobs for micro-nudges). */
@@ -10034,58 +10041,10 @@ a.leadership-roster-link.tab {
   --testimonial-photo-y: top;
 }
 
-/* Wide split: quote + inset side portrait (fills cols 2–3 under the quote pair) */
-.testimonials-card--split {
+/* Wide quote under the quote pair (cols 2–3) — Priya attribution pattern. */
+.testimonials-card--quote-wide {
   grid-column: 2 / span 2;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  gap: 0;
-  padding: 0;
-}
-
-.testimonials-card-copy {
-  flex: 1 1 0;
-  min-width: 0;
-  width: auto;
-}
-
-.testimonials-card--split .testimonials-attribution {
-  display: block;
-}
-
-/* Willows-style side slot: stretch with the split row; photo is inset + rounded. */
-.testimonials-card-side {
-  position: relative;
-  flex: 0 0 40%;
-  max-width: 40%;
-  min-width: 0;
-  min-height: 0;
-  align-self: stretch;
-  box-sizing: border-box;
-  background: transparent;
-  overflow: hidden;
-}
-
-/* Absolute fill with EXPLICIT w/h — replaced elems ignore inset stretch when
-   width/height are auto (intrinsic 900² blew past the slot). Even inset +
-   nested radius matches the tall-tile photo treatment. */
-.testimonials-card-side img {
-  position: absolute;
-  inset: var(--s-3);
-  display: block;
-  width: calc(100% - 2 * var(--s-3));
-  height: calc(100% - 2 * var(--s-3));
-  max-width: none;
-  border-radius: var(--radius-md);
-  background: var(--surface-2);
-}
-
-/* Denise: side slot is shorter than 4:5 — center (not top) so cover
-   crops white headroom + lower body evenly and keeps the face in frame. */
-.testimonials-card-side img[src*="denise-r"] {
-  --testimonial-photo-x: center;
-  --testimonial-photo-y: center;
+  grid-row: span 1;
 }
 
 /* ===== 11. JOIN ===== */
@@ -11026,67 +10985,21 @@ a.leadership-roster-link.tab {
   }
 
   .testimonials-card--quote,
-  .testimonials-card--photo,
-  .testimonials-card--split {
+  .testimonials-card--quote-wide,
+  .testimonials-card--photo {
     grid-column: auto;
     grid-row: auto;
   }
 
-  /* Hide separate tall photo tiles — Marcus/Jordan images live in quote cards. */
+  /* Hide separate tall photo tiles — Marcus/Jordan faces live in quote avatars. */
   .testimonials-card--photo {
     display: none;
   }
 
   .testimonials-card--quote,
-  .testimonials-card-copy {
+  .testimonials-card--quote-wide {
     overflow: visible;
-  }
-
-  /* Denise / Jordan: drop Willows side portrait; card reads as a Priya-style
-     quote. Desktop copy uses flex:1 1 0 + height:100% for the split row —
-     with the side hidden that collapses the card (~34px) and overflow:hidden
-     clips the quote. Size to content instead. */
-  .testimonials-card--split {
-    flex-direction: column;
     height: auto;
-    overflow: visible;
-  }
-
-  .testimonials-card--split .testimonials-card-copy {
-    flex: 1 1 auto;
-    height: auto;
-    min-height: auto;
-  }
-
-  .testimonials-card-side {
-    display: none;
-  }
-
-  .testimonials-card--split .testimonials-attribution {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: var(--s-3);
-  }
-
-  .testimonials-avatar--mobile {
-    display: block;
-  }
-
-  /* Marcus: face-centered crop to match Priya circle treatment. */
-  .testimonials-avatar[src*="marcus-l"] {
-    --testimonial-avatar-x: center;
-    --testimonial-avatar-y: 28%;
-    object-view-box: inset(0% 14% 42% 14%);
-  }
-
-  /* Jordan / Denise: mobile uses face-square masters (*-avatar); center in circle.
-     Tall jordan-t.jpg / denise-r.jpg stay desktop-only — do not apply tall-portrait insets. */
-  .testimonials-avatar[src*="jordan-t"],
-  .testimonials-avatar[src*="denise-r"] {
-    --testimonial-avatar-x: center;
-    --testimonial-avatar-y: center;
-    object-view-box: none;
   }
 
   .testimonials-avatar[src*="priya-n"] {

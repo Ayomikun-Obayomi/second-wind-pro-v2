@@ -486,10 +486,10 @@ function createScrollCarousel({
     return cards[0]?.offsetWidth || 0;
   }
 
+  /* Embla containScroll:'trimSnaps' / Nike-style: no trailing empty gap.
+     Natural max scroll leaves the last card flush with the viewport end. */
   function updateTrackSpacer() {
-    const width = cardWidth();
-    const spacer = width ? Math.max(0, viewport.clientWidth - width) : 0;
-    track.style.setProperty('--carousel-end-spacer', `${spacer}px`);
+    track.style.setProperty('--carousel-end-spacer', '0px');
   }
 
   function visibleCount() {
@@ -510,18 +510,17 @@ function createScrollCarousel({
   function maxScrollLeft() {
     const cards = getCards();
     if (!cards.length) return 0;
+    return Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+  }
 
-    const nativeMax = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
-
-    if (getMode() === 'step') {
-      return nativeMax;
+  function pageCount() {
+    const cards = getCards();
+    if (!cards.length) return 0;
+    if (getMode() === 'page') {
+      return Math.ceil(cards.length / perPageCount());
     }
-
-    const pages = pageCount();
-    const lastPageStart = pageStartOffset(Math.max(0, pages - 1));
-    const endAligned = lastCardEndScrollLeft();
-
-    return Math.max(0, lastPageStart, endAligned, nativeMax);
+    // Step + trimSnaps: one stop per lead card until the track end fills the viewport
+    return Math.max(1, cards.length - visibleCount() + 1);
   }
 
   function alignToPageScroll(page, behavior = 'auto') {
@@ -546,38 +545,26 @@ function createScrollCarousel({
     const cards = getCards();
     if (!cards.length) return 0;
 
+    const pages = pageCount();
     const scrollLeft = viewport.scrollLeft;
     const max = maxScrollLeft();
 
     if (max > 0 && scrollLeft >= max - 4) {
-      for (let i = cards.length - 1; i >= 0; i -= 1) {
-        if (scrollLeftForIndex(i) <= scrollLeft + 4) {
-          return i;
-        }
-      }
-      return cards.length - 1;
+      return Math.max(0, pages - 1);
     }
 
     let closest = 0;
     let minDist = Infinity;
-    cards.forEach((card, i) => {
-      const offset = cardOffsetInTrack(card);
+    const limit = Math.min(cards.length, pages);
+    for (let i = 0; i < limit; i += 1) {
+      const offset = Math.max(0, Math.min(cardOffsetInTrack(cards[i]), max));
       const dist = Math.abs(scrollLeft - offset);
       if (dist < minDist) {
         minDist = dist;
         closest = i;
       }
-    });
-    return closest;
-  }
-
-  function pageCount() {
-    const cards = getCards();
-    if (!cards.length) return 0;
-    if (getMode() === 'page') {
-      return Math.ceil(cards.length / perPageCount());
     }
-    return cards.length;
+    return closest;
   }
 
   function pageStartOffset(page) {
@@ -713,7 +700,7 @@ function createScrollCarousel({
     const cards = getCards();
     if (!cards.length) return;
 
-    const i = Math.max(0, Math.min(index, cards.length - 1));
+    const i = Math.max(0, Math.min(index, pageCount() - 1));
     if (getMode() === 'page') {
       alignToPageScroll(i, behavior);
       return;
@@ -865,10 +852,9 @@ function createScrollCarousel({
       return;
     }
     if (getMode() === 'step') {
-      const cards = getCards();
       const max = maxScrollLeft();
-      if (cards.length && max > 0 && viewport.scrollLeft >= max - 4) {
-        activeIndex = cards.length - 1;
+      if (max > 0 && viewport.scrollLeft >= max - 4) {
+        activeIndex = Math.max(0, pageCount() - 1);
         updateNav();
         return;
       }
@@ -982,6 +968,24 @@ function rosterPerPage() {
     return [...cardRoot.querySelectorAll('.athlete-card')].filter((c) => c.dataset.hidden !== 'true');
   }
 
+  function syncFilterCounts() {
+    const cards = [...cardRoot.querySelectorAll('.athlete-card')];
+    tabs.forEach((tab) => {
+      const countEl = tab.querySelector('.count');
+      if (!countEl) return;
+      const sport = tab.dataset.filter || 'all';
+      const n = sport === 'all'
+        ? cards.length
+        : cards.filter((card) => {
+          const tag = card.dataset.sport
+            || card.querySelector('.sport-tag')?.textContent.toLowerCase()
+            || '';
+          return tag.includes(sport);
+        }).length;
+      countEl.textContent = String(n);
+    });
+  }
+
   const scrollCarousel = !isGrid
     ? createScrollCarousel({
       viewport,
@@ -1008,6 +1012,7 @@ function rosterPerPage() {
       card.setAttribute('tabindex', show ? '0' : '-1');
       card.setAttribute('aria-hidden', show ? 'false' : 'true');
     });
+    syncFilterCounts();
     scrollCarousel?.reset();
   }
 
@@ -1024,6 +1029,7 @@ function rosterPerPage() {
   });
 
   cardRoot.querySelectorAll('.athlete-card').forEach((c) => { c.dataset.hidden = 'false'; });
+  syncFilterCounts();
   scrollCarousel?.reset();
 })();
 
