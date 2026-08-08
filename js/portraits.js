@@ -1,4 +1,4 @@
-/* Placeholder portrait paths — synthetic headshots for demo only. */
+/* Portrait paths — athlete demo assets + real agent headshots. */
 
 (function SWPortraits(global) {
   const BASE = 'assets/portraits';
@@ -26,11 +26,11 @@
   }
 
   function agentPortraitSrc(advisorId) {
-    return `${BASE}/agents/${advisorId}.jpg`;
+    return `${BASE}/agents/${advisorId}.jpg?v=lead-heads-li-19`;
   }
 
   function founderPortraitSrc() {
-    return `${BASE}/agents/luke-mazur.jpg`;
+    return `${BASE}/agents/luke-mazur.jpg?v=lead-heads-li-19`;
   }
 
   function portraitSeed(key, female) {
@@ -136,11 +136,12 @@
     const onRosterPage = Boolean(el.closest('#roster.roster-page'));
     const onCommitCard = Boolean(el.closest('.commit-card'));
     const onMktQueue = Boolean(el.closest('.mkt-queue-av'));
+    const onMktChrome = Boolean(el.closest('.mkt-chrome-av'));
     const onWirePhoto = Boolean(el.closest('.wire-photo'));
 
     if (onWirePhoto) {
       applySizedAthletePortrait(el, slug, DISPLAY_SIZES.wire, alt);
-    } else if (onMktQueue) {
+    } else if (onMktQueue || onMktChrome) {
       applySizedAthletePortrait(el, slug, DISPLAY_SIZES.queue, alt);
     } else if (onCommitCard) {
       applySizedAthletePortrait(el, slug, DISPLAY_SIZES.commit, alt);
@@ -156,7 +157,7 @@
     const img = el.querySelector('img.portrait-img');
     if (!img) return;
 
-    if (onWirePhoto || onMktQueue || onCommitCard) return;
+    if (onWirePhoto || onMktQueue || onMktChrome || onCommitCard) return;
 
     const syncPosition = () => {
       if (onRosterPage) {

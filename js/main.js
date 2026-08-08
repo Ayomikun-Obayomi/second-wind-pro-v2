@@ -81,7 +81,7 @@ const ADVISORS = {
     disciplines: ['Football'],
     regions: ['National', 'Southeast', 'Texas'],
     athletes: [],
-    photoSrc: 'assets/portraits/agents/luke-mazur.jpg',
+    photoSrc: 'assets/portraits/agents/luke-mazur.jpg?v=lead-heads-li-19',
   },
   'shane-simpson': {
     name: 'Shane Simpson',
@@ -93,6 +93,7 @@ const ADVISORS = {
     disciplines: ['Football'],
     regions: ['Midwest', 'Southeast', 'National'],
     athletes: [],
+    photoSrc: 'assets/portraits/agents/shane-simpson.jpg?v=lead-heads-li-19',
   },
   'tony-storniolo': {
     name: 'Tony Storniolo',
@@ -104,6 +105,7 @@ const ADVISORS = {
     disciplines: ['Football'],
     regions: ['Midwest', 'East Coast'],
     athletes: [],
+    photoSrc: 'assets/portraits/agents/tony-storniolo.jpg?v=lead-heads-li-19',
   },
 };
 
@@ -1494,69 +1496,98 @@ function rosterPerPage() {
     requestAnimationFrame(tick);
   }
 
-  const DEAL_QUEUE = (globalThis.DEMO_MARKETING?.deals || []).map((deal) => ({
-    slug: deal.slug,
-    title: deal.title,
-    type: deal.type,
-    offer: deal.offer,
-    term: deal.term,
-    status: deal.status,
-    feed: deal.feed,
-    agent: deal.agent,
-    initials: deal.initials,
-  }));
+  const DEAL_STORY = {
+    'salahadin-allah': {
+      story: 'Transfer to Iowa State · moving now',
+      queueSub: 'Transfer · Iowa State',
+      queueStatus: 'In motion',
+    },
+    'jaiden-allos': {
+      story: 'Finding the right school · package in review',
+      queueSub: 'Finding the right school',
+      queueStatus: 'Reviewing',
+      queueMuted: true,
+    },
+    'quory-ambrose': {
+      story: 'Commit package locked · Harding',
+      queueSub: 'Commit package locked',
+      queueStatus: 'Signed',
+    },
+  };
+
+  const DEAL_QUEUE = (globalThis.DEMO_MARKETING?.deals || []).map((deal) => {
+    const story = DEAL_STORY[deal.slug] || {};
+    return {
+      slug: deal.slug,
+      title: deal.title,
+      type: deal.type,
+      story: story.story || deal.type,
+      queueSub: story.queueSub || deal.type,
+      queueStatus: story.queueStatus || deal.status,
+      queueMuted: Boolean(story.queueMuted),
+      offer: deal.offer,
+      term: deal.term,
+      status: deal.status,
+      feed: deal.feed,
+      agent: deal.agent,
+      initials: deal.initials,
+    };
+  });
 
   const demoFeatured = globalThis.DEMO_MARKETING?.perfAthlete || DEAL_QUEUE[0]?.title || 'Represented athlete';
 
   const PERF_PROFILES = [
     {
-      label: 'Readiness score · Week 8',
+      label: 'How ready he is',
       hero: '94%',
-      delta: '+3% vs last week',
-      panelLabel: 'Game day',
+      delta: 'Up 3% from last week',
+      panelLabel: 'Bottom line',
+      focusDay: 2,
       alloc: [
-        { label: 'Training', pct: 78, val: '78%' },
-        { label: 'HRV', pct: 91, val: '91' },
-        { label: 'Nutrition', pct: 88, val: '88%' },
+        { label: 'Practice', pct: 78, val: 'On' },
+        { label: 'Rest', pct: 91, val: 'Good' },
+        { label: 'Food', pct: 88, val: 'Set' },
       ],
       sessions: [
-        { mark: 'TH', title: 'Field practice', sub: 'Thu · High load block', amt: '78%' },
-        { mark: 'FR', title: 'Recovery protocol', sub: 'Fri · Pool + stretch', amt: 'Deload' },
-        { mark: 'SA', title: 'Game day prep', sub: 'Sat · Walk-through', amt: 'Peak' },
+        { mark: 'TH', title: 'Practice', sub: 'Thursday · hard day', amt: 'On' },
+        { mark: 'FR', title: 'Rest day', sub: 'Friday · pool + stretch', amt: 'Easy' },
+        { mark: 'SA', title: 'Game prep', sub: 'Saturday · walk-through', amt: 'Peak', tone: 'good' },
       ],
-      status: 'Cleared · Sat kickoff',
+      status: 'Cleared to play Saturday',
     },
     {
-      label: 'Training load · Week 8',
+      label: 'How hard this week is',
       hero: '78%',
-      delta: 'Deload week · trending down',
-      panelLabel: 'Load outlook',
+      delta: 'Easing down before the game',
+      panelLabel: 'Bottom line',
+      focusDay: 2,
       alloc: [
-        { label: 'Training', pct: 78, val: '78%' },
-        { label: 'Load cap', pct: 62, val: '62%' },
-        { label: 'Hydration', pct: 74, val: '74%' },
+        { label: 'Practice', pct: 78, val: 'On' },
+        { label: 'Cap', pct: 62, val: 'Ok' },
+        { label: 'Water', pct: 74, val: 'Ok' },
       ],
       sessions: [
-        { mark: 'MO', title: 'Lower-body lift', sub: 'Mon · Volume day', amt: '72%' },
-        { mark: 'WE', title: 'Position drills', sub: 'Wed · Moderate load', amt: '68%' },
-        { mark: 'FR', title: 'Active recovery', sub: 'Fri · Deload block', amt: '45%' },
+        { mark: 'MO', title: 'Lift day', sub: 'Monday · legs', amt: 'Done' },
+        { mark: 'WE', title: 'Position work', sub: 'Wednesday · medium', amt: 'Done' },
+        { mark: 'FR', title: 'Light day', sub: 'Friday · recover', amt: 'Easy', tone: 'good' },
       ],
-      status: 'Managed · Sat cleared',
+      status: 'Managed · ready for Saturday',
     },
     {
-      label: 'Recovery score · Week 8',
+      label: 'How well he’s recovering',
       hero: '91',
-      delta: 'HRV optimal · sleep on track',
-      panelLabel: 'Recovery window',
+      delta: 'Sleep is on track',
+      panelLabel: 'Bottom line',
+      focusDay: 0,
       alloc: [
-        { label: 'HRV', pct: 91, val: '91' },
-        { label: 'Sleep', pct: 86, val: '86%' },
-        { label: 'Mobility', pct: 80, val: '80%' },
+        { label: 'Sleep', pct: 91, val: 'Good' },
+        { label: 'Body', pct: 86, val: 'Good' },
+        { label: 'Mobility', pct: 80, val: 'Ok' },
       ],
       sessions: [
-        { mark: 'TU', title: 'Cold plunge', sub: 'Tue · Recovery suite', amt: 'Complete' },
-        { mark: 'TH', title: 'Sports massage', sub: 'Thu · 60 min block', amt: 'Booked' },
-        { mark: 'SA', title: 'Post-game reset', sub: 'Sat · Protocol ready', amt: 'Queued' },
+        { mark: 'TU', title: 'Cold plunge', sub: 'Tuesday · recovery', amt: 'Done', tone: 'good' },
+        { mark: 'TH', title: 'Massage', sub: 'Thursday · 60 min', amt: 'Booked' },
+        { mark: 'SA', title: 'Post-game reset', sub: 'Saturday · after', amt: 'Set' },
       ],
       status: 'In range · cleared to play',
     },
@@ -1564,64 +1595,64 @@ function rosterPerPage() {
 
   const TECH_PROFILES = [
     {
-      label: `${demoFeatured} · portfolio`,
+      label: 'What Salahadin’s deals are worth today',
       hero: '$847,500',
-      delta: '+18.4% vs last month',
-      panelLabel: 'Sync',
-      allocHead: 'Revenue mix',
+      delta: 'Up 18% from last month',
+      panelLabel: 'Updated',
+      allocHead: 'What makes up that number',
       alloc: [
         { label: 'NIL', pct: 55, val: '55%' },
-        { label: 'Brand', pct: 30, val: '30%' },
-        { label: 'Portal', pct: 15, val: '15%' },
+        { label: 'Brands', pct: 30, val: '30%' },
+        { label: 'School', pct: 15, val: '15%' },
       ],
       signals: [
-        { mark: 'WR', title: 'P4 WR comps', sub: 'Similar production · reach', amt: '$720K' },
-        { mark: '↑', title: 'Valuation trend', sub: '30-day rolling index', amt: '+18%' },
-        { mark: '●', title: 'Deal pipeline', sub: '2 offers in review', amt: 'Active' },
+        { mark: 'WR', title: 'Athletes like him', sub: 'Same position · same reach', amt: '$720K' },
+        { mark: '↑', title: 'Trend this month', sub: 'Last 30 days', amt: '+18%' },
+        { mark: '●', title: 'Open offers', sub: '2 still in review', amt: 'Active' },
       ],
-      status: 'Live · updated 2m ago',
+      status: 'Just now · ready for the call',
     },
     {
-      label: 'Market demand index',
+      label: 'How much brands want Salahadin',
       hero: '84',
-      delta: '↑ 12% apparel category',
-      panelLabel: 'Signal',
-      allocHead: 'Demand mix',
+      delta: 'Apparel interest up 12%',
+      panelLabel: 'Updated',
+      allocHead: 'Where demand is coming from',
       alloc: [
         { label: 'Apparel', pct: 72, val: '72%' },
         { label: 'Social', pct: 84, val: '84%' },
-        { label: 'Regional', pct: 61, val: '61%' },
+        { label: 'Local', pct: 61, val: '61%' },
       ],
       signals: [
-        { mark: 'BR', title: 'Brand demand', sub: 'Apparel interest rising', amt: '↑ 12%' },
-        { mark: 'IG', title: 'Social reach', sub: 'Engagement vs cohort', amt: 'Top 8%' },
-        { mark: 'TX', title: 'Market heat', sub: 'Texas · SEC footprint', amt: 'High' },
+        { mark: 'BR', title: 'Apparel brands', sub: 'Up vs last month', amt: '↑ 12%' },
+        { mark: 'IG', title: 'Social reach', sub: 'Vs similar athletes', amt: 'Top 8%' },
+        { mark: 'TX', title: 'Hot markets', sub: 'Texas · SEC', amt: 'High' },
       ],
-      status: 'Demand up · apparel lead',
+      status: 'Demand is up · apparel leads',
     },
     {
-      label: 'Comparable athletes',
+      label: 'What peers like Salahadin make',
       hero: '$720K',
-      delta: 'P4 WR avg · similar profile',
-      panelLabel: 'Activity',
-      allocHead: 'Comp spread',
+      delta: 'Average for similar athletes',
+      panelLabel: 'Updated',
+      allocHead: 'Where he sits vs peers',
       alloc: [
-        { label: 'Floor', pct: 45, val: '45%' },
-        { label: 'Median', pct: 68, val: '68%' },
-        { label: 'Ceiling', pct: 92, val: '92%' },
+        { label: 'Low', pct: 45, val: '45%' },
+        { label: 'Mid', pct: 68, val: '68%' },
+        { label: 'Top', pct: 92, val: '92%' },
       ],
       signals: [
-        { mark: 'A1', title: 'Cohort median', sub: 'Production + social index', amt: '$680K' },
-        { mark: 'A2', title: 'Portal watch', sub: '3 schools monitoring', amt: 'Active' },
-        { mark: 'A3', title: 'Offer ceiling', sub: 'Modeled max next cycle', amt: '$1.1M' },
+        { mark: 'A1', title: 'Peer average', sub: 'Same production + reach', amt: '$680K' },
+        { mark: 'A2', title: 'Schools watching', sub: 'Portal interest', amt: '3' },
+        { mark: 'A3', title: 'Ceiling next year', sub: 'If everything hits', amt: '$1.1M' },
       ],
-      status: '3 schools · monitoring film',
+      status: '3 schools are watching film',
     },
   ];
 
   const WEALTH_STAGES = [
     {
-      label: 'NIL portfolio value',
+      label: 'Saved and invested so far',
       total: '$847,500',
       delta: '+$131K this season',
       alloc: [
@@ -1630,30 +1661,30 @@ function rosterPerPage() {
         { pct: 15, val: '15%' },
       ],
       activities: [
-        { mark: 'NI', title: 'Apparel deal closed', sub: 'Regional brand · 2-yr term', amt: '+$420K' },
-        { mark: 'CA', title: 'Camp appearances', sub: 'Summer schedule · 4 events', amt: '+$85K' },
-        { mark: 'SO', title: 'Social campaign', sub: 'Deliverables on track', amt: '+$42K' },
+        { mark: 'NI', title: 'Apparel deal closed', sub: 'Two-year brand deal', amt: '+$420K' },
+        { mark: 'CA', title: 'Camp appearances', sub: 'Summer · 4 events', amt: '+$85K' },
+        { mark: 'SO', title: 'Social posts', sub: 'Campaign on track', amt: '+$42K' },
       ],
-      status: 'NIL rollover · reinvest after season',
+      status: 'Put more away after the season',
     },
     {
-      label: 'Draft signing value',
+      label: 'What draft day can look like',
       total: '$2.1M',
-      delta: 'Signing bonus · Round 1',
+      delta: 'Signing bonus · Round 1 path',
       alloc: [
         { pct: 45, val: '45%' },
         { pct: 35, val: '35%' },
         { pct: 20, val: '20%' },
       ],
       activities: [
-        { mark: 'SG', title: 'Signing bonus received', sub: 'Draft day · wire posted', amt: '+$1.4M' },
-        { mark: 'AG', title: 'Agent advisory fee', sub: 'Representation · settled', amt: '−$84K' },
-        { mark: 'TR', title: 'Trust account opened', sub: 'Estate planning · initiated', amt: '$420K' },
+        { mark: 'SG', title: 'Signing bonus in', sub: 'Draft day · banked', amt: '+$1.4M' },
+        { mark: 'AG', title: 'Agent fee', sub: 'Representation', amt: '−$84K', tone: 'down' },
+        { mark: 'TR', title: 'Long-term savings', sub: 'Trust opened', amt: '$420K' },
       ],
-      status: 'Pre-draft financial literacy · Q2',
+      status: 'Money basics locked before the draft',
     },
     {
-      label: 'Pro career treasury',
+      label: 'Career money so far',
       total: '$24.8M',
       delta: '+$2.1M since draft',
       alloc: [
@@ -1662,27 +1693,27 @@ function rosterPerPage() {
         { pct: 25, val: '25%' },
       ],
       activities: [
-        { mark: 'PR', title: 'Pro contract bonus', sub: 'Year 2 · performance tier', amt: '+$3.2M' },
-        { mark: 'TR', title: 'Family trust funded', sub: 'Quarterly contribution', amt: '$8.7M' },
-        { mark: 'RB', title: 'Portfolio rebalance', sub: 'Advisor review · scheduled', amt: 'Q2' },
+        { mark: 'PR', title: 'Contract bonus', sub: 'Year 2 · performance', amt: '+$3.2M' },
+        { mark: 'TR', title: 'Family trust', sub: 'Quarterly deposit', amt: '$8.7M' },
+        { mark: 'RB', title: 'Advisor check-in', sub: 'Portfolio review', amt: 'Q2' },
       ],
-      status: 'Wealth plan active · liquidity reserve funded',
+      status: 'Plan active · cash reserve set',
     },
     {
-      label: 'Legacy fund target',
+      label: 'What we protect for after',
       total: '$4.2M',
-      delta: 'Family office · long-term',
+      delta: 'Long-term family plan',
       alloc: [
         { pct: 50, val: '50%' },
         { pct: 35, val: '35%' },
         { pct: 15, val: '15%' },
       ],
       activities: [
-        { mark: 'LF', title: 'Legacy fund seeded', sub: 'Community impact · endowed', amt: '$1.2M' },
-        { mark: 'PH', title: 'Philanthropy pledge', sub: 'Youth football · 5-yr', amt: '$800K' },
-        { mark: 'OF', title: 'Family office setup', sub: 'Advisory board · forming', amt: 'Active' },
+        { mark: 'LF', title: 'Legacy fund', sub: 'Community impact', amt: '$1.2M' },
+        { mark: 'PH', title: 'Youth pledge', sub: 'Football · 5 years', amt: '$800K' },
+        { mark: 'OF', title: 'Family plan', sub: 'Advisory forming', amt: 'Active' },
       ],
-      status: 'Legacy planning · post-career runway',
+      status: 'Post-career runway in place',
     },
   ];
 
@@ -1691,20 +1722,79 @@ function rosterPerPage() {
       return `<span class="mkt-school-mark logo--img"><img src="${row.logoSrc}" alt="" width="36" height="36" loading="lazy" /></span>`;
     }
     if (row.mark) {
-      return `<span class="mkt-school-mark">${row.mark}</span>`;
+      const tone = row.tone === 'good' ? ' is-good' : '';
+      return `<span class="mkt-school-mark${tone}">${row.mark}</span>`;
     }
     return '';
   }
 
+  function mktAmtClass(row) {
+    const amt = String(row?.amt || '');
+    if (row.tone === 'down' || /^[-−]/.test(amt)) return ' down';
+    if (amt.startsWith('+') || row.tone === 'good') return ' up';
+    return '';
+  }
+
+  function mktTrendHtml(dir) {
+    const arrow = dir === 'down'
+      ? '<path d="M5 5l6 6M7.5 11H11V7.5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>'
+      : '<path d="M5 11l6-6M7.5 5H11v3.5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>';
+    return `<span class="mkt-trend mkt-trend--${dir}" aria-hidden="true">`
+      + `<svg width="10" height="10" viewBox="0 0 16 16" focusable="false">${arrow}</svg>`
+      + '</span>';
+  }
+
+  function setMktDelta($el, text, { greenIfDollar = false } = {}) {
+    if (!$el || text == null) return;
+    const raw = String(text).trim();
+    const upMatch = /^(?:Up |↑\s*)(.+)$/i.exec(raw);
+    if (upMatch) {
+      $el.classList.remove('is-neutral');
+      $el.innerHTML = `${mktTrendHtml('up')}<span class="mkt-delta-copy">${upMatch[1]}</span>`;
+      return;
+    }
+    const downMatch = /^(?:Down |↓\s*)(.+)$/i.exec(raw);
+    if (downMatch) {
+      $el.classList.add('is-down');
+      $el.classList.remove('is-neutral');
+      $el.innerHTML = `${mktTrendHtml('down')}<span class="mkt-delta-copy">${downMatch[1]}</span>`;
+      return;
+    }
+    $el.classList.remove('is-down');
+    $el.textContent = raw;
+    const isUp = /^(?:\+|↑|Up\b)/i.test(raw) || (greenIfDollar && /\$\d/.test(raw));
+    $el.classList.toggle('is-neutral', !isUp);
+  }
+
   function renderLedgerRows(list, rows, { active = 0 } = {}) {
     if (!list) return;
-    list.innerHTML = rows.map((row, i) => (
-      `<button type="button" class="mkt-school-row${i === active ? ' on' : ''}" data-row="${i}">`
-      + mktSchoolMarkHtml(row)
-      + `<span class="mkt-school-copy"><strong>${row.title}</strong><span>${row.sub}</span></span>`
-      + `<em class="mkt-school-amt${row.amt.startsWith('+') ? ' up' : ''}">${row.amt}</em>`
-      + '</button>'
-    )).join('');
+    list.innerHTML = rows.map((row, i) => {
+      const tone = mktAmtClass(row);
+      const trend = tone.includes('down')
+        ? mktTrendHtml('down')
+        : (tone.includes('up') && String(row.amt || '').startsWith('+') ? mktTrendHtml('up') : '');
+      return `<button type="button" class="mkt-school-row${i === active ? ' on' : ''}" data-row="${i}">`
+        + mktSchoolMarkHtml(row)
+        + `<span class="mkt-school-copy"><strong>${row.title}</strong><span>${row.sub}</span></span>`
+        + `<em class="mkt-school-amt${tone}">${trend}${row.amt}</em>`
+        + '</button>';
+    }).join('');
+  }
+
+  const demoAthleteSlug = globalThis.DEMO_MARKETING?.deals?.[0]?.slug
+    || (typeof ATHLETES !== 'undefined' && ATHLETES['salahadin-allah'] ? 'salahadin-allah' : null);
+
+  function hydrateMktAthleteChrome(mktRoot, slug = demoAthleteSlug) {
+    if (!mktRoot || !slug) return;
+    const athlete = typeof ATHLETES !== 'undefined' ? ATHLETES[slug] : null;
+    const $name = mktRoot.querySelector('.mkt-chrome-athlete-name');
+    const $av = mktRoot.querySelector('.mkt-chrome-av');
+    if ($name) $name.textContent = athlete?.name || demoFeatured;
+    if ($av && athlete && globalThis.SW_PORTRAITS) {
+      globalThis.SW_PORTRAITS.fillAthletePhoto($av, slug, athlete);
+    } else if ($av && athlete?.photo) {
+      $av.textContent = athlete.photo;
+    }
   }
 
   function wireQueue(mktRoot) {
@@ -1712,16 +1802,16 @@ function rosterPerPage() {
     const pane = mktRoot.querySelector('.mkt-deal-pane');
     if (!items.length || !pane) return;
 
-    const $title = pane.querySelector('.mkt-deal-title');
-    const $type = pane.querySelector('.mkt-deal-type');
-    const $offer = pane.querySelector('.mkt-deal-offer');
-    const $term = pane.querySelector('.mkt-deal-term');
-    const $status = pane.querySelector('.mkt-deal-status');
-    const $agent = pane.querySelector('.mkt-deal-agent-name');
-    const $feed = pane.querySelector('.mkt-deal-feed');
+    const $title = pane.querySelector('.mkt-deal-title') || mktRoot.querySelector('.mkt-deal-title');
+    const $type = pane.querySelector('.mkt-deal-type') || mktRoot.querySelector('.mkt-deal-type');
+    const $offer = pane.querySelector('.mkt-deal-offer') || mktRoot.querySelector('.mkt-deal-offer');
+    const $term = pane.querySelector('.mkt-deal-term') || mktRoot.querySelector('.mkt-deal-term');
+    const $status = pane.querySelector('.mkt-deal-status') || mktRoot.querySelector('.mkt-deal-status');
+    const $agent = mktRoot.querySelector('.mkt-deal-agent-name');
+    const $feed = pane.querySelector('.mkt-deal-feed') || mktRoot.querySelector('.mkt-deal-feed');
 
     function renderFeed(feed) {
-      if (!$feed) return;
+      if (!$feed || !feed) return;
       $feed.innerHTML = feed.map((line) => (
         `<div class="mkt-feed-line"><span>${line.role}</span>`
         + `<p class="mkt-feed-msg">${line.msg}</p></div>`
@@ -1732,7 +1822,7 @@ function rosterPerPage() {
       const data = DEAL_QUEUE[i];
       if (!data) return;
       if ($title) $title.textContent = data.title;
-      if ($type) $type.textContent = data.type;
+      if ($type) $type.textContent = data.story || data.type;
       if ($offer) $offer.textContent = data.offer;
       if ($term) $term.textContent = data.term;
       if ($status) $status.textContent = data.status;
@@ -1748,8 +1838,13 @@ function rosterPerPage() {
         const nameEl = item.querySelector('.mkt-queue-name');
         const subEl = item.querySelector('.mkt-queue-sub');
         const avEl = item.querySelector('.mkt-queue-av');
+        const statusEl = item.querySelector('.mkt-queue-status');
         if (nameEl) nameEl.textContent = data.title;
-        if (subEl) subEl.textContent = data.type;
+        if (subEl) subEl.textContent = data.queueSub || data.type;
+        if (statusEl && data.queueStatus) {
+          statusEl.textContent = data.queueStatus;
+          statusEl.classList.toggle('muted', Boolean(data.queueMuted));
+        }
         if (avEl && data.slug && portraits && typeof ATHLETES !== 'undefined' && ATHLETES[data.slug]) {
           portraits.fillAthletePhoto(avEl, data.slug, ATHLETES[data.slug]);
         } else if (avEl && data.initials) {
@@ -1793,8 +1888,7 @@ function rosterPerPage() {
     const tabs = [...mktRoot.querySelectorAll('.mkt-seg-tab[data-perf]')];
   if (!tabs.length) return;
 
-    const $chromeCount = mktRoot.querySelector('.mkt-chrome-count');
-    if ($chromeCount && demoFeatured) $chromeCount.textContent = demoFeatured;
+    hydrateMktAthleteChrome(mktRoot);
 
     const $label = mktRoot.querySelector('.mkt-perf-label');
     const $hero = mktRoot.querySelector('.mkt-perf-hero');
@@ -1808,15 +1902,12 @@ function rosterPerPage() {
     const amts = [$a0, $a1, $a2];
     const allocLabels = [...mktRoot.querySelectorAll('.mkt-alloc .mkt-alloc-row > span')];
 
-    function applyProfile(i, { sessionActive = 0 } = {}) {
+    function applyProfile(i) {
       const data = PERF_PROFILES[i];
       if (!data) return;
       if ($label) $label.textContent = data.label;
       if ($hero) $hero.textContent = data.hero;
-      if ($delta) {
-        $delta.textContent = data.delta;
-        $delta.classList.toggle('is-neutral', !data.delta.startsWith('+'));
-      }
+      if ($delta) setMktDelta($delta, data.delta);
       if ($panelLabel && data.panelLabel) $panelLabel.textContent = data.panelLabel;
       if ($status) $status.textContent = data.status;
       data.alloc.forEach((row, idx) => {
@@ -1826,7 +1917,8 @@ function rosterPerPage() {
         if (bar) bar.dataset.width = String(row.pct);
       });
       animateAllocBars(mktRoot, data.alloc);
-      renderLedgerRows($list, data.sessions, { active: sessionActive });
+      const focus = Number.isInteger(data.focusDay) ? data.focusDay : 0;
+      renderLedgerRows($list, data.sessions, { active: focus });
     }
 
     if ($list && !$list.dataset.bound) {
@@ -1861,10 +1953,10 @@ function rosterPerPage() {
 
   const EARNINGS_SCHOOLS = [
     {
-      label: 'Texas · projected annual',
+      label: 'Best offer right now',
       total: '$1.2M',
-      delta: '+$310K vs next offer',
-      status: 'Texas lead · offer sheet under review',
+      delta: 'Texas · $310K more than the next one',
+      status: 'Texas is ahead · we’re reviewing terms',
       alloc: [
         { key: 'collective', pct: 60, amt: '$720K' },
         { key: 'roster', pct: 23, amt: '$280K' },
@@ -1872,10 +1964,10 @@ function rosterPerPage() {
       ],
     },
     {
-      label: 'Oregon · projected annual',
+      label: 'Oregon’s total package',
       total: '$890K',
-      delta: '+$250K vs next offer',
-      status: 'Oregon package · collective terms pending',
+      delta: '$250K more than the next school',
+      status: 'Oregon package · terms still open',
       alloc: [
         { key: 'collective', pct: 58, amt: '$520K' },
         { key: 'roster', pct: 25, amt: '$220K' },
@@ -1883,10 +1975,10 @@ function rosterPerPage() {
       ],
     },
     {
-      label: 'Duke · projected annual',
+      label: 'Duke’s total package',
       total: '$640K',
-      delta: 'Baseline market comp',
-      status: 'Duke offer · brand upside modeled',
+      delta: 'Smaller base · more brand upside',
+      status: 'Duke package · under review',
       alloc: [
         { key: 'collective', pct: 59, amt: '$380K' },
         { key: 'roster', pct: 25, amt: '$160K' },
@@ -1915,6 +2007,8 @@ function rosterPerPage() {
     const offers = [...mktRoot.querySelectorAll('.mkt-school-row')];
     if (!offers.length) return;
 
+    hydrateMktAthleteChrome(mktRoot);
+
     const $label = mktRoot.querySelector('.mkt-earn-label');
     const $total = mktRoot.querySelector('.mkt-earn-total');
     const $delta = mktRoot.querySelector('.mkt-earn-delta');
@@ -1928,10 +2022,7 @@ function rosterPerPage() {
       if (!data) return;
       if ($label) $label.textContent = data.label;
       if ($total) $total.textContent = data.total;
-      if ($delta) {
-        $delta.textContent = data.delta;
-        $delta.classList.toggle('is-neutral', !data.delta.startsWith('+'));
-      }
+      if ($delta) setMktDelta($delta, data.delta, { greenIfDollar: true });
       if ($status) $status.textContent = data.status;
       if ($collective) $collective.textContent = data.alloc[0].amt;
       if ($roster) $roster.textContent = data.alloc[1].amt;
@@ -1966,46 +2057,46 @@ function rosterPerPage() {
   const LIFESTYLE_STEPS = [
     {
       icon: 'announcement',
-      route: 'ATL · campus',
-      head: 'Thu media day · Press block 10 AM',
-      badge: 'On site',
-      log: [
-        { key: 'Studio', val: 'Studio B · mic check 9:45 AM' },
-        { key: 'Wardrobe', val: 'Team gear + press kit staged' },
-        { key: 'Comms', val: 'Talking points cleared · 12 min slot' },
+      route: 'Thursday',
+      head: 'Talk to press · we set the time and place',
+      badge: 'Done',
+      pills: [
+        { icon: 'video', text: 'Studio set' },
+        { icon: 'luggage', text: 'Gear ready' },
+        { icon: 'announcement', text: 'Talking points' },
       ],
     },
     {
       icon: 'camera',
-      route: 'ATL → NYC',
-      head: 'Fri brand shoot · Car service 2:30 PM',
-      badge: 'Confirmed',
-      log: [
-        { key: 'Car', val: 'Black SUV · Pickup 2:15 PM at hotel' },
-        { key: 'Hotel', val: 'Soho House · 2 nights · late checkout Sun' },
-        { key: 'Wardrobe', val: 'Stylist on-site 1 PM · 3 looks prepped' },
+      route: 'Friday',
+      head: 'Brand shoot in NYC · car picks him up at 2:30',
+      badge: 'Booked',
+      pills: [
+        { icon: 'car', text: 'Ride set' },
+        { icon: 'building', text: 'Studio held' },
+        { icon: 'luggage', text: 'Clothes ready' },
       ],
     },
     {
       icon: 'sun',
-      route: 'NYC · recovery',
-      head: 'Sat recovery block · Facility 9 AM',
+      route: 'Saturday',
+      head: 'Rest day · body work and meals already set',
       badge: 'Scheduled',
-      log: [
-        { key: 'Facility', val: 'Equinox Hudson Yards · 90 min block' },
-        { key: 'Nutrition', val: 'Macro protocol · meals pre-ordered' },
-        { key: 'Sleep', val: 'Checkout moved · quiet hours flagged' },
+      pills: [
+        { icon: 'sun', text: 'Body work' },
+        { icon: 'building', text: 'Facility held' },
+        { icon: 'luggage', text: 'Meals set' },
       ],
     },
     {
       icon: 'plane',
-      route: 'NYC → ATL',
-      head: 'Sun return travel · Flight 6 PM',
+      route: 'Sunday',
+      head: 'Flight home · NYC back to Atlanta',
       badge: 'Ticketed',
-      log: [
-        { key: 'Car', val: 'SUV · Pickup 4:15 PM at hotel' },
-        { key: 'Flight', val: 'Delta 1842 · JFK → ATL · seat 2A' },
-        { key: 'Checkout', val: 'Soho House · 11 AM · bags to car' },
+      pills: [
+        { icon: 'car', text: 'Ride to airport' },
+        { icon: 'plane', text: 'Flight booked' },
+        { icon: 'luggage', text: 'Bags handled' },
       ],
     },
   ];
@@ -2030,10 +2121,19 @@ function rosterPerPage() {
       if ($ico) $ico.dataset.swIcon = data.icon;
       window.SW_ICONS?.hydrate(chip);
       if ($log) {
-        $log.innerHTML = data.log.map((row) => (
-          `<li><strong class="mkt-travel-log-key">${row.key}</strong>`
-          + `<span class="mkt-travel-log-val">${row.val}</span></li>`
-        )).join('');
+        if (data.pills) {
+          $log.classList.add('mkt-log-pills');
+          $log.innerHTML = data.pills.map((pill) => (
+            `<li class="mkt-log-pill"><span class="mkt-log-ico" data-sw-icon="${pill.icon}" data-sw-icon-size="16" aria-hidden="true"></span>${pill.text}</li>`
+          )).join('');
+          window.SW_ICONS?.hydrate($log);
+        } else if (data.log) {
+          $log.classList.remove('mkt-log-pills');
+          $log.innerHTML = data.log.map((row) => (
+            `<li><strong class="mkt-travel-log-key">${row.key}</strong>`
+            + `<span class="mkt-travel-log-val">${row.val}</span></li>`
+          )).join('');
+        }
       }
     }
 
@@ -2083,6 +2183,8 @@ function rosterPerPage() {
     const tabs = [...mktRoot.querySelectorAll('.mkt-seg-tab[data-stage]')];
     if (!tabs.length) return;
 
+    hydrateMktAthleteChrome(mktRoot);
+
     const $label = mktRoot.querySelector('.mkt-wealth-label');
     const $total = mktRoot.querySelector('.mkt-wealth-total');
     const $delta = mktRoot.querySelector('.mkt-wealth-delta');
@@ -2106,10 +2208,7 @@ function rosterPerPage() {
       if (!data) return;
       if ($label) $label.textContent = data.label;
       if ($total) $total.textContent = data.total;
-      if ($delta) {
-        $delta.textContent = data.delta;
-        $delta.classList.toggle('is-neutral', !data.delta.startsWith('+'));
-      }
+      if ($delta) setMktDelta($delta, data.delta);
       if ($status) $status.textContent = data.status;
       data.alloc.forEach((row, idx) => {
         if (amts[idx]) amts[idx].textContent = row.val;
@@ -2138,7 +2237,7 @@ function rosterPerPage() {
     }
 
     tabs.forEach((tab) => tab.addEventListener('click', () => setStage(tab)));
-    applyStage(2);
+    applyStage(0);
 
     mktRoot._mileAuto = () => {
       if (!mktMotionEnabled(mktRoot)) return null;
@@ -2154,8 +2253,7 @@ function rosterPerPage() {
     const tabs = [...mktRoot.querySelectorAll('.mkt-seg-tab[data-tech]')];
     if (!tabs.length) return;
 
-    const $chromeCount = mktRoot.querySelector('.mkt-chrome-count');
-    if ($chromeCount && demoFeatured) $chromeCount.textContent = demoFeatured;
+    hydrateMktAthleteChrome(mktRoot);
 
     const $label = mktRoot.querySelector('.mkt-tech-label');
     const $hero = mktRoot.querySelector('.mkt-tech-hero');
@@ -2175,10 +2273,7 @@ function rosterPerPage() {
       if (!data) return;
       if ($label) $label.textContent = data.label;
       if ($hero) $hero.textContent = data.hero;
-      if ($delta) {
-        $delta.textContent = data.delta;
-        $delta.classList.toggle('is-neutral', !data.delta.startsWith('+') && !data.delta.startsWith('↑'));
-      }
+      if ($delta) setMktDelta($delta, data.delta);
       if ($allocHead) $allocHead.textContent = data.allocHead;
       if ($panelLabel && data.panelLabel) $panelLabel.textContent = data.panelLabel;
       if ($status) $status.textContent = data.status;

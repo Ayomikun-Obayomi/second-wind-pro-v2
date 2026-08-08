@@ -1509,7 +1509,7 @@ a.btn-tertiary {
 
 .svc-stack-visual .mkt-chrome {
   flex-shrink: 0;
-  padding: 10px 14px;
+  padding: var(--s-3) var(--s-4);
   border-radius: var(--svc-frame-inner-r) var(--svc-frame-inner-r) 0 0;
 }
 
@@ -1518,10 +1518,10 @@ a.btn-tertiary {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--s-3);
   justify-content: flex-start;
   overflow: hidden;
-  padding: 12px 14px 14px;
+  padding: var(--s-4);
   border-radius: 0 0 var(--svc-frame-inner-r) var(--svc-frame-inner-r);
 }
 
@@ -1643,26 +1643,24 @@ a.btn-tertiary {
   height: 100%;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%),
     var(--surface-2);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
-    0 24px 48px rgba(0, 0, 0, 0.38);
+  box-shadow: none;
   overflow: visible;
 }
 
 .mkt-chrome {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 16px 10px 14px;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-4);
   border-bottom: 1px solid var(--line);
-  background: rgba(0, 0, 0, 0.22);
+  background: rgba(0, 0, 0, 0.18);
   flex-shrink: 0;
-  border-radius: 12px 12px 0 0;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   min-width: 0;
 }
 
@@ -1673,9 +1671,9 @@ a.btn-tertiary {
 
 .mkt-chrome-title {
   margin-left: 0;
-  font-size: 11px;
+  font-size: var(--t-sm);
   font-weight: var(--fw-medium);
-  color: var(--muted);
+  color: var(--cream);
   letter-spacing: -.01em;
   flex: 1;
   min-width: 0;
@@ -1688,17 +1686,17 @@ a.btn-tertiary {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 14px 16px 16px;
+  gap: var(--s-3);
+  padding: var(--s-4);
   justify-content: flex-start;
   overflow: hidden;
-  border-radius: 0 0 12px 12px;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 }
 
 .mkt-intro {
-  margin: 0 0 2px;
-  font-size: 12px;
-  line-height: 1.5;
+  margin: 0;
+  font-size: var(--t-sm);
+  line-height: 1.45;
   color: var(--muted);
 }
 
@@ -1956,11 +1954,52 @@ a.btn-tertiary {
 }
 
 .mkt-delta {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
   margin-top: 4px;
   font-size: 11px;
   font-family: var(--font-mono);
   color: var(--success);
+}
+
+.mkt-delta.is-down {
+  color: var(--danger);
+}
+
+.mkt-trend {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  line-height: 0;
+}
+
+.mkt-trend svg {
+  width: 10px;
+  height: 10px;
+  display: block;
+}
+
+.mkt-trend--up {
+  color: var(--success);
+  background: color-mix(in srgb, var(--success) 18%, transparent);
+}
+
+.mkt-trend--down {
+  color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 18%, transparent);
+}
+
+.mkt-delta-copy {
+  min-width: 0;
+}
+
+.mkt-delta.mkt-deal-type,
+.mkt-delta.is-neutral {
+  color: var(--muted);
 }
 
 .mkt-spark {
@@ -2567,6 +2606,34 @@ a.btn-tertiary {
   background: rgba(255, 255, 255, 0.03);
 }
 
+.mkt-chrome-count.mkt-chrome-athlete {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 2px 8px 2px 2px;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: var(--fw-medium);
+  color: var(--cream);
+  max-width: min(100%, 180px);
+}
+
+.mkt-chrome-av {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  font-size: 8px;
+}
+
+.mkt-chrome-athlete-name {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .mkt-body--pane {
   display: grid;
   grid-template-columns: 0.42fr 0.58fr;
@@ -2584,6 +2651,25 @@ a.btn-tertiary {
   background: rgba(0, 0, 0, 0.14);
   min-height: 0;
   overflow: auto;
+}
+
+/* Full-width story list (no split-pane sidebar) */
+.mkt-queue--story {
+  border-right: none;
+  background: transparent;
+  padding: 0;
+  gap: var(--s-1);
+}
+
+.mkt-hero-metric.mkt-deal-pane {
+  padding: 0;
+  gap: 0;
+  min-height: 0;
+}
+
+.svc-stack-visual .mkt-queue--story {
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .mkt-queue-item {
@@ -3052,6 +3138,18 @@ a.btn-tertiary {
   border-color: rgba(184, 157, 255, 0.45);
 }
 
+.mkt-school-mark.is-good {
+  color: var(--success);
+  background: rgba(134, 239, 172, 0.1);
+  border-color: rgba(134, 239, 172, 0.35);
+}
+
+.mkt-school-row.on .mkt-school-mark.is-good {
+  color: var(--success);
+  background: rgba(134, 239, 172, 0.16);
+  border-color: rgba(134, 239, 172, 0.45);
+}
+
 .mkt-school-mark.logo--img {
   background: rgba(255, 255, 255, 0.96);
   border-color: rgba(184, 157, 255, 0.18);
@@ -3094,6 +3192,10 @@ a.btn-tertiary {
 }
 
 .mkt-school-amt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--s-1);
   font-size: 12px;
   font-style: normal;
   font-family: var(--font-mono);
@@ -3105,8 +3207,14 @@ a.btn-tertiary {
   color: var(--cream);
 }
 
-.mkt-school-amt.up {
+.mkt-school-amt.up,
+.mkt-school-row.on .mkt-school-amt.up {
   color: var(--success);
+}
+
+.mkt-school-amt.down,
+.mkt-school-row.on .mkt-school-amt.down {
+  color: var(--danger);
 }
 
 .mkt-seg-tabs {
@@ -3252,8 +3360,8 @@ a.btn-tertiary {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  border-top: 1px solid rgba(196, 181, 253, 0.1);
-  padding-top: 8px;
+  border-top: 1px solid var(--line);
+  padding-top: var(--s-2);
 }
 
 .mkt-travel-log li {
@@ -3273,6 +3381,59 @@ a.btn-tertiary {
   text-transform: uppercase;
   color: var(--muted-2);
   font-weight: var(--fw-medium);
+}
+
+.mkt-travel-log.mkt-log-pills {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.mkt-travel-log.mkt-log-pills .mkt-log-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+  grid-template-columns: none;
+  padding: var(--s-1) var(--s-2);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: var(--surface-sub);
+  font-size: var(--t-xs);
+  font-family: var(--font-sans);
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.mkt-travel-log.mkt-log-pills .mkt-log-pill .mkt-log-ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--purple-bright);
+  line-height: 0;
+  overflow: visible;
+}
+
+.mkt-travel-log.mkt-log-pills .mkt-log-pill .mkt-log-ico svg,
+.mkt-travel-log.mkt-log-pills .mkt-log-pill .mkt-log-ico .sw-icon {
+  width: 16px;
+  height: 16px;
+  display: block;
+  overflow: visible;
+}
+
+.mkt-sched-icon.mkt-ico svg,
+.mkt-sched-icon.mkt-ico .sw-icon {
+  width: 14px;
+  height: 14px;
 }
 
 .mkt[data-mkt="lifestyle"] .mkt-body {
@@ -3873,7 +4034,8 @@ a.btn-tertiary {
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
     "toolbar controls"
-    "carousel carousel";
+    "carousel carousel"
+    "showall showall";
   gap: var(--s-4);
   max-width: var(--container);
   margin-left: auto;
@@ -3897,6 +4059,16 @@ a.btn-tertiary {
   align-self: center;
   min-width: 0;
   max-width: 100%;
+}
+
+#roster .roster-show-all {
+  grid-area: showall;
+  display: flex;
+  justify-content: center;
+}
+
+#roster .roster-show-all .btn-outline {
+  min-height: 44px;
 }
 
 .roster-toolbar .roster-tabs {
@@ -9615,7 +9787,21 @@ a.leadership-roster-link.tab {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 24%;
+  object-position: center center;
+}
+
+/* Loaded portraits: kill purple football/exec gradient under the photo. */
+.advisor-photo:has(.has-portrait),
+.advisor-photo.has-portrait,
+.advisor-photo-surface.has-portrait,
+.advisor-photo--exec:has(.has-portrait),
+.leadership-detail-photo:has(.has-portrait),
+.leadership-detail-photo.has-portrait,
+.about-founder-photo.has-portrait,
+#leadership.leadership-page .advisor-photo:has(.has-portrait),
+#leadership.leadership-page .advisor-photo--exec:has(.has-portrait) {
+  background-color: var(--bg-deep);
+  background-image: none;
 }
 
 .advisor-photo.has-portrait .advisor-initials,
@@ -10884,48 +11070,82 @@ a.leadership-roster-link.tab {
   }
 
   #roster .roster-stage {
-    grid-template-columns: minmax(0, 1fr);
+    /* Filters + carousel controls on one row; Show all under the track */
+    grid-template-columns: max-content minmax(0, 1fr);
     grid-template-areas:
-      "toolbar"
-      "carousel"
-      "controls";
+      "toolbar controls"
+      "carousel carousel"
+      "showall showall";
+  }
+
+  #roster .roster-toolbar {
+    width: auto;
+    min-width: 0;
+  }
+
+  #roster .roster-toolbar .roster-tabs {
+    width: auto;
+    flex: none;
+    flex-wrap: nowrap;
+  }
+
+  #roster .roster-show-all {
+    justify-content: center;
+    align-self: stretch;
+    min-width: 0;
+  }
+
+  #roster .roster-show-all .btn-outline {
+    min-height: 0;
+    height: auto;
+    padding: var(--s-2) var(--s-4);
+    font-size: 12px;
   }
 
   #roster .roster-controls {
-    width: 100%;
+    width: auto;
     max-width: 100%;
-    justify-content: center;
+    justify-content: flex-end;
+    min-width: 0;
   }
 
   #roster .roster-nav-group {
     width: auto;
     max-width: 100%;
-    justify-content: center;
+    justify-content: flex-end;
+    gap: var(--s-1);
+    min-width: 0;
   }
 
-  /* Tighter chrome on small viewports — long page-dot rows + 44px arrows read oversized */
+  #roster .carousel-nav-group .roster-dots {
+    min-width: 0;
+    padding: 0;
+    flex: 0 1 auto;
+  }
+
+  /* Mobile: swipe + arrows are enough — dots crowd the filter row */
+  #roster:not(.roster-page) .roster-dots {
+    display: none;
+  }
+
+  /* Tighter chrome on small viewports — 44px arrows read oversized beside pills */
   #roster .roster-nav {
     width: 36px;
     height: 36px;
   }
 
-  #roster .roster-dots {
-    gap: 5px;
-  }
-
-  #roster .roster-dot {
-    width: 6px;
-    height: 6px;
-  }
-
-  #roster .roster-dot.active {
-    width: 16px;
-  }
-
   #roster:not(.roster-page) .roster-viewport {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    --carousel-card-size: min(240px, calc(100vw - (var(--gutter-mobile) * 2) - 48px));
+    /* Near full-bleed card + small peek of the next */
+    --carousel-card-size: calc(100vw - (var(--gutter-mobile) * 2) - 28px);
+  }
+
+  #roster:not(.roster-page) .roster-carousel,
+  #roster:not(.roster-page) .roster-viewport,
+  #roster:not(.roster-page) .roster-track {
+    min-width: 0;
+    max-width: 100%;
   }
 
   #leadership:not(.leadership-page) .leadership-viewport {
@@ -10977,7 +11197,8 @@ a.leadership-roster-link.tab {
     margin-top: var(--s-4);
   }
 
-  .testimonials-bento {
+  .testimonials-bento,
+  .testimonials-bento:not(:has(.testimonials-card--photo:not([hidden]))) {
     grid-template-columns: 1fr;
     grid-template-rows: none;
     grid-auto-rows: auto;
@@ -10986,7 +11207,8 @@ a.leadership-roster-link.tab {
 
   .testimonials-card--quote,
   .testimonials-card--quote-wide,
-  .testimonials-card--photo {
+  .testimonials-card--photo,
+  .testimonials-bento:not(:has(.testimonials-card--photo:not([hidden]))) .testimonials-card--quote-wide {
     grid-column: auto;
     grid-row: auto;
   }
@@ -11853,8 +12075,9 @@ a.leadership-roster-link.tab {
   }
 
   #roster .roster-controls {
-    width: 100%;
-    justify-content: center;
+    width: auto;
+    max-width: 100%;
+    justify-content: flex-end;
     margin-inline: 0;
     padding-inline: 0;
   }
@@ -11879,7 +12102,12 @@ a.leadership-roster-link.tab {
   }
 
   #roster:not(.roster-page) .roster-viewport {
-    --carousel-card-size: min(220px, calc(100vw - (var(--gutter-mobile) * 2) - 40px));
+    --carousel-card-size: calc(100vw - (var(--gutter-mobile) * 2) - 28px);
+  }
+
+  #roster:not(.roster-page) .athlete-card {
+    flex: 0 0 var(--carousel-card-size);
+    width: var(--carousel-card-size);
   }
 
   #roster.roster-page .roster-grid {

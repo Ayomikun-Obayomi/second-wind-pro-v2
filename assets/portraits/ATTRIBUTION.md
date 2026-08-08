@@ -54,3 +54,11 @@ Speaker avatars in `testimonials/` are copies of existing demo portraits (not re
 | Chris M. (`chris-m`) | `athletes/chris-dalton.jpg` |
 | Ava K. (`ava-k`) | `athletes/sienna-hart.jpg` |
 
+## Agents (real headshots)
+
+| Advisor | Source |
+|---|---|
+| Luke Mazur (`luke-mazur`) | Company About page headshot ([secondwind.pro/about](https://www.secondwind.pro/about-second-wind-pro)); LinkedIn guest view authwalled |
+| Shane Simpson (`shane-simpson`) | LinkedIn profile photo ([linkedin.com/in/shane-simpson-b40a59160](https://www.linkedin.com/in/shane-simpson-b40a59160)) |
+| Tony Storniolo (`tony-storniolo`) | Cropped from LinkedIn welcome announcement post (profile authwalled); [linkedin.com/in/tony-storniolo](https://www.linkedin.com/in/tony-storniolo) |
+
