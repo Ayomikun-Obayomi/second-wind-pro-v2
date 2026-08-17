@@ -10946,6 +10946,8 @@ a.leadership-roster-link.tab {
     --partner-btn-font-size: 12px;
     --partner-btn-padding-y: 6px;
     --partner-btn-padding-x: 12px;
+    /* Sticky nav is in flow (44px brand + 24px pad + 1px border). */
+    --nav-height: 69px;
   }
 
   section {
@@ -10989,14 +10991,22 @@ a.leadership-roster-link.tab {
   .agency-body p { font-size: 17px; }
 
   .hero {
-    min-height: max(560px, 100svh);
+    /* Fill the remaining viewport under the sticky nav — not 100svh
+       below it, which left a below-the-fold hero and bottom-heavy copy. */
+    padding: 0;
     height: auto;
+    min-height: calc(100svh - var(--nav-height));
+    min-height: calc(100dvh - var(--nav-height));
   }
 
   .hero-content {
-    padding: calc(64px + var(--s-5)) var(--gutter-mobile) var(--s-6);
+    position: relative;
+    inset: auto;
+    padding: var(--s-5) var(--gutter-mobile);
     justify-content: center;
-    min-height: max(560px, 100svh);
+    align-items: center;
+    min-height: calc(100svh - var(--nav-height));
+    min-height: calc(100dvh - var(--nav-height));
   }
 
   .hero h1 { font-size: clamp(36px, 8.5vw, 52px); }
@@ -12010,7 +12020,6 @@ a.leadership-roster-link.tab {
   }
 
   .hero-content {
-    padding-top: calc(56px + var(--s-4));
     justify-content: center;
   }
 
