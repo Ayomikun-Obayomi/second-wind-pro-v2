@@ -11002,7 +11002,8 @@ a.leadership-roster-link.tab {
   .hero-content {
     position: relative;
     inset: auto;
-    padding: var(--s-5) var(--gutter-mobile);
+    /* Heavier bottom padding lifts the block a bit above true center. */
+    padding: var(--s-5) var(--gutter-mobile) calc(var(--s-5) + 12vh);
     justify-content: center;
     align-items: center;
     min-height: calc(100svh - var(--nav-height));
